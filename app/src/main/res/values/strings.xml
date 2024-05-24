@@ -14,6 +14,8 @@
     <string name="invalid_password">Password must not be less than 8 characters</string>
     <string name="remember_me">Remember Me</string>
     <string name="dont_have_acc">Don\'t have an account yet?</string>
+    <string name="empty_form">Please fill in the form fields</string>
+    <string name="invalid_form">Please fill in the form data according to the requirements</string>
 
     <string name="sign_up">Sign Up</string>
     <string name="illust_signup">Sign Up Illustration</string>
@@ -21,6 +23,8 @@
     <string name="fullname">Fullname</string>
     <string name="confirm_pass">Confirm Password</string>
     <string name="already_acc">Already have an account?</string>
+    <string name="pass_not_match">Passwords do not match</string>
+    <string name="signup_success">Sign Up Success! Please try to login to your account</string>
 
     <string name="forgot_pass">Forgot Password?</string>
     <string name="reset_pass">Reset Password</string>
@@ -28,4 +32,37 @@
     <string name="enter_email">Enter your email to continue</string>
     <string name="send">Send</string>
     <string name="remember_pass">Remember your password?</string>
+    <string name="confirm_send">"A reset password email is being sent to %s</string>
+
+    <!-- Home -->
+    <string name="home">Home</string>
+    <string name="hi_user">Hi, $s</string>
+    <string name="ready_practice">Ready to practice mindfulness today?</string>
+    <string name="question_feel">How do you feel?</string>
+    <string name="recent_article">Recent Article</string>
+
+    <string-array name="feel_desc">
+        <item>Angry</item>
+        <item>Badly</item>
+        <item>Fine</item>
+        <item>Well</item>
+    </string-array>
+
+    <integer-array name="feel_icon">
+        <item>@drawable/ic_angry_face</item>
+        <item>@drawable/ic_badly_face</item>
+        <item>@drawable/ic_fine_face</item>
+        <item>@drawable/ic_well_face</item>
+    </integer-array>
+
+    <!-- Chat -->
+    <string name="chat">Chat</string>
+
+    <!-- Article -->
+    <string name="article">Article</string>
+
+    <!-- Profile -->
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

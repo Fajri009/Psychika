@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/shades_50"
     tools:context=".ui.auth.signup.SignUpActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -135,7 +136,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_confirm_password" />
 
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
@@ -158,7 +159,7 @@
             app:layout_constraintEnd_toStartOf="@id/tv_login"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_register" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
 
         <TextView
             android:id="@+id/tv_login"

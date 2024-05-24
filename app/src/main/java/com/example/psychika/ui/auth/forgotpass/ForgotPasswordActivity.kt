@@ -2,7 +2,9 @@ package com.example.psychika.ui.auth.forgotpass
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.psychika.R
 import com.example.psychika.databinding.ActivityForgotPasswordBinding
 import com.example.psychika.ui.auth.login.LoginActivity
 
@@ -15,6 +17,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         tvButton()
+        send()
     }
 
     private fun tvButton() {
@@ -22,5 +25,28 @@ class ForgotPasswordActivity : AppCompatActivity() {
             val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun send() {
+        val etEmail = binding.etForgotPassEmail.text
+
+        binding.btnSend.setOnClickListener {
+            if (etEmail!!.isEmpty()) {
+                showToast(R.string.empty_form)
+            } else {
+                val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
+                startActivity(intent)
+
+                showToastString(getString(R.string.confirm_send, etEmail.toString()))
+            }
+        }
+    }
+
+    private fun showToast(message: Int) {
+        Toast.makeText(this@ForgotPasswordActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showToastString(message: String) {
+        Toast.makeText(this@ForgotPasswordActivity, message, Toast.LENGTH_SHORT).show()
     }
 }
