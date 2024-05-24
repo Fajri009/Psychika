@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">Psychika</string>
+
+    <!-- Splash -->
+    <string name="logo_app">Logo Psychika</string>
+
+    <!-- Authentication -->
+    <string name="login">Login</string>
+    <string name="illust_login">Login Illustration</string>
+    <string name="login_hello">Hello there, login to continue</string>
+    <string name="email">Email</string>
+    <string name="invalid_email">Use email format</string>
+    <string name="password">Password</string>
+    <string name="invalid_password">Password must not be less than 8 characters</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="dont_have_acc">Don\'t have an account yet?</string>
+
+    <string name="sign_up">Sign Up</string>
+    <string name="illust_signup">Sign Up Illustration</string>
+    <string name="signup_create">Create an account to continue</string>
+    <string name="fullname">Fullname</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="already_acc">Already have an account?</string>
+
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="reset_pass">Reset Password</string>
+    <string name="illust_forgot_pass">Forgot Password Illustration</string>
+    <string name="enter_email">Enter your email to continue</string>
+    <string name="send">Send</string>
+    <string name="remember_pass">Remember your password?</string>
 </resources>

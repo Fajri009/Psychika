@@ -1,9 +1,100 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Psychika" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+            <item name="colorPrimary">@color/primary_700</item>
     </style>
 
     <style name="Theme.Psychika" parent="Base.Theme.Psychika" />
+
+    <!-- Display Xs -->
+    <style name="TextAppearance.AppCompat.DisplayXs">
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineSpacingExtra">12sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.DisplayXs.Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.DisplayXs.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.DisplayXs.Semibold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.DisplayXs.Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <!-- Text Sm -->
+    <style name="TextAppearance.AppCompat.TextSm">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextSm.Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextSm.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextSm.Semibold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextSm.Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <!-- Text Xs -->
+    <style name="TextAppearance.AppCompat.TextXs">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXs.Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXs.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXs.Semibold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXs.Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <!-- Text Xxs -->
+    <style name="TextAppearance.AppCompat.TextXxs">
+        <item name="android:textSize">10sp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXxs.Regular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXxs.Medium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXxs.Semibold">
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextXxs.Bold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <declare-styleable name="IconEditText">
+        <attr name="icon" format="reference" />
+    </declare-styleable>
 </resources>
