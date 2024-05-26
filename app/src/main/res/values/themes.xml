@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Psychika" parent="Theme.Material3.DayNight.NoActionBar">
-            <item name="colorPrimary">@color/primary_700</item>
+        <item name="colorPrimary">@color/primary_700</item>
     </style>
 
     <style name="Theme.Psychika" parent="Base.Theme.Psychika" />

@@ -1,4 +1,4 @@
-package com.example.psychika.ui.home
+package com.example.psychika.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.psychika.R
 import com.example.psychika.data.Feel
-import com.example.psychika.databinding.ItemRowFeelBinding
 
 class FeelAdapter(private val listFeel: ArrayList<Feel>) : RecyclerView.Adapter<FeelAdapter.ViewHolder>() {
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION

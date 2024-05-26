@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.psychika.ui.profile.ProfileFragment"
+        android:name="com.example.psychika.ui.profile.displayprofile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

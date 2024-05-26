@@ -6,6 +6,7 @@ import android.view.*
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.psychika.R
+import com.example.psychika.adapter.FeelAdapter
 import com.example.psychika.data.Feel
 import com.example.psychika.databinding.FragmentHomeBinding
 
