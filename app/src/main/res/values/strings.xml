@@ -62,6 +62,10 @@
 
     <!-- Article -->
     <string name="article">Article</string>
+    <string name="search">Search</string>
+    <string name="leaf_background">Leaf Background</string>
+    <string name="photo_article">Articel Photo</string>
+    <string name="title_article">Study Finds Nature Walks Boost Mental Well-being</string>
 
     <!-- Profile -->
     <string name="profile">Profile</string>

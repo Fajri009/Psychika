@@ -77,7 +77,6 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/outlined_edit_text"
-                    android:paddingHorizontal="15dp"
                     app:icon="@drawable/ic_fullname" />
 
                 <TextView
@@ -113,7 +112,6 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/outlined_edit_text"
-                    android:paddingHorizontal="15dp"
                     app:icon="@drawable/ic_phone" />
 
                 <TextView
