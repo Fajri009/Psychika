@@ -5,9 +5,10 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
 import com.example.psychika.R
 
-class IconEditText @JvmOverloads constructor(
+class DisableEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : AppCompatEditText(context, attrs) {
     private var iconEditText: Drawable?
@@ -24,7 +25,11 @@ class IconEditText @JvmOverloads constructor(
                 recycle()
             }
         }
-        maxLines = 1
+
+        isEnabled = false
+        isFocusable = false
+        isFocusableInTouchMode = false
+        inputType = android.text.InputType.TYPE_NULL
     }
 
     override fun onDraw(canvas: Canvas) {

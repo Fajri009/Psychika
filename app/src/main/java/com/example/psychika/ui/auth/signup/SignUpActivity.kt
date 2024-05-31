@@ -18,15 +18,14 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        tvButton()
-
-        signUp()
-    }
-
-    private fun tvButton() {
-        binding.tvLogin.setOnClickListener {
-            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-            startActivity(intent)
+        binding.apply {
+            tvLogin.setOnClickListener {
+                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            btnSignup.setOnClickListener {
+                signUp()
+            }
         }
     }
 
@@ -37,21 +36,19 @@ class SignUpActivity : AppCompatActivity() {
         val etConfirmPass = binding.etConfirmPassword.text
 
 
-        binding.btnSignup.setOnClickListener {
-            if (etFullname!!.isEmpty() || etEmail!!.isEmpty() || etPassword!!.isEmpty() || etConfirmPass!!.isEmpty()) {
-                showToast(R.string.empty_form)
-            } else if (!isValidEmail(etEmail) || etPassword.length < 8 || etConfirmPass.length < 8) {
-                showToast(R.string.invalid_form)
-            } else if (etConfirmPass.toString() != etPassword.toString()) {
-                Log.i("test", etConfirmPass.toString())
-                Log.i("test", etPassword.toString())
-                showToast(R.string.pass_not_match)
-            } else {
-                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                startActivity(intent)
+        if (etFullname!!.isEmpty() || etEmail!!.isEmpty() || etPassword!!.isEmpty() || etConfirmPass!!.isEmpty()) {
+            showToast(R.string.empty_form)
+        } else if (!isValidEmail(etEmail) || etPassword.length < 8 || etConfirmPass.length < 8) {
+            showToast(R.string.invalid_form)
+        } else if (etConfirmPass.toString() != etPassword.toString()) {
+            Log.i("test", etConfirmPass.toString())
+            Log.i("test", etPassword.toString())
+            showToast(R.string.pass_not_match)
+        } else {
+            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+            startActivity(intent)
 
-                showToast(R.string.signup_success)
-            }
+            showToast(R.string.signup_success)
         }
     }
 

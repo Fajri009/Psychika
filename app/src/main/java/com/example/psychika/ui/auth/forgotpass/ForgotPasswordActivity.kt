@@ -16,29 +16,27 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        tvButton()
-        send()
-    }
-
-    private fun tvButton() {
-        binding.tvLogin.setOnClickListener {
-            val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
-            startActivity(intent)
+        binding.apply {
+            tvLogin.setOnClickListener {
+                val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+            btnSend.setOnClickListener {
+                send()
+            }
         }
     }
 
     private fun send() {
         val etEmail = binding.etForgotPassEmail.text
 
-        binding.btnSend.setOnClickListener {
-            if (etEmail!!.isEmpty()) {
-                showToast(R.string.empty_form)
-            } else {
-                val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
-                startActivity(intent)
+        if (etEmail!!.isEmpty()) {
+            showToast(R.string.empty_form)
+        } else {
+            val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
+            startActivity(intent)
 
-                showToastString(getString(R.string.confirm_send, etEmail.toString()))
-            }
+            showToastString(getString(R.string.confirm_send, etEmail.toString()))
         }
     }
 
