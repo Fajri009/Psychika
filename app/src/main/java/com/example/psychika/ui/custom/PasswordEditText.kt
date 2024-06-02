@@ -23,7 +23,7 @@ class PasswordEditText @JvmOverloads constructor(
     private var isPasswordVisible: Boolean = false
 
     init {
-        iconPassword = ContextCompat.getDrawable(context, R.drawable.ic_password) as Drawable
+        iconPassword = ContextCompat.getDrawable(context, R.drawable.ic_pass) as Drawable
         hidePassword = ContextCompat.getDrawable(context, R.drawable.ic_hide_pass) as Drawable
         showPassword = ContextCompat.getDrawable(context, R.drawable.ic_unhide_pass) as Drawable
 
@@ -49,7 +49,7 @@ class PasswordEditText @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        setButtonDrawables(startOfTheText = iconPassword,endOfTheText = if (isPasswordVisible) showPassword else hidePassword)
+        setEditTextDrawables(startOfTheText = iconPassword,endOfTheText = if (isPasswordVisible) showPassword else hidePassword)
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -70,7 +70,7 @@ class PasswordEditText @JvmOverloads constructor(
         return false
     }
 
-    private fun setButtonDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
+    private fun setEditTextDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
         setCompoundDrawablesWithIntrinsicBounds(startOfTheText, topOfTheText, endOfTheText, bottomOfTheText)
         compoundDrawablePadding = 20
     }

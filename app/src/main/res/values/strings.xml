@@ -6,7 +6,7 @@
     <!-- Splash -->
     <string name="logo_app">Logo Psychika</string>
 
-    <!-- Authentication -->
+    <!-- Login -->
     <string name="login">Login</string>
     <string name="illust_login">Login Illustration</string>
     <string name="login_hello">Hello there, login to continue</string>
@@ -15,10 +15,16 @@
     <string name="password">Password</string>
     <string name="invalid_password">Password must not be less than 8 characters</string>
     <string name="remember_me">Remember Me</string>
+    <string name="divider">Divider</string>
+    <string name="or">or</string>
+    <string name="login_google">Login with Google</string>
+    <string name="login_failed">Login tidak berhasil</string>
     <string name="dont_have_acc">Don\'t have an account yet?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
+    <string name="web_client_id">422866453064-f60vsdil6hdr6ftsm2c9srvgtivjdh5m.apps.googleusercontent.com</string>
 
+    <!-- Sign Up -->
     <string name="sign_up">Sign Up</string>
     <string name="illust_signup">Sign Up Illustration</string>
     <string name="signup_create">Create an account to continue</string>
@@ -28,6 +34,7 @@
     <string name="pass_not_match">Passwords do not match</string>
     <string name="signup_success">Sign Up Success! Please try to login to your account</string>
 
+    <!-- Forgot Password -->
     <string name="forgot_pass">Forgot Password?</string>
     <string name="reset_pass">Reset Password</string>
     <string name="illust_forgot_pass">Forgot Password Illustration</string>
@@ -64,7 +71,7 @@
     <string name="article">Article</string>
     <string name="search">Search</string>
     <string name="leaf_background">Leaf Background</string>
-    <string name="photo_article">Articel Photo</string>
+    <string name="photo_article">Article Photo</string>
     <string name="title_article">Study Finds Nature Walks Boost Mental Well-being</string>
 
     <!-- Profile -->

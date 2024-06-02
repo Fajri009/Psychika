@@ -2,29 +2,36 @@ package com.example.psychika.ui.profile.displayprofile
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.*
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import com.example.psychika.R
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
+import androidx.lifecycle.lifecycleScope
+import com.example.psychika.data.local.preference.User
+import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.databinding.FragmentProfileBinding
 import com.example.psychika.ui.auth.login.LoginActivity
 import com.example.psychika.ui.profile.editprofile.EditProfileActivity
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-    private var doubleBack = false
-    private val handler = Handler(Looper.getMainLooper())
+
+    private var userModel: User = User()
+    private lateinit var userPreference: UserPreference
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(layoutInflater)
 
-        handlingBackPress()
+        auth = FirebaseAuth.getInstance()
+
+        userPreference = UserPreference(requireContext())
 
         binding.apply {
             btnEditProfile.setOnClickListener {
@@ -32,31 +39,25 @@ class ProfileFragment : Fragment() {
                 startActivity(intent)
             }
             btnLogout.setOnClickListener {
-                val intent = Intent(requireContext(), LoginActivity::class.java)
-                startActivity(intent)
+                logout()
             }
         }
 
         return binding.root
     }
 
-    private fun handlingBackPress() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (doubleBack) {
-                    requireActivity().finishAffinity()
-                    return
-                }
+    private fun logout() {
+        lifecycleScope.launch {
+            val credentialManager = CredentialManager.create(requireContext())
 
-                doubleBack = true
-                Toast.makeText(requireContext(), R.string.press_back_again, Toast.LENGTH_SHORT).show()
+            auth.signOut()
+            credentialManager.clearCredentialState(ClearCredentialStateRequest())
 
-                handler.postDelayed({
-                    doubleBack = false
-                }, 2000)
-            }
+            userModel.email = ""
+            userPreference.setUser(userModel)
+
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
         }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }

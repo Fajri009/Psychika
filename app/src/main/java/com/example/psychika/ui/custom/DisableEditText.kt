@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat
 import com.example.psychika.R
 
 class DisableEditText @JvmOverloads constructor(
@@ -35,11 +34,11 @@ class DisableEditText @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         iconEditText?.let {
-            setButtonDrawables(startOfTheText = it)
+            setEdiTextDrawables(startOfTheText = it)
         }
     }
 
-    private fun setButtonDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
+    private fun setEdiTextDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
         setCompoundDrawablesWithIntrinsicBounds(startOfTheText, topOfTheText, endOfTheText, bottomOfTheText)
         compoundDrawablePadding = 20
     }

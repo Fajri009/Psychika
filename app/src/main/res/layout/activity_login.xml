@@ -11,13 +11,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/illust_login"
             android:layout_width="330dp"
             android:layout_height="240dp"
-            android:layout_marginTop="20dp"
             android:contentDescription="@string/illust_login"
             android:src="@drawable/illust_login"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +38,6 @@
             android:id="@+id/tv_hello"
             style="@style/TextAppearance.AppCompat.TextSm.Regular"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/login_hello"
             android:textColor="@color/neutral_700"
@@ -50,7 +48,6 @@
             android:id="@+id/tv_email"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/email"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,7 +68,6 @@
             android:id="@+id/tv_password"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/password"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,65 +81,113 @@
             android:background="@drawable/outlined_edit_text"
             android:layout_marginTop="5dp"
             android:paddingHorizontal="15dp"
-            app:icon="@drawable/ic_password"
+            app:icon="@drawable/ic_pass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_password"/>
 
-        <CheckBox
-            android:id="@+id/cb_remember"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="25dp"
-            app:buttonTint="@color/primary_700"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_login_password" />
-
-        <TextView
-            android:id="@+id/tv_remember"
-            style="@style/TextAppearance.AppCompat.TextXxs.Regular"
+        <LinearLayout
+            android:id="@+id/layout_remember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/remember_me"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cb_remember"
-            app:layout_constraintStart_toEndOf="@+id/cb_remember"
-            app:layout_constraintTop_toTopOf="@+id/cb_remember" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_login_password">
+
+            <CheckBox
+                android:id="@+id/cb_remember"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                app:buttonTint="@color/primary_400" />
+
+            <TextView
+                android:id="@+id/tv_remember"
+                style="@style/TextAppearance.AppCompat.TextXxs.Regular"
+                android:layout_width="wrap_content"
+                android:text="@string/remember_me"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_forgot_pass"
             style="@style/TextAppearance.AppCompat.TextXxs.Regular"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/forgot_pass"
             android:textColor="@color/primary_900"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_remember"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_remember"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_remember" />
+            app:layout_constraintTop_toTopOf="@+id/layout_remember" />
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="@string/login"
             android:layout_marginTop="20dp"
             android:background="@drawable/custom_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_remember" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_remember" />
+
+        <ImageView
+            android:id="@+id/divider_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider"
+            android:contentDescription="@string/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_or"
+            app:layout_constraintEnd_toStartOf="@id/tv_or"
+            app:layout_constraintBottom_toBottomOf="@id/tv_or" />
+
+        <TextView
+            android:id="@+id/tv_or"
+            style="@style/TextAppearance.AppCompat.TextXs.Medium"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/or"
+            android:textColor="@color/neutral_400"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+        <ImageView
+            android:id="@+id/divider_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider"
+            android:contentDescription="@string/divider"
+            app:layout_constraintStart_toEndOf="@id/tv_or"
+            app:layout_constraintTop_toTopOf="@id/tv_or"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/tv_or" />
+
+        <com.example.psychika.ui.custom.GoogleButton
+            android:id="@+id/btn_google"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/login_google"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_or"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tv_dont_have_acc"
             style="@style/TextAppearance.AppCompat.TextXs.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/dont_have_acc"
             android:textColor="@color/neutral_900"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_signup"
-            app:layout_constraintHorizontal_chainStyle="packed"/>
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
         <TextView
             android:id="@+id/tv_signup"

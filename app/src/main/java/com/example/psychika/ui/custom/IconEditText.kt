@@ -30,12 +30,12 @@ class IconEditText @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         iconEditText?.let {
-            setButtonDrawables(startOfTheText = it)
+            setEditTextDrawables(startOfTheText = it)
         }
         setPaddingRelative(dpToPx(15), dpToPx(0), dpToPx(15), dpToPx(0))
     }
 
-    private fun setButtonDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
+    private fun setEditTextDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
         setCompoundDrawablesWithIntrinsicBounds(startOfTheText, topOfTheText, endOfTheText, bottomOfTheText)
         compoundDrawablePadding = 20
     }
