@@ -7,19 +7,19 @@ class UserPreference(context: Context) {
 
     fun setUser(data: User) {
         val editor = preference.edit()
-        editor.putString(EMAIL, data.email)
+        editor.putString(ID, data.id)
         editor.apply()
     }
 
     fun getUser(): User {
         val user = User()
-        user.email = preference.getString(EMAIL, "")
+        user.id = preference.getString(ID, "")
 
         return user
     }
 
     companion object {
         private const val PREFS_NAME = "user_pref"
-        private const val EMAIL = "email"
+        private const val ID = "id"
     }
 }

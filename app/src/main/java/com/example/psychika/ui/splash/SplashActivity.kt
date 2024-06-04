@@ -3,7 +3,6 @@ package com.example.psychika.ui.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.*
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.psychika.R
 import com.example.psychika.data.local.preference.User
@@ -26,8 +25,7 @@ class SplashActivity : AppCompatActivity() {
         userModel = userPreference.getUser()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            Log.i("userModel", userModel.email!!.toString())
-            if (userModel.email == "") {
+            if (userModel.id == "") {
                 val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                 startActivity(intent)
             } else {

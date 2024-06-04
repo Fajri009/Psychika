@@ -5,13 +5,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/shades_50"
     tools:context=".ui.profile.editprofile.EditProfileActivity"
     tools:ignore="ScrollViewSize">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/shades_50">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:id="@+id/iv_white_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="150dp"
                 android:background="@drawable/white_container"
                 android:orientation="vertical"
                 android:paddingTop="80dp"
@@ -65,20 +65,37 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_edit_profile">
 
                 <TextView
-                    android:id="@+id/tv_fullname"
+                    android:id="@+id/tv_first_name"
                     style="@style/TextAppearance.AppCompat.TextSm.Medium"
                     android:layout_width="wrap_content"
-                    android:text="@string/fullname"
+                    android:text="@string/first_name"
                     android:textColor="@color/shades_100" />
 
                 <com.example.psychika.ui.custom.IconEditText
-                    android:id="@+id/et_edit_fullname"
+                    android:id="@+id/et_edit_first_name"
                     style="@style/TextAppearance.AppCompat.TextMd.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/outlined_edit_text"
-                    app:icon="@drawable/ic_fullname" />
+                    app:icon="@drawable/ic_profile" />
+
+                <TextView
+                    android:id="@+id/tv_last_name"
+                    style="@style/TextAppearance.AppCompat.TextSm.Medium"
+                    android:layout_width="wrap_content"
+                    android:text="@string/last_name"
+                    android:textColor="@color/shades_100"
+                    android:layout_marginTop="20dp" />
+
+                <com.example.psychika.ui.custom.IconEditText
+                    android:id="@+id/et_edit_last_name"
+                    style="@style/TextAppearance.AppCompat.TextMd.Medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/outlined_edit_text"
+                    app:icon="@drawable/ic_profile" />
 
                 <TextView
                     android:id="@+id/tv_email"
@@ -98,57 +115,6 @@
                     android:paddingHorizontal="15dp"
                     app:icon="@drawable/ic_email" />
 
-                <TextView
-                    android:id="@+id/tv_phone"
-                    style="@style/TextAppearance.AppCompat.TextSm.Medium"
-                    android:layout_width="wrap_content"
-                    android:text="@string/phone"
-                    android:textColor="@color/shades_100"
-                    android:layout_marginTop="20dp" />
-
-                <com.example.psychika.ui.custom.IconEditText
-                    android:id="@+id/et_edit_phone"
-                    style="@style/TextAppearance.AppCompat.TextMd.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/outlined_edit_text"
-                    app:icon="@drawable/ic_phone" />
-
-                <TextView
-                    android:id="@+id/tv_password"
-                    style="@style/TextAppearance.AppCompat.TextSm.Medium"
-                    android:layout_width="wrap_content"
-                    android:text="@string/password"
-                    android:textColor="@color/shades_100"
-                    android:layout_marginTop="20dp" />
-
-                <com.example.psychika.ui.custom.PasswordEditText
-                    android:id="@+id/et_edit_password"
-                    style="@style/TextAppearance.AppCompat.TextMd.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/outlined_edit_text"
-                    android:paddingHorizontal="15dp"/>
-
-                <TextView
-                    android:id="@+id/tv_confirm_pass"
-                    style="@style/TextAppearance.AppCompat.TextSm.Medium"
-                    android:layout_width="wrap_content"
-                    android:text="@string/confirm_pass"
-                    android:textColor="@color/shades_100"
-                    android:layout_marginTop="20dp" />
-
-                <com.example.psychika.ui.custom.PasswordEditText
-                    android:id="@+id/et_edit_confirm_pass"
-                    style="@style/TextAppearance.AppCompat.TextMd.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/outlined_edit_text"
-                    android:paddingHorizontal="15dp" />
-
                 <Button
                     android:id="@+id/btn_save_edit"
                     style="@style/TextAppearance.AppCompat.TextSm.Semibold"
@@ -165,6 +131,7 @@
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:src="@drawable/profile_avatar"
+                android:elevation="10dp"
                 app:civ_border_color="@color/shades_50"
                 app:civ_border_width="5dp"
                 app:layout_constraintTop_toTopOf="@id/iv_white_container"
@@ -176,8 +143,9 @@
                 android:id="@+id/iv_edit_profile"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/ic_edit_profile"
+                android:src="@drawable/ic_edit_profil_pic"
                 android:contentDescription="@string/icon_edit_profile"
+                android:elevation="10dp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_profile_picture"
                 app:layout_constraintEnd_toEndOf="@+id/iv_profile_picture"
                 app:layout_constraintHorizontal_bias="0.85"

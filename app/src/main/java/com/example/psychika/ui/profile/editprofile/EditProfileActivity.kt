@@ -18,9 +18,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
         setContentView(binding.root)
 
         binding.apply {
-            ivBackButton.setOnClickListener {
-                finish()
-            }
+            ivBackButton.setOnClickListener { finish() }
             ivEditProfile.setOnClickListener {
                 showBottomSheet()
             }

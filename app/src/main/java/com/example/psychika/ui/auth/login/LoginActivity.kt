@@ -1,11 +1,11 @@
 package com.example.psychika.ui.auth.login
 
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.*
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -16,8 +16,10 @@ import androidx.lifecycle.lifecycleScope
 import com.example.psychika.R
 import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.ActivityLoginBinding
 import com.example.psychika.ui.MainActivity
+import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.ui.auth.forgotpass.ForgotPasswordActivity
 import com.example.psychika.ui.auth.signup.SignUpActivity
 import com.example.psychika.utils.isValidEmail
@@ -27,13 +29,15 @@ import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var doubleBack = false
     private val handler = Handler(Looper.getMainLooper())
+    private val viewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance()
+    }
 
     private var userModel: User = User()
     private lateinit var userPreference: UserPreference
@@ -69,13 +73,6 @@ class LoginActivity : AppCompatActivity() {
             layoutRemember.setOnClickListener {
                 cbRemember.isChecked = !cbRemember.isChecked
             }
-            cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    userModel.email = etLoginEmail.toString()
-                } else {
-                    userModel.email = ""
-                }
-            }
             btnLogin.setOnClickListener {
                 login()
             }
@@ -109,17 +106,44 @@ class LoginActivity : AppCompatActivity() {
         } else if (!isValidEmail(etLoginEmail.toString()) || etLoginPassword.length < 8) {
             showToast(R.string.invalid_form)
         } else {
-            userPreference.setUser(userModel)
+            viewModel.login(
+                etLoginEmail.toString(),
+                etLoginPassword.toString()
+            ).observe(this) { result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
 
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-            startActivity(intent)
+                        is Result.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            val response = result.data
+
+                            if (binding.cbRemember.isChecked) {
+                                userModel.id = response.token
+                                userPreference.setUser(userModel)
+                            }
+
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+
+                        is Result.Error -> {
+                            binding.progressBar.visibility = View.GONE
+
+                            if (result.error.message == "Incorrect password!" || result.error.message == "There is no user with this email address!") {
+                                showToast(R.string.invalid_input_user)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
     private fun loginWithGoogle() {
-//        val signInIntent = googleSignInClient.signInIntent
-//        startActivityForResult(signInIntent, RC_SIGN_IN)
-
         val credentialManager = CredentialManager.create(this)
 
         val googleIdOption = GetGoogleIdOption.Builder()
@@ -145,61 +169,34 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun handleSignIn(result: GetCredentialResponse) {
-        // Handle the successfully returned credential.
         when (val credential = result.credential) {
             is CustomCredential -> {
                 if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                     try {
-                        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-                        firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
+                        val googleIdTokenCredential =
+                            GoogleIdTokenCredential.createFrom(credential.data)
+                        val idToken = googleIdTokenCredential.idToken
+                        viewModel.loginWithGoogle(idToken) { result ->
+                            if (result) {
+                                val user = auth.currentUser
+                                userModel.id = user?.uid ?: ""
+                                userPreference.setUser(userModel)
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
                     } catch (e: GoogleIdTokenParsingException) {
                         Log.e(TAG, "Received an invalid google id token response", e)
                     }
                 } else {
-                    // Catch any unrecognized custom credential type here.
                     Log.e(TAG, "Unexpected type of credential")
                 }
             }
 
             else -> {
-                // Catch any unrecognized credential type here.
                 Log.e(TAG, "Unexpected type of credential")
             }
         }
-    }
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...)
-//        if (requestCode == RC_SIGN_IN) {
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            try {
-//                // Google Sign In was successful, authenticate with Firebase
-//                val account = task.getResult(ApiException::class.java)!!
-//                firebaseAuthWithGoogle(account.idToken!!)
-//            } catch (e: ApiException) {
-//                // Google Sign In failed, update UI appropriately
-//                Log.w(TAG, "Google sign in failed", e)
-//                showToast(R.string.login_failed)
-//            }
-//        }
-//    }
-
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    userModel.email = user?.email ?: ""
-                    userPreference.setUser(userModel)
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    showToast(R.string.login_failed)
-                }
-            }
     }
 
     private fun showToast(message: Int) {

@@ -2,6 +2,7 @@
     <string name="app_name">Psychika</string>
 
     <string name="press_back_again">Press back again to exit</string>
+    <string name="web_client_id">422866453064-f60vsdil6hdr6ftsm2c9srvgtivjdh5m.apps.googleusercontent.com</string>
 
     <!-- Splash -->
     <string name="logo_app">Logo Psychika</string>
@@ -22,13 +23,15 @@
     <string name="dont_have_acc">Don\'t have an account yet?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
-    <string name="web_client_id">422866453064-f60vsdil6hdr6ftsm2c9srvgtivjdh5m.apps.googleusercontent.com</string>
+    <string name="invalid_input_user">Invalid email or password. Please try again.</string>
+    <string name="try_login">Register Success! Please try to login to your account</string>
 
     <!-- Sign Up -->
     <string name="sign_up">Sign Up</string>
     <string name="illust_signup">Sign Up Illustration</string>
     <string name="signup_create">Create an account to continue</string>
-    <string name="fullname">Fullname</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="confirm_pass">Confirm Password</string>
     <string name="already_acc">Already have an account?</string>
     <string name="pass_not_match">Passwords do not match</string>
@@ -77,19 +80,21 @@
     <!-- Profile -->
     <string name="profile">Profile</string>
     <string name="bubble_background">Bubble Background</string>
-    <string name="icon_fullname">Icon Fullname</string>
     <string name="user_fullname">User</string>
-    <string name="icon_email">Icon Email</string>
     <string name="user_email">user@gmail.com</string>
-    <string name="icon_phone">Icone Phone Number</string>
-    <string name="phone">Phone Number</string>
-    <string name="user_phone">08123456789</string>
+    <string name="icon_history">Icon History</string>
+    <string name="history">History</string>
+    <string name="icon_edit_profile">Icon Edit Profile</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="icon_change_password">Icon Change Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="icon_language">Icon Language</string>
+    <string name="language">Language</string>
+    <string name="icon_logout">Icon Logout</string>
     <string name="logout">Logout</string>
 
     <!-- Edit Profile -->
     <string name="back_button">Back Button</string>
-    <string name="icon_edit_profile">Icon Edit Profile</string>
     <string name="save_changes">Save Changes</string>
     <string name="illust_edit_profile">Illustration Edit Profile</string>
     <string name="success">Success</string>

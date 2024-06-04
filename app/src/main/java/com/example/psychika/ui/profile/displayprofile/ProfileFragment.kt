@@ -2,6 +2,7 @@ package com.example.psychika.ui.profile.displayprofile
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.*
 import androidx.credentials.ClearCredentialStateRequest
@@ -11,6 +12,7 @@ import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.databinding.FragmentProfileBinding
 import com.example.psychika.ui.auth.login.LoginActivity
+import com.example.psychika.ui.profile.changepass.ChangePasswordActivity
 import com.example.psychika.ui.profile.editprofile.EditProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -34,9 +36,17 @@ class ProfileFragment : Fragment() {
         userPreference = UserPreference(requireContext())
 
         binding.apply {
+            btnHistory.setOnClickListener {  }
             btnEditProfile.setOnClickListener {
                 val intent = Intent(requireContext(), EditProfileActivity::class.java)
                 startActivity(intent)
+            }
+            btnChangePass.setOnClickListener {
+                val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+                startActivity(intent)
+            }
+            btnLanguage.setOnClickListener {
+                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
             }
             btnLogout.setOnClickListener {
                 logout()
@@ -53,7 +63,7 @@ class ProfileFragment : Fragment() {
             auth.signOut()
             credentialManager.clearCredentialState(ClearCredentialStateRequest())
 
-            userModel.email = ""
+            userModel.id = ""
             userPreference.setUser(userModel)
 
             val intent = Intent(requireContext(), LoginActivity::class.java)

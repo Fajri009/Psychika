@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class User(
-    var email: String? = ""
+    var id: String? = ""
 ): Parcelable
