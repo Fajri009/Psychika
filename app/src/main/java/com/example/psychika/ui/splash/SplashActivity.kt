@@ -25,11 +25,11 @@ class SplashActivity : AppCompatActivity() {
         userModel = userPreference.getUser()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (userModel.id == "") {
-                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+            if (userModel.rememberMe) {
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
                 startActivity(intent)
             } else {
-                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
             finish()

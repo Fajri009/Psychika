@@ -79,4 +79,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
+
+    // Glide
+    implementation(libs.glide)
+
+    // uCrop
+    implementation(libs.ucrop)
+    implementation(libs.ucrop.v228native)
+
+    // Camera X
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
 }

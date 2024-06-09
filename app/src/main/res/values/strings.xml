@@ -35,6 +35,7 @@
     <string name="confirm_pass">Confirm Password</string>
     <string name="already_acc">Already have an account?</string>
     <string name="pass_not_match">Passwords do not match</string>
+    <string name="email_registered">The email is already registered. Please use another email.</string>
     <string name="signup_success">Sign Up Success! Please try to login to your account</string>
 
     <!-- Forgot Password -->
@@ -48,10 +49,11 @@
 
     <!-- Home -->
     <string name="home">Home</string>
-    <string name="hi_user">Hi, $s</string>
+    <string name="hi_user">Hi, %s</string>
     <string name="ready_practice">Ready to practice mindfulness today?</string>
     <string name="question_feel">How do you feel?</string>
     <string name="recent_article">Recent Article</string>
+    <string name="cant_get_user_data_google">Unable to retrieve user data</string>
 
     <string-array name="feel_desc">
         <item>Angry</item>
@@ -69,6 +71,10 @@
 
     <!-- Chat -->
     <string name="chat">Chat</string>
+    <string name="chatbot">Chatbot</string>
+    <string name="icon_send_message">Icon Send Message</string>
+    <string name="white_container">White Container</string>
+    <string name="hint_message">Type your message</string>
 
     <!-- Article -->
     <string name="article">Article</string>
@@ -76,6 +82,12 @@
     <string name="leaf_background">Leaf Background</string>
     <string name="photo_article">Article Photo</string>
     <string name="title_article">Study Finds Nature Walks Boost Mental Well-being</string>
+
+    <!-- Detail Article -->
+    <string name="sample_article_picture">Article Picture</string>
+    <string name="sample_article_title">Study Finds Nature Walks Boost Mental Well-being</string>
+    <string name="sample_article_date">5 Mei 2024</string>
+    <string name="sample_article_desc">A recent study published highlights the significant positive impact of nature walks on mental well-being. This research underscores the psychological benefits of interacting with the natural environment and reinforces the importance of integrating nature into our daily routines.\n\nConducted by a team of researchers from XYZ University, the study involved over 200 participants divided into two groups. The first group was instructed to walk for 60 minutes in a densely urban area, while the second group walked in a serene forested area. Both groups were then assessed based on several indicators of mental well-being, including stress levels, anxiety, mood, and overall happiness.\n\nThe results showed that the group walking in nature experienced a significant decrease in stress and anxiety levels compared to the urban-walking group. They also reported improved mood and a greater sense of happiness. "Walking in nature provides a powerful restorative effect on mental well-being," said Dr. Jane Doe, the lead researcher. "Interacting with nature can help reduce tension and bring feelings of calmness and joy."\n\nThis research reinforces a long-held belief that nature has a calming effect on the human mind. Furthermore, these findings align with several previous studies indicating that engaging with nature can enhance cognitive function and reduce symptoms of depression.</string>
 
     <!-- Profile -->
     <string name="profile">Profile</string>
@@ -102,6 +114,14 @@
     <string name="ok">OK</string>
     <string name="close">Close</string>
     <string name="take_photo">Take photo</string>
+    <string name="cancel_camera">Cancel</string>
+    <string name="icon_capture_camera">Icon Capture Camera</string>
+    <string name="icon_switch_camera">Icon Switch Camera</string>
     <string name="choose_gallery">Choose from gallery</string>
     <string name="delete_photo">Delete photo</string>
+
+    <!-- Change Password -->
+    <string name="current_pass">Current Password</string>
+    <string name="new_pass">New Password</string>
+    <string name="confirm_new_pass">Confirm New Password</string>
 </resources>

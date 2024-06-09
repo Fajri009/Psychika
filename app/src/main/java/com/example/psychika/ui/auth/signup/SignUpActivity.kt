@@ -2,7 +2,6 @@ package com.example.psychika.ui.auth.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -48,8 +47,6 @@ class SignUpActivity : AppCompatActivity() {
         } else if (!isValidEmail(etEmail) || etPassword.length < 8 || etConfirmPass.length < 8) {
             showToast(R.string.invalid_form)
         } else if (etConfirmPass.toString() != etPassword.toString()) {
-            Log.i("test", etConfirmPass.toString())
-            Log.i("test", etPassword.toString())
             showToast(R.string.pass_not_match)
         } else {
             viewModel.register(
@@ -64,6 +61,14 @@ class SignUpActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.VISIBLE
                         }
 
+                        is Result.Error -> {
+                            binding.progressBar.visibility = View.GONE
+
+                            if (result.error.message == "[email must be unique]") {
+                                showToast(R.string.email_registered)
+                            }
+                        }
+
                         is Result.Success -> {
                             binding.progressBar.visibility = View.GONE
                             showToast(R.string.try_login)
@@ -71,25 +76,13 @@ class SignUpActivity : AppCompatActivity() {
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                         }
-
-                        is Result.Error -> {
-                            showToastString(result.error.message!!)
-                        }
                     }
                 }
             }
-            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-            startActivity(intent)
-
-            showToast(R.string.signup_success)
         }
     }
 
     private fun showToast(message: Int) {
-        Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showToastString(message: String) {
         Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

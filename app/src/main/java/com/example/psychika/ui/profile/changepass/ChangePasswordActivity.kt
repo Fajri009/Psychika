@@ -1,19 +1,103 @@
 package com.example.psychika.ui.profile.changepass
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.psychika.R
+import com.example.psychika.data.local.preference.User
+import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.network.Result
+import com.example.psychika.data.network.response.UserResponse
 import com.example.psychika.databinding.ActivityChangePasswordBinding
+import com.example.psychika.databinding.PopUpEditBinding
+import com.example.psychika.ui.MainActivity
+import com.example.psychika.ui.ViewModelFactory
 
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
+    private val viewModel by viewModels<ChangePasswordViewModel> {
+        ViewModelFactory.getInstance()
+    }
+
+    private var userModel: User = User()
+    private lateinit var userPreference: UserPreference
+
+    private var userResponse: UserResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        userPreference = UserPreference(this)
+        userModel = userPreference.getUser()
+
+        userResponse = intent.getParcelableExtra<UserResponse>("USER_RESPONSE")
+
         binding.apply {
             ivBackButton.setOnClickListener { finish() }
+            etEditEmail.setText(userResponse!!.email)
+            btnSaveEdit.setOnClickListener { saveChanges() }
         }
+    }
+
+    private fun saveChanges() {
+        val etCurrentPass = binding.etEditCurrentPass.text
+        val etNewPass = binding.etEditNewPass.text
+        val etConfirmNewPass = binding.etEditConfirmNewPass.text
+
+        if (etCurrentPass!!.isEmpty() || etNewPass!!.isEmpty() || etConfirmNewPass!!.isEmpty()) {
+            showToast(R.string.empty_form)
+        } else if (etNewPass.length < 8 || etConfirmNewPass.length < 8) {
+            showToast(R.string.invalid_form)
+        } else if (etNewPass.toString() != etConfirmNewPass.toString()) {
+            showToast(R.string.pass_not_match)
+        } else {
+            viewModel.updateChangePass(
+                "Bearer ${userModel.id}",
+                etCurrentPass.toString(),
+                etNewPass.toString()
+            ).observe(this) { result ->
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> { }
+                        is Result.Success -> {
+                            showPopUp()
+                        }
+                        is Result.Error -> {
+                            showToastString(result.error.message)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showPopUp() {
+        val popupBinding = PopUpEditBinding.inflate(layoutInflater)
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(popupBinding.root)
+            .setCancelable(false)
+            .create()
+        alertDialog.show()
+
+        popupBinding.btnOk.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("navigateToProfile", true)
+            startActivity(intent)
+            alertDialog.dismiss()
+        }
+    }
+
+    private fun showToast(message: Int) {
+        Toast.makeText(this@ChangePasswordActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showToastString(message: String) {
+        Toast.makeText(this@ChangePasswordActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

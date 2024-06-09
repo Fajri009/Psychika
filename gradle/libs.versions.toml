@@ -20,10 +20,13 @@ playServicesAuth = "21.1.1"
 retrofit = "2.11.0"
 converterGson = "2.11.0"
 loggingInterceptor = "4.11.0"
-kotlinxCoroutinesTest = "1.7.3"
 lifecycleViewmodelKtx = "2.8.0"
 activityKtx = "1.9.0"
 fragmentKtx = "1.7.1"
+glide = "4.16.0"
+ucrop = "2.2.8"
+ucropVersion = "2.2.8-native"
+cameraxVersion = "1.2.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +53,12 @@ androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-lived
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
+ucrop-v228native = { module = "com.github.yalantis:ucrop", version.ref = "ucropVersion" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }
+camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
+camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraxVersion" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

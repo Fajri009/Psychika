@@ -7,7 +7,6 @@ class LoginViewModel(private val psychikaRepository: PsychikaRepository): ViewMo
     fun login(email: String, password: String) =
         psychikaRepository.login(email, password)
 
-    fun loginWithGoogle(idToken: String, onResult: (Boolean) -> Unit) {
+    fun loginWithGoogle(idToken: String, onResult: (Boolean) -> Unit) =
         psychikaRepository.loginWithGoogle(idToken, onResult)
-    }
 }

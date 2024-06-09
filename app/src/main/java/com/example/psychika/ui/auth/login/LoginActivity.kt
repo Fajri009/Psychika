@@ -73,12 +73,8 @@ class LoginActivity : AppCompatActivity() {
             layoutRemember.setOnClickListener {
                 cbRemember.isChecked = !cbRemember.isChecked
             }
-            btnLogin.setOnClickListener {
-                login()
-            }
-            btnGoogle.setOnClickListener {
-                loginWithGoogle()
-            }
+            btnLogin.setOnClickListener { login() }
+            btnGoogle.setOnClickListener { loginWithGoogle() }
         }
     }
 
@@ -120,10 +116,13 @@ class LoginActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
                             val response = result.data
 
+                            userModel.id = response.token
+
                             if (binding.cbRemember.isChecked) {
-                                userModel.id = response.token
-                                userPreference.setUser(userModel)
+                                userModel.rememberMe = true
                             }
+
+                            userPreference.setUser(userModel)
 
                             val intent = Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)
@@ -180,6 +179,8 @@ class LoginActivity : AppCompatActivity() {
                             if (result) {
                                 val user = auth.currentUser
                                 userModel.id = user?.uid ?: ""
+                                userModel.rememberMe = true
+                                userModel.googleAuth = true
                                 userPreference.setUser(userModel)
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)

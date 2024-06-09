@@ -43,7 +43,7 @@ class PasswordEditText @JvmOverloads constructor(
             override fun afterTextChanged(s: Editable?) { }
         })
 
-
+        maxLines = 1
     }
 
     override fun onDraw(canvas: Canvas) {

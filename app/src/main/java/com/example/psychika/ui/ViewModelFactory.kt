@@ -6,6 +6,10 @@ import com.example.psychika.data.network.PsychikaRepository
 import com.example.psychika.di.Injection
 import com.example.psychika.ui.auth.login.LoginViewModel
 import com.example.psychika.ui.auth.signup.SignUpViewModel
+import com.example.psychika.ui.home.HomeViewModel
+import com.example.psychika.ui.profile.changepass.ChangePasswordViewModel
+import com.example.psychika.ui.profile.displayprofile.ProfileViewModel
+import com.example.psychika.ui.profile.editprofile.EditProfileViewModel
 
 class ViewModelFactory private constructor(private val psychikaRepository: PsychikaRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -15,11 +19,21 @@ class ViewModelFactory private constructor(private val psychikaRepository: Psych
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(psychikaRepository) as T
             }
-
             modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
                 SignUpViewModel(psychikaRepository) as T
             }
-
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(psychikaRepository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(psychikaRepository) as T
+            }
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                EditProfileViewModel(psychikaRepository) as T
+            }
+            modelClass.isAssignableFrom(ChangePasswordViewModel::class.java) -> {
+                ChangePasswordViewModel(psychikaRepository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
