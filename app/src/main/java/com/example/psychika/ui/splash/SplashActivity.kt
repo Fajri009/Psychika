@@ -3,12 +3,14 @@ package com.example.psychika.ui.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.psychika.R
 import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.ui.MainActivity
 import com.example.psychika.ui.auth.login.LoginActivity
+import java.io.IOException
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -25,15 +27,26 @@ class SplashActivity : AppCompatActivity() {
         userModel = userPreference.getUser()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (userModel.rememberMe) {
-                val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                startActivity(intent)
-            } else {
-                val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-                startActivity(intent)
+            try {
+                if (userModel.rememberMe) {
+                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+                finish()
+            } catch (e: IOException) {
+                // Tangani kesalahan IO
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "Terjadi kesalahan saat mengakses server", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
-            finish()
         }, SPLASH_TIME_OUT)
+
     }
 
     companion object {

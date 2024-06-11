@@ -1,95 +1,76 @@
 <resources>
-    <string name="app_name" translatable="false">Psychika</string>
-
-    <string name="press_back_again">Tekan kembali lagi untuk keluar</string>
-    <string name="web_client_id" translatable="false">422866453064-f60vsdil6hdr6ftsm2c9srvgtivjdh5m.apps.googleusercontent.com</string>
-
-    <!-- Splash -->
-    <string name="logo_app" translatable="false">Logo Psychika</string>
+    <string name="press_back_again">Press back again to exit</string>
 
     <!-- Login -->
-    <string name="login">Masuk</string>
-    <string name="illust_login">Ilustrasi Masuk</string>
-    <string name="login_hello">Halo, login untuk melanjutkan</string>
+    <string name="login">Login</string>
+    <string name="illust_login">Login Illustration</string>
+    <string name="login_hello">Hello there, login to continue</string>
     <string name="email">Email</string>
-    <string name="invalid_email">Gunakan format email</string>
-    <string name="password">Kata sandi</string>
-    <string name="invalid_password">Kata sandi tidak boleh kurang dari 8 karakter</string>
-    <string name="remember_me">Ingat Saya</string>
-    <string name="divider">Pembagi</string>
-    <string name="or">atau</string>
-    <string name="login_google">Masuk dengan Google</string>
-    <string name="login_failed">Masuk tidak berhasil</string>
-    <string name="dont_have_acc">Belum punya akun?</string>
-    <string name="empty_form">Silakan isi kolom formulir</string>
-    <string name="invalid_form">Silakan isi data formulir sesuai kebutuhan</string>
-    <string name="invalid_input_user">Email atau kata sandi tidak valid. Silakan coba lagi.</string>
-    <string name="try_login">Daftar Sukses! Silakan coba login ke akun Anda</string>
+    <string name="invalid_email">Use email format</string>
+    <string name="password">Password</string>
+    <string name="invalid_password">Password must not be less than 8 characters</string>
+    <string name="remember_me">Remember Me</string>
+    <string name="divider">Divider</string>
+    <string name="or">or</string>
+    <string name="login_google">Login with Google</string>
+    <string name="login_failed">Login failed</string>
+    <string name="dont_have_acc">Don\'t have an account yet?</string>
+    <string name="empty_form">Please fill in the form fields</string>
+    <string name="invalid_form">Please fill in the form data according to the requirements</string>
+    <string name="invalid_input_user">Invalid email or password. Please try again.</string>
+    <string name="try_login">Register Success! Please try to login to your account</string>
 
     <!-- Sign Up -->
-    <string name="sign_up">Daftar</string>
-    <string name="illust_signup">Ilustrasi Daftar</string>
-    <string name="signup_create">Buat akun untuk melanjutkan</string>
-    <string name="first_name">Nama Depan</string>
-    <string name="last_name">Nama Belakang</string>
-    <string name="confirm_pass">Konfirmasi Sandi</string>
-    <string name="already_acc">Sudah memiliki akun?</string>
-    <string name="pass_not_match">Sandi tidak cocok</string>
-    <string name="email_registered">Email sudah terdaftar. Silakan gunakan email lain.</string>
-    <string name="signup_success">Daftar Sukses! Silakan coba login ke akun Anda</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="illust_signup">Sign Up Illustration</string>
+    <string name="signup_create">Create an account to continue</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="already_acc">Already have an account?</string>
+    <string name="pass_not_match">Passwords do not match</string>
+    <string name="email_registered">The email is already registered. Please use another email.</string>
+    <string name="signup_success">Sign Up Success! Please try to login to your account</string>
 
     <!-- Forgot Password -->
-    <string name="forgot_pass">Lupa Kata Sandi?</string>
-    <string name="reset_pass">Atur Ulang Kata Sandi</string>
-    <string name="illust_forgot_pass">Ilustrasi Lupa Kata Sandi</string>
-    <string name="enter_email">Masukkan email Anda untuk melanjutkan</string>
-    <string name="send">Kirim</string>
-    <string name="remember_pass">Ingat kata sandi Anda?</string>
-    <string name="confirm_send">Email pengaturan ulang kata sandi sedang dikirim ke %s</string>
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="reset_pass">Reset Password</string>
+    <string name="illust_forgot_pass">Forgot Password Illustration</string>
+    <string name="enter_email">Enter your email to continue</string>
+    <string name="send">Send</string>
+    <string name="remember_pass">Remember your password?</string>
+    <string name="confirm_send">A reset password email is being sent to %s</string>
 
     <!-- Home -->
-    <string name="home">Beranda</string>
-    <string name="hi_user">Halo, %s</string>
-    <string name="ready_practice">Siap untuk berlatih kesadaran hari ini?</string>
-    <string name="illust_face">Ilustrasi Wajah</string>
-    <string name="question_feel">Bagaimana perasaanmu?</string>
-    <string name="recent_article">Artikel Terbaru</string>
-    <string name="cant_get_user_data_google">Tidak dapat mengambil data pengguna</string>
+    <string name="home">Home</string>
+    <string name="hi_user">Hi, %s</string>
+    <string name="ready_practice">Ready to practice mindfulness today?</string>
+    <string name="illust_face">Face Illustration</string>
+    <string name="question_feel">How do you feel?</string>
+    <string name="recent_article">Recent Article</string>
+    <string name="cant_get_user_data_google">Unable to retrieve user data</string>
 
     <string-array name="feel_desc">
-        <item>Marah</item>
-        <item>Buruk</item>
-        <item>Baik</item>
-        <item>Baik-baik saja</item>
+        <item>Angry</item>
+        <item>Badly</item>
+        <item>Fine</item>
+        <item>Well</item>
     </string-array>
 
-    <integer-array name="feel_icon">
-        <item>@drawable/ic_angry_face</item>
-        <item>@drawable/ic_badly_face</item>
-        <item>@drawable/ic_fine_face</item>
-        <item>@drawable/ic_well_face</item>
-    </integer-array>
-
     <!-- Chat -->
-    <string name="chat">Obrolan</string>
+    <string name="chat">Chat</string>
     <string name="chatbot">Chatbot</string>
-    <string name="icon_send_message">Ikon Kirim Pesan</string>
-    <string name="white_container">Wadah Putihr</string>
-    <string name="hint_message">Ketik pesan anda</string>
+    <string name="icon_send_message">Icon Send Message</string>
+    <string name="white_container">White Container</string>
+    <string name="hint_message">Type your message</string>
 
     <!-- Article -->
-    <string name="article">Artikel</string>
-    <string name="search">Cari</string>
-    <string name="leaf_background">Latar Belakang Daun</string>
-    <string name="photo_article">Foto Artikel</string>
-    <string name="title_article">Studi Menemukan Jalan-jalan di Alam Meningkatkan Kesejahteraan Mental</string>
-    <string name="no_article_found">Tidak ada artikel yang ditemukan</string>
-
-    <!-- Detail Article -->
-    <string name="sample_article_picture">Gambar Artikel</string>
-    <string name="sample_article_title">Studi Menemukan Jalan-jalan di Alam Meningkatkan Kesejahteraan Mental</string>
-    <string name="sample_article_date">5 Mei 2024</string>
-    <string name="sample_article_desc">Sebuah studi baru-baru ini yang diterbitkan menyoroti dampak positif yang signifikan dari jalan-jalan di alam terhadap kesejahteraan mental. Penelitian ini menggarisbawahi manfaat psikologis dari berinteraksi dengan lingkungan alam dan memperkuat pentingnya mengintegrasikan alam ke dalam rutinitas sehari-hari.\n\nDilakukan oleh tim peneliti dari Universitas XYZ, penelitian ini melibatkan lebih dari 200 peserta yang dibagi menjadi dua kelompok. Kelompok pertama diinstruksikan berjalan kaki selama 60 menit di kawasan padat perkotaan, sedangkan kelompok kedua berjalan di kawasan hutan yang tenteram. Kedua kelompok tersebut kemudian dinilai berdasarkan beberapa indikator kesejahteraan mental, termasuk tingkat stres, kecemasan, suasana hati, dan kebahagiaan secara keseluruhan.\n\nHasilnya menunjukkan bahwa kelompok yang berjalan-jalan di alam mengalami penurunan tingkat stres dan kecemasan yang signifikan dibandingkan dengan kelompok yang berjalan-jalan di alam. kelompok pejalan kaki perkotaan. Mereka juga melaporkan peningkatan suasana hati dan rasa bahagia yang lebih besar. “Berjalan di alam memberikan efek pemulihan yang kuat pada kesejahteraan mental,” kata Dr. Jane Doe, peneliti utama. "Berinteraksi dengan alam dapat membantu mengurangi ketegangan dan menghadirkan perasaan tenang dan gembira."\n\nPenelitian ini memperkuat keyakinan lama bahwa alam memiliki efek menenangkan pada pikiran manusia. Lebih lanjut, temuan ini sejalan dengan beberapa penelitian sebelumnya yang menunjukkan bahwa berinteraksi dengan alam dapat meningkatkan fungsi kognitif dan mengurangi gejala depresi.</string>
+    <string name="article">Article</string>
+    <string name="search">Search</string>
+    <string name="leaf_background">Leaf Background</string>
+    <string name="photo_article">Article Photo</string>
+    <string name="title_article">Study Finds Nature Walks Boost Mental Well-being</string>
+    <string name="no_article_found">No article found</string>
 
     <string-array name="article_publisher_profile_pic">
         <item>@drawable/profile_avatar</item>
@@ -116,19 +97,11 @@
     </string-array>
 
     <string-array name="article_date_publish">
-        <item>25 Mei 2023</item>
-        <item>5 Januari 2024</item>
-        <item>31 Desember 2023</item>
-        <item>7 Mei 2024</item>
-        <item>11 Juni 2022</item>
-    </string-array>
-
-    <string-array name="article_photo">
-        <item>@drawable/article_photo_2</item>
-        <item>@drawable/article_photo_2</item>
-        <item>@drawable/article_photo_3</item>
-        <item>@drawable/article_photo_4</item>
-        <item>@drawable/article_photo_4</item>
+        <item>25 May 2023</item>
+        <item>5 January 2024</item>
+        <item>31 December 2023</item>
+        <item>7 May 2024</item>
+        <item>11 June 2022</item>
     </string-array>
 
     <string-array name="article_desc">
@@ -171,45 +144,51 @@
             \n\n5. Lakukan Satu Hal Sulit Dalam Satu Minggu Secara Rutin\nMemiliki mental yang kuat, itu artinya kita harus berani berbuat. Untuk melatih mental, kamu bisa belajar hal baru yang mungkin sebelumnya belum pernah kamu lakukan sama sekali. Misalnya dengan mengikuti kursus tertentu. Dorong diri kamu untuk keluar dari zona nyaman. Jangan batasi diri dengan rasa takut akan kegagalan.</item>
     </string-array>
 
+    <!-- Detail Article -->
+    <string name="sample_article_picture">Article Picture</string>
+    <string name="sample_article_title">Study Finds Nature Walks Boost Mental Well-being</string>
+    <string name="sample_article_date">5 May 2024</string>
+    <string name="sample_article_desc">A recent study published highlights the significant positive impact of nature walks on mental well-being. This research underscores the psychological benefits of interacting with the natural environment and reinforces the importance of integrating nature into our daily routines.\n\nConducted by a team of researchers from XYZ University, the study involved over 200 participants divided into two groups. The first group was instructed to walk for 60 minutes in a densely urban area, while the second group walked in a serene forested area. Both groups were then assessed based on several indicators of mental well-being, including stress levels, anxiety, mood, and overall happiness.\n\nThe results showed that the group walking in nature experienced a significant decrease in stress and anxiety levels compared to the urban-walking group. They also reported improved mood and a greater sense of happiness. "Walking in nature provides a powerful restorative effect on mental well-being," said Dr. Jane Doe, the lead researcher. "Interacting with nature can help reduce tension and bring feelings of calmness and joy."\n\nThis research reinforces a long-held belief that nature has a calming effect on the human mind. Furthermore, these findings align with several previous studies indicating that engaging with nature can enhance cognitive function and reduce symptoms of depression.</string>
+
     <!-- Profile -->
-    <string name="profile">Profil</string>
-    <string name="bubble_background">Latar Belakang Gelembung</string>
-    <string name="user_fullname">Pengguna</string>
-    <string name="user_email">pengguna@gmail.com</string>
-    <string name="icon_history">Ikon Sejarah</string>
-    <string name="history">Sejarah Obrolan</string>
-    <string name="icon_edit_profile">Ikon Ubah Profil</string>
-    <string name="edit_profile">Ubah Profil</string>
-    <string name="icon_change_password">Ikon Ubah Kata Sandi</string>
-    <string name="change_password">Ubah Kata Sandi</string>
-    <string name="icon_language">Ikon Bahasa</string>
-    <string name="language">Bahasa</string>
-    <string name="icon_logout">Ikon Keluar</string>
-    <string name="logout">Keluar</string>
+    <string name="profile">Profile</string>
+    <string name="bubble_background">Bubble Background</string>
+    <string name="user_fullname">User</string>
+    <string name="user_email">user@gmail.com</string>
+    <string name="icon_history">Icon History</string>
+    <string name="history">History Chat</string>
+    <string name="icon_edit_profile">Icon Edit Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="icon_change_password">Icon Change Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="icon_language">Icon Language</string>
+    <string name="language">Language</string>
+    <string name="icon_logout">Icon Logout</string>
+    <string name="logout">Logout</string>
 
     <!-- History -->
-    <string name="mental_health">Kesehatan Mental</string>
-    <string name="illust_mental_health">Ilustrasi Kesehatan Mental</string>
-    <string name="high_mental_health">Persentase kesehatan mentalmu tergolong tinggi, semoga hari-harimu selalu bahagia :)</string>
-    <string name="low_mental_health">Persentase kesehatan mental Anda tergolong rendah, segera konsultasikan dengan psikolog/psikiater Anda.</string>
+    <string name="mental_health">Mental Health</string>
+    <string name="illust_mental_health">Illustration Mental Health</string>
+    <string name="high_mental_health">Your mental health percentage shows high, hope your days are always happy :)</string>
+    <string name="low_mental_health">Your mental health percentage shows low, please consult your psychologist/psychiatrist immediately.</string>
 
     <!-- Edit Profile -->
-    <string name="back_button">Tombol kembali</string>
-    <string name="save_changes">Simpan perubahan</string>
-    <string name="illust_edit_profile">Ilustrasi Ubah Profil</string>
-    <string name="success">Sukeses</string>
-    <string name="changes_success">Perubahan berhasil disimpan</string>
-    <string name="ok">OKE</string>
-    <string name="close">Tutup</string>
-    <string name="take_photo">Ambil Foto</string>
-    <string name="cancel_camera">Batal</string>
-    <string name="icon_capture_camera">Ikon Pengambil Kamera</string>
-    <string name="icon_switch_camera">Ikon Beralih Kamera</string>
-    <string name="choose_gallery">Pilih dari galeri</string>
-    <string name="delete_photo">Hapus foto</string>
+    <string name="back_button">Back Button</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="illust_edit_profile">Illustration Edit Profile</string>
+    <string name="success">Success</string>
+    <string name="changes_success">Changes successfully saved</string>
+    <string name="ok">OK</string>
+    <string name="close">Close</string>
+    <string name="take_photo">Take photo</string>
+    <string name="cancel_camera">Cancel</string>
+    <string name="icon_capture_camera">Icon Capture Camera</string>
+    <string name="icon_switch_camera">Icon Switch Camera</string>
+    <string name="choose_gallery">Choose from gallery</string>
+    <string name="delete_photo">Delete photo</string>
 
     <!-- Change Password -->
-    <string name="current_pass">Kata Sandi Saat Ini</string>
-    <string name="new_pass">Kata Sandi Baru</string>
-    <string name="confirm_new_pass">Konfirmasi Kata Sandi Baru</string>
+    <string name="current_pass">Current Password</string>
+    <string name="new_pass">New Password</string>
+    <string name="confirm_new_pass">Confirm New Password</string>
 </resources>

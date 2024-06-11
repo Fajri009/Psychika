@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.psychika.R
 import com.example.psychika.data.Article
 
-class ArticleAdapter(private val listArticle: ArrayList<Article>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter(private var listArticle: ArrayList<Article>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallBack
 
     fun setOnItemClickCallBack(onItemClickCallBack: OnItemClickCallBack) {
@@ -43,6 +43,12 @@ class ArticleAdapter(private val listArticle: ArrayList<Article>) : RecyclerView
             }
         }
     }
+
+    fun setFilteredList(listArticle: ArrayList<Article>) {
+        this.listArticle = listArticle
+        notifyDataSetChanged()
+    }
+
 
     interface OnItemClickCallBack {
         fun onItemClicked(data: Article)

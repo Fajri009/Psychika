@@ -2,18 +2,23 @@ package com.example.psychika.ui.article
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.*
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.R
 import com.example.psychika.adapter.ArticleAdapter
 import com.example.psychika.data.Article
 import com.example.psychika.databinding.FragmentArticleBinding
 import com.example.psychika.ui.article.detail.DetailArticleActivity
+import java.util.Locale
 
 class ArticleFragment : Fragment() {
     private lateinit var binding: FragmentArticleBinding
     private val list = ArrayList<Article>()
+    private lateinit var listArticleAdapter: ArticleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,12 +29,44 @@ class ArticleFragment : Fragment() {
         list.addAll(getListArticle())
         showListArticle()
 
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterList(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
         return binding.root
+    }
+
+    private fun filterList(query: String?) {
+        if (query != null) {
+            val filteredList = ArrayList<Article>()
+            for (i in list) {
+                if (i.title.lowercase(Locale.getDefault()).contains(query)) {
+                    filteredList.add(i)
+                }
+            }
+
+            if (filteredList.isEmpty()) {
+                showToast(R.string.no_article_found)
+            } else {
+                listArticleAdapter.setFilteredList(filteredList)
+            }
+        }
     }
 
     private fun showListArticle() {
         val layoutManager = LinearLayoutManager(requireContext())
-        val listArticleAdapter = ArticleAdapter(list)
+        listArticleAdapter = ArticleAdapter(list)
 
         binding.rvListArticle.apply {
             setLayoutManager(layoutManager)
@@ -76,5 +113,9 @@ class ArticleFragment : Fragment() {
             putExtra(DetailArticleActivity.EXTRA_ARTICLE_DESC, data.desc)
         }
         startActivity(moveWithParcelableIntent)
+    }
+
+    private fun showToast(message: Int) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

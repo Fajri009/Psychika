@@ -135,7 +135,6 @@ class ProfileFragment : Fragment() {
     private fun navigatePage(destination: Class<*>) {
         val intent = Intent(requireContext(), destination)
         intent.putExtra("USER_RESPONSE", userApi)
-//        intent.putExtra("USER_GOOGLE_AUTH", userGoogleAuth)
         startActivity(intent)
     }
 

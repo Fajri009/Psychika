@@ -137,7 +137,7 @@ class HomeFragment : Fragment() {
         val dataDesc = resources.getStringArray(R.array.article_desc)
 
         val listArticle = ArrayList<Article>()
-        for (i in dataTitle.indices) {
+        for (i in 0 until 3) {
             val article = Article(
                 profilePic = dataProfilePic.getResourceId(i, -1),
                 publisher = dataPublisher[i],
