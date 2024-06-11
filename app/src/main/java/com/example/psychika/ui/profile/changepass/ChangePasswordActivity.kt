@@ -12,7 +12,7 @@ import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.data.network.response.UserResponse
 import com.example.psychika.databinding.ActivityChangePasswordBinding
-import com.example.psychika.databinding.PopUpEditBinding
+import com.example.psychika.databinding.PopUpChangesBinding
 import com.example.psychika.ui.MainActivity
 import com.example.psychika.ui.ViewModelFactory
 
@@ -77,7 +77,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun showPopUp() {
-        val popupBinding = PopUpEditBinding.inflate(layoutInflater)
+        val popupBinding = PopUpChangesBinding.inflate(layoutInflater)
 
         val alertDialog = AlertDialog.Builder(this)
             .setView(popupBinding.root)

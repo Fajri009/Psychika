@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:paddingHorizontal="50dp"
     android:paddingVertical="30dp"
-    android:background="@drawable/dialog_profile_bg">
+    android:background="@drawable/pop_up_background">
 
     <ImageView
         android:id="@+id/imageView"

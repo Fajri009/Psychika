@@ -11,8 +11,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+        
         <ImageView
+            android:id="@+id/iv_article_picture"
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:src="@drawable/article_picture"
@@ -21,6 +22,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_back_button"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/ic_back"
+            android:layout_margin="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/shades_50" />
 
         <LinearLayout
             android:id="@+id/iv_white_container"
@@ -71,12 +83,14 @@
                     android:layout_marginStart="5dp">
 
                     <TextView
+                        android:id="@+id/tv_article_publisher"
                         style="@style/TextAppearance.AppCompat.TextXs.Semibold"
                         android:layout_width="wrap_content"
                         android:text="@string/user_fullname"
                         android:textColor="@color/neutral_900" />
 
                     <TextView
+                        android:id="@+id/tv_article_date"
                         style="@style/TextAppearance.AppCompat.TextXxs.Regular"
                         android:layout_width="wrap_content"
                         android:text="@string/sample_article_date"
@@ -93,6 +107,7 @@
                 android:contentDescription="@string/divider" />
 
             <TextView
+                android:id="@+id/tv_Article_desc"
                 style="@style/TextAppearance.AppCompat.TextXs.Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

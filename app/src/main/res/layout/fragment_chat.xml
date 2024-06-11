@@ -40,23 +40,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_chatbot" />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.example.psychika.ui.custom.IconEditText
+        android:id="@+id/et_user_input_message"
+        style="@style/TextAppearance.AppCompat.TextXs.Regular"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/outlined_edit_text"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
+        android:hint="@string/hint_message"
         app:layout_constraintTop_toTopOf="@id/iv_send_message"
         app:layout_constraintBottom_toBottomOf="@id/iv_send_message"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_send_message">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/TextAppearance.AppCompat.TextXs.Regular"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/hint_message" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintEnd_toStartOf="@id/iv_send_message" />
 
     <ImageView
         android:id="@+id/iv_send_message"

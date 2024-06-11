@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Psychika</string>
+    <string name="app_name" translatable="false">Psychika</string>
 
     <string name="press_back_again">Press back again to exit</string>
-    <string name="web_client_id">422866453064-f60vsdil6hdr6ftsm2c9srvgtivjdh5m.apps.googleusercontent.com</string>
+    <string name="web_client_id" translatable="false">422866453064-f60vsdil6hdr6ftsm2c9srvgtivjdh5m.apps.googleusercontent.com</string>
 
     <!-- Splash -->
-    <string name="logo_app">Logo Psychika</string>
+    <string name="logo_app" translatable="false">Logo Psychika</string>
 
     <!-- Login -->
     <string name="login">Login</string>
@@ -19,7 +19,7 @@
     <string name="divider">Divider</string>
     <string name="or">or</string>
     <string name="login_google">Login with Google</string>
-    <string name="login_failed">Login tidak berhasil</string>
+    <string name="login_failed">Login failed</string>
     <string name="dont_have_acc">Don\'t have an account yet?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
@@ -45,12 +45,13 @@
     <string name="enter_email">Enter your email to continue</string>
     <string name="send">Send</string>
     <string name="remember_pass">Remember your password?</string>
-    <string name="confirm_send">"A reset password email is being sent to %s</string>
+    <string name="confirm_send">A reset password email is being sent to %s</string>
 
     <!-- Home -->
     <string name="home">Home</string>
     <string name="hi_user">Hi, %s</string>
     <string name="ready_practice">Ready to practice mindfulness today?</string>
+    <string name="illust_face">Face Illustration</string>
     <string name="question_feel">How do you feel?</string>
     <string name="recent_article">Recent Article</string>
     <string name="cant_get_user_data_google">Unable to retrieve user data</string>
@@ -83,10 +84,90 @@
     <string name="photo_article">Article Photo</string>
     <string name="title_article">Study Finds Nature Walks Boost Mental Well-being</string>
 
+    <string-array name="article_publisher_profile_pic">
+        <item>@drawable/profile_avatar</item>
+        <item>@drawable/profile_avatar</item>
+        <item>@drawable/profile_avatar</item>
+        <item>@drawable/profile_avatar</item>
+        <item>@drawable/profile_avatar</item>
+    </string-array>
+
+    <string-array name="article_publisher">
+        <item>Gabriella Florencia</item>
+        <item>Administrator</item>
+        <item>Kompas Indonesia</item>
+        <item>ANTARA</item>
+        <item>R Adinda</item>
+    </string-array>
+
+    <string-array name="article_title">
+        <item>9 Cara Sederhana Menjaga Kesehatan Mental</item>
+        <item>Menjaga Kesehatan Mental: Tips dan Trik Harian</item>
+        <item>Menjaga Mental Health di Tengah Dinamika Hidup Modern: Pentingnya Health Awareness dan Dukungan Positive Circle</item>
+        <item>Kegiatan berbasis alam dapat meningkatkan kesehatan mental siswa</item>
+        <item>Cara Melatih Mental Agar Selalu Kuat</item>
+    </string-array>
+
+    <string-array name="article_date_publish">
+        <item>25 Mei 2023</item>
+        <item>5 Januari 2024</item>
+        <item>31 Desember 2023</item>
+        <item>7 Mei 2024</item>
+        <item>11 Juni 2022</item>
+    </string-array>
+
+    <string-array name="article_photo">
+        <item>@drawable/article_photo_2</item>
+        <item>@drawable/article_photo_2</item>
+        <item>@drawable/article_photo_3</item>
+        <item>@drawable/article_photo_4</item>
+        <item>@drawable/article_photo_4</item>
+    </string-array>
+
+    <string-array name="article_desc">
+        <item>
+            Katakan Hal Positif pada Diri Sendiri\nPenelitian menunjukkan bahwa cara kamu berpikir tentang diri sendiri dapat memiliki efek yang kuat pada kejiwaan kamu. Ketika kita memandang diri kita dan hidup kita secara negatif, maka kita juga merasakan efek negatifnya. Sebaliknya, jika membiasakan diri menggunakan kata-kata yang membuat lebih positif, maka hal ini membuat kamu lebih optimis.
+            \n\nTuliskan Hal-Hal yang Patut Disyukuri\nRasa bersyukur dikaitkan dengan peningkatan kesejahteraan, kualitas kesehatan mental, serta kebahagiaan. Cara sederhana untuk meningkatkan rasa bersyukur adalah membuat jurnal dan menuliskan berbagai hal yang patut disyukuri setiap harinya. Secara umum merenungkan rasa terima kasih juga efektif, tetapi kamu perlu berlatih secara teratur untuk mendapatkan manfaat jangka panjang. Temukan sesuatu untuk disyukuri dan nikmati perasaan tersebut dalam hatimu.
+            \n\nFokus pada Satu Hal pada Satu Waktu\nFokus kepada tujuan mampu melepaskan emosi negatif atau sulit dari pengalaman masa lalu yang membebani. Mulailah dengan membawa kesadaran bahkan untuk hal-hal sederhana seperti mandi, makan siang, atau berjalan pulang. Memberi perhatian pada sensasi fisik, suara, bau, atau rasa dari pengalaman ini membantu kamu untuk fokus. Ketika pikiran kamu terbang melayang hingga menyebabkan kamu overthinking, maka bawa saja kembali ke apa yang kini kamu tengah lakukan.
+            \n\nOlahraga\nTubuh akan melepaskan endorfin yang membantu menyingkirkan stres dan meningkatkan suasana hati kamu sebelum dan sesudah berolahraga. Itulah sebabnya olahraga adalah cara penangkal stres, kecemasan, dan depresi yang ampuh. Carilah cara-cara kecil untuk menambah aktivitas olahraga, seperti naik tangga, atau jalan kaki ke tempat yang dekat. Untuk mendapatkan manfaat maksimal, lakukan olahraga setidaknya 30 menit setiap hari, dan coba melakukannya di luar ruangan. Paparan sinar matahari juga membantu tubuh menghasilkan vitamin D, yang meningkatkan tingkat serotonin di otak.</item>
+        <item>Kesehatan mental yang baik merupakan pondasi utama bagi kehidupan yang seimbang dan bahagia. Dalam kesibukan sehari-hari, seringkali kita lupa untuk memberikan perhatian yang cukup pada kesehatan mental kita. Berikut adalah beberapa tips dan trik harian yang dapat membantu Anda menjaga kesehatan mental:
+            \n\n1. Berolahraga Secara Teratur\nOlahraga tidak hanya bermanfaat bagi kesehatan fisik, tetapi juga memiliki dampak positif pada kesehatan mental. Aktivitas fisik dapat meningkatkan produksi endorfin, hormon yang dapat meningkatkan suasana hati dan mengurangi stres. Sediakan waktu setiap hari untuk bergerak, entah itu dengan berjalan-jalan, berlari, atau melakukan olahraga favorit Anda.
+            \n\n2. Tidur Cukup\nKurang tidur dapat berdampak negatif pada kesehatan mental dan kesejahteraan secara keseluruhan. Pastikan untuk mendapatkan 7-9 jam tidur setiap malam. Rutinitas tidur yang baik dapat membantu menjaga keseimbangan emosional dan meningkatkan ketahanan terhadap stres.
+            \n\n3. Menerapkan Teknik Relaksasi\nTeknik-teknik relaksasi seperti meditasi, yoga, dan pernapasan dalam dapat membantu mengurangi tingkat stres dan meningkatkan fokus. Sisihkan waktu setiap hari untuk melibatkan diri dalam praktik relaksasi ini, baik pagi atau malam.
+            \n\n4. Mengatur Waktu untuk Kesenangan\nTentukan waktu untuk melakukan aktivitas yang Anda nikmati. Itu bisa berupa membaca buku, menonton film, mendengarkan musik, atau melakukan hobi kreatif. Kegiatan-kegiatan ini dapat menjadi pelarian yang menyenangkan dan membantu mengurangi tekanan.
+            \n\n5. Menjaga Koneksi Sosial\nHubungan sosial yang baik dapat memiliki dampak positif pada kesehatan mental. Ajak teman-teman atau keluarga untuk berkumpul, atau jika tidak memungkinkan secara fisik, pertahankan komunikasi melalui panggilan telepon atau video call. Rasa dukungan sosial dapat memberikan ketenangan pikiran.
+            \n\n6. Mengelola Tugas Secara Bertahap\nJangan terlalu keras pada diri sendiri. Bagi tugas besar menjadi tugas yang lebih kecil dan kelola satu langkah pada satu waktu. Ini dapat membantu mengurangi rasa kewalahan dan meningkatkan rasa pencapaian.
+            \n\n7. Bersikap Positif dan Berterima Kasih\nFokus pada hal-hal positif dalam hidup dan praktikkan rasa syukur. Menuliskan hal-hal yang membuat Anda bersyukur setiap hari dapat meningkatkan suasana hati dan membantu menjaga perspektif positif.
+            \n\n8. Mencari Bantuan Profesional Jika Diperlukan\nJika Anda merasa kesulitan mengatasi masalah kesehatan mental, jangan ragu untuk mencari bantuan dari profesional. Psikolog, psikiater, atau konselor dapat memberikan dukungan dan alat yang Anda butuhkan.
+            \n\nDengan mengintegrasikan tips dan trik ini ke dalam rutinitas harian, Anda dapat membangun dasar yang kokoh untuk menjaga kesehatan mental Anda. Ingatlah bahwa kesehatan mental adalah perjalanan yang berkelanjutan, dan memberikan perhatian terus-menerus adalah kunci untuk mencapai keseimbangan dan kebahagiaan.</item>
+        <item>Kesehatan mental merupakan aspek terpenting dalam menjaga keseimbangan dan kualitas hidup seseorang.
+            \n\nMeski sering diabaikan, namun disadari bahwa kesehatan mental merupakan suatu hal penting karena memiliki dampak yang signifikan terhadap kesejahteraan seseorang. Mengingat pentingnya hal ini, penting untuk meningkatkan kesadaran tentang kesehatan mental.
+            \n\nTidak dapat dipungkiri bahwa kehidupan modern seringkali menimbulkan stres bagi banyak orang. Tekanan sosial, masalah keuangan, hubungan sosial yang buruk dan ketidak pastian masa depan adalah beberapa stres yang kerap berdampak buruk pada kesehatan mental seseorang. Oleh karena itu, penting untuk meningkatkan kesadaran tentang pentingnya menjaga kesehatan mental.
+            \n\nSalah satu kunci terpenting untuk menjaga kesehatan mental adalah meluangkan waktu untuk diri sendiri, mendedikasikan waktu untuk  aktivitas yang menyenangkan seperti hobi dan olahraga dapat membantu mengurangi stres dan meningkatkan kesehatan mental</item>
+        <item>Jakarta (ANTARA) - Hasil penelitian baru yang dilakukan oleh tim riset dari North Carolina State University menunjukkan bahwa kegiatan sederhana berbasis alam dapat meningkatkan kesehatan mental siswa, mengurangi stres, kecemasan, dan depresi di kalangan remaja.
+            \n\nSiaran Medical Daily pada Senin (6/5) waktu setempat menyebutkan bahwa menurut hasil penelitian tersebut, mengikuti sesi pengamatan burung selama 30 menit lima kali setiap pekan bisa meningkatkan kesejahteraan mental dan mengurangi tekanan psikologis di kalangan mahasiswa.
+            \n\nTim peneliti juga mendapati aktivitas sederhana yang mudah dijalankan itu bisa memberikan kesejahteraan subjektif yang lebih baik dan mengurangi tekanan dibandingkan dengan bentuk-bentuk paparan alam yang lain, seperti berjalan-jalan di alam.
+            \n\n"Ada banyak riset tentang kesejahteraan pada masa pandemi yang menunjukkan bahwa remaja dan mahasiswa yang paling kesulitan. Khususnya pelajar dan mahasiswa, tampaknya itu kelompok yang kesusahan dalam menjangkau alam dan mendapatkan manfaat tersebut," kata Nils Peterson, salah satu penulis hasil studi dari North Carolina State University.
+            \n\n"Pengamatan burung adalah salah satu cara yang paling umum dilakukan manusia untuk berinteraksi dengan satwa liar…, dan kampus menyediakan tempat untuk mengakses aktivitas tersebut bahkan di lingkungan perkotaan," katanya.
+            \n\nDalam risetnya, para peneliti melibatkan 112 peserta siswa yang dibagi dalam tiga kelompok: kelompok kontrol, kelompok jalan-jalan di alam, dan kelompok mengamati burung yang ditugasi mengikuti lima sesi mengamati burung selama 30 menit.
+            \n\nMereka kemudian dievaluasi menggunakan survei WHO-5, alat dengan lima pertanyaan untuk menilai kesejahteraan pada skala nol hingga lima berdasarkan perasaan selama dua minggu terakhir.
+            \n\nMeskipun semua kelompok menunjukkan peningkatan skor WHO-5, kelompok pengamat burung yang memulai dengan skor lebih rendah berakhir mendapatkan skor lebih tinggi dibandingkan kelompok lainnya.
+            \n\nDengan menggunakan daftar pertanyaan serupa untuk mengukur tekanan, para peneliti juga mendapati kegiatan yang bersentuhan dengan alam, khususnya pengamatan burung dan jalan-jalan di alam, dapat memicu penurunan tekanan psikologis.
+            \n\nHasil penelitian itu mendukung gagasan bahwa mengamati burung membantu meningkatkan kesehatan mental dan membuka banyak jalan untuk penelitian di masa depan, termasuk studi untuk mengetahui mengapa mengamati burung membantu orang merasa lebih baik.</item>
+        <item>Perlu dipahami bahwa hidup ini memang penuh lika-liku. Hampir tidak ada hidup seseorang yang selalu lancar dan baik-baik saja. Bahkan orang yang sukses dan kaya raya pun tetap pernah melewati titik terendah dalam hidupnya. Seperti halnya Jack Ma, seorang pendiri Alibaba Group. Ia telah melewati berbagai macam kegagalan hingga akhirnya sukses menjadi seorang pengusaha besar.
+            \n\nUntuk mencapai sesuatu hal yang besar, kita harus berjuang dari bawah dan melalui berbagai macam rintangan. Untuk bisa mengejar mimpi dan menjadi seseorang yang sukses, kita pasti akan terbentur dengan tekanan dan juga rasa yang stres. Sehingga kita membutuhkan mental yang kuat untuk dapat maju dan tidak mudah menyerah. Memiliki mental yang lemah hanya akan menghalangi kita untuk berpikir lebih positif dan akan terjebak di dalam pola pikir yang bisa merendahkan mental diri sendiri.
+            \n\nApapun yang kita hadapi di dalam hidup, mental yang kuat adalah solusi utama. Untuk memiliki mental yang kuat, kita bisa melatihnya dengan beberapa cara. Ada beberapa kebiasaan yang dapat kita lakukan untuk mendapatkan mental yang kuat. Berikut adalah beberapa diantaranya:
+            \n\n1. Selalu Berpikir Positif\nKita mungkin akan mengalami dan merasakan kegagalan dan kekecewaan dalam kehidupan pribadi ataupun profesional. Jangan mudah larut dalam kesedihan dan memutuskan untuk menyerah. Cobalah untuk selalu berpikir positif akan dua hal tersebut. Bagaimana caranya? Terimalah kegagalan dan kekecewaan tersebut dan jadikan itu semua sebagai pelajaran dan pengalaman penting untuk menuntun ke jalan yang lebih baik. Dengan begitu, mental kita akan terbentuk dan tidak mudah terpuruk.
+            \n\n2. Selalu Mengingat Tuhan\nMental akan kuat jika memperoleh dukungan yang kuat juga, benar bukan? Sebagai seseorang yang percaya akan Tuhan dan memiliki agama, tentu kita percaya bahwa Tuhan adalah satu-satunya dukungan terkuat di dunia. Jadi, usahakan untuk mengingat Tuhan setiap saat supaya mental tetap kuat.
+            \n\n3. Jangan Terlalu Memikirkan Perkataan Orang Lain\nKomentar negatif yang berasal dari orang lain, bahkan mungkin dari orang-orang terdekat pasti akan kita terima. Mungkin ada banyak dari kita yang sering mendengar perkataan kurang enak dari mereka. Salah satu melatih mental agar tetap kuat adalah dengan tidak memusingkan perkataan negatif dari orang lain. Karena memikirkan hal-hal yang sebenarnya tidak penting justru akan membuat mental kita semakin terpuruk.
+            \n\n4. Asah Kemampuan Diri\nAdapun cara selanjutnya yang bisa kamu lakukan untuk menguatkan mental yaitu dengan terus belajar dan mengasah kemampuan diri sendiri. Hal itu bisa kamu peroleh melalui latihan, belajar, mengikuti kursus, dan mencoba strategi baru. Misalnya saja, apabila kamu seorang mahasiswa dan akan mengikuti ujian semester. Maka yang perlu kamu lakukan adalah belajar mengenai materi-materi yang pernah dijelaskan oleh dosen terkait. Dengan begitu, kamu akan lebih percaya diri untuk menghadapi ujian tersebut.
+            \n\n5. Lakukan Satu Hal Sulit Dalam Satu Minggu Secara Rutin\nMemiliki mental yang kuat, itu artinya kita harus berani berbuat. Untuk melatih mental, kamu bisa belajar hal baru yang mungkin sebelumnya belum pernah kamu lakukan sama sekali. Misalnya dengan mengikuti kursus tertentu. Dorong diri kamu untuk keluar dari zona nyaman. Jangan batasi diri dengan rasa takut akan kegagalan.</item>
+    </string-array>
+
     <!-- Detail Article -->
     <string name="sample_article_picture">Article Picture</string>
     <string name="sample_article_title">Study Finds Nature Walks Boost Mental Well-being</string>
-    <string name="sample_article_date">5 Mei 2024</string>
+    <string name="sample_article_date">5 May 2024</string>
     <string name="sample_article_desc">A recent study published highlights the significant positive impact of nature walks on mental well-being. This research underscores the psychological benefits of interacting with the natural environment and reinforces the importance of integrating nature into our daily routines.\n\nConducted by a team of researchers from XYZ University, the study involved over 200 participants divided into two groups. The first group was instructed to walk for 60 minutes in a densely urban area, while the second group walked in a serene forested area. Both groups were then assessed based on several indicators of mental well-being, including stress levels, anxiety, mood, and overall happiness.\n\nThe results showed that the group walking in nature experienced a significant decrease in stress and anxiety levels compared to the urban-walking group. They also reported improved mood and a greater sense of happiness. "Walking in nature provides a powerful restorative effect on mental well-being," said Dr. Jane Doe, the lead researcher. "Interacting with nature can help reduce tension and bring feelings of calmness and joy."\n\nThis research reinforces a long-held belief that nature has a calming effect on the human mind. Furthermore, these findings align with several previous studies indicating that engaging with nature can enhance cognitive function and reduce symptoms of depression.</string>
 
     <!-- Profile -->
@@ -95,7 +176,7 @@
     <string name="user_fullname">User</string>
     <string name="user_email">user@gmail.com</string>
     <string name="icon_history">Icon History</string>
-    <string name="history">History</string>
+    <string name="history">History Chat</string>
     <string name="icon_edit_profile">Icon Edit Profile</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="icon_change_password">Icon Change Password</string>
@@ -105,12 +186,18 @@
     <string name="icon_logout">Icon Logout</string>
     <string name="logout">Logout</string>
 
+    <!-- History -->
+    <string name="mental_health">Mental Health</string>
+    <string name="illust_mental_health">Illustration Mental Health</string>
+    <string name="high_mental_health">Your mental health percentage shows high, hope your days are always happy :)</string>
+    <string name="low_mental_health">Your mental health percentage shows low, please consult your psychologist/psychiatrist immediately.</string>
+
     <!-- Edit Profile -->
     <string name="back_button">Back Button</string>
     <string name="save_changes">Save Changes</string>
     <string name="illust_edit_profile">Illustration Edit Profile</string>
     <string name="success">Success</string>
-    <string name="changes_success">Changes successfully  saved</string>
+    <string name="changes_success">Changes successfully saved</string>
     <string name="ok">OK</string>
     <string name="close">Close</string>
     <string name="take_photo">Take photo</string>

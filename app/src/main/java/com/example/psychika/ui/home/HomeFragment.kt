@@ -1,26 +1,32 @@
 package com.example.psychika.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.R
+import com.example.psychika.adapter.ArticleAdapter
 import com.example.psychika.adapter.FeelAdapter
+import com.example.psychika.data.Article
 import com.example.psychika.data.Feel
 import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.FragmentHomeBinding
 import com.example.psychika.ui.ViewModelFactory
+import com.example.psychika.ui.article.detail.DetailArticleActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<HomeViewModel> {
         ViewModelFactory.getInstance()
     }
-    private val list = ArrayList<Feel>()
+    private val listFeel = ArrayList<Feel>()
+    private val listArticle = ArrayList<Article>()
 
     private lateinit var userModel: User
     private lateinit var userPreference: UserPreference
@@ -40,16 +46,19 @@ class HomeFragment : Fragment() {
             getCurrentUserGoogleAuth()
         }
 
-
-        list.addAll(getListFeel())
+        listFeel.addAll(getListFeel())
         showListFeel()
+
+        listArticle.addAll(getListArticle())
+        showListArticle()
 
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        list.clear()
+        listFeel.clear()
+        listArticle.clear()
     }
 
     private fun getCurrentUserApi() {
@@ -81,8 +90,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun showListFeel() {
-        val layoutManager = GridLayoutManager(requireContext(), list.size)
-        val listFeelAdapter = FeelAdapter(list)
+        val layoutManager = GridLayoutManager(requireContext(), listFeel.size)
+        val listFeelAdapter = FeelAdapter(listFeel)
 
         binding.rvListFeel.apply {
             setLayoutManager(layoutManager)
@@ -101,6 +110,57 @@ class HomeFragment : Fragment() {
             listFeel.add(feel)
         }
         return listFeel
+    }
+
+    private fun showListArticle() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        val listArticleAdapter = ArticleAdapter(listArticle)
+
+        binding.rvListArticle.apply {
+            setLayoutManager(layoutManager)
+            adapter = listArticleAdapter
+        }
+
+        listArticleAdapter.setOnItemClickCallBack(object : ArticleAdapter.OnItemClickCallBack {
+            override fun onItemClicked(data: Article) {
+                showSelectedArticle(data)
+            }
+        })
+    }
+
+    private fun getListArticle(): ArrayList<Article> {
+        val dataProfilePic = resources.obtainTypedArray(R.array.article_publisher_profile_pic)
+        val dataPublisher = resources.getStringArray(R.array.article_publisher)
+        val dataTitle = resources.getStringArray(R.array.article_title)
+        val dataDate = resources.getStringArray(R.array.article_date_publish)
+        val dataPhoto = resources.obtainTypedArray(R.array.article_photo)
+        val dataDesc = resources.getStringArray(R.array.article_desc)
+
+        val listArticle = ArrayList<Article>()
+        for (i in dataTitle.indices) {
+            val article = Article(
+                profilePic = dataProfilePic.getResourceId(i, -1),
+                publisher = dataPublisher[i],
+                title = dataTitle[i],
+                date = dataDate[i],
+                photo = dataPhoto.getResourceId(i, -1),
+                desc = dataDesc[i]
+            )
+            listArticle.add(article)
+        }
+        return listArticle
+    }
+
+    private fun showSelectedArticle(data: Article) {
+        val moveWithParcelableIntent = Intent(requireContext(), DetailArticleActivity::class.java)
+        moveWithParcelableIntent.apply {
+            putExtra(DetailArticleActivity.EXTRA_ARTICLE_PUBLISHER, data.publisher)
+            putExtra(DetailArticleActivity.EXTRA_ARTICLE_TITLE, data.title)
+            putExtra(DetailArticleActivity.EXTRA_ARTICLE_DATE, data.date)
+            putExtra(DetailArticleActivity.EXTRA_ARTICLE_PHOTO, data.photo)
+            putExtra(DetailArticleActivity.EXTRA_ARTICLE_DESC, data.desc)
+        }
+        startActivity(moveWithParcelableIntent)
     }
 
     private fun showToast(message: String) {
