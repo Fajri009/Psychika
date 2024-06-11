@@ -31,20 +31,16 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val etEmail = binding.etForgotPassEmail.text
 
         if (etEmail!!.isEmpty()) {
-            showToast(R.string.empty_form)
+            showToast(getString(R.string.empty_form))
         } else {
             val intent = Intent(this@ForgotPasswordActivity, LoginActivity::class.java)
             startActivity(intent)
 
-            showToastString(getString(R.string.confirm_send, etEmail.toString()))
+            showToast(getString(R.string.confirm_send, etEmail.toString()))
         }
     }
 
-    private fun showToast(message: Int) {
-        Toast.makeText(this@ForgotPasswordActivity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showToastString(message: String) {
+    private fun showToast(message: String) {
         Toast.makeText(this@ForgotPasswordActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

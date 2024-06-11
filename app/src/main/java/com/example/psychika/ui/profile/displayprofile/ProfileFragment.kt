@@ -3,6 +3,7 @@ package com.example.psychika.ui.profile.displayprofile
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.credentials.CredentialManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.psychika.R
 import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.data.network.Result
@@ -22,7 +24,10 @@ import com.example.psychika.ui.auth.login.LoginActivity
 import com.example.psychika.ui.history.HistoryActivity
 import com.example.psychika.ui.profile.changepass.ChangePasswordActivity
 import com.example.psychika.ui.profile.editprofile.EditProfileActivity
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
@@ -38,6 +43,8 @@ class ProfileFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var userGoogleAuth: UserGoogleAuth
 
+    private lateinit var db: FirebaseDatabase
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,10 +56,11 @@ class ProfileFragment : Fragment() {
         userPreference = UserPreference(requireContext())
         userModel = userPreference.getUser()
 
+        db = Firebase.database
+
         if (!userModel.googleAuth) {
             getCurrentUserApi()
         } else {
-            binding.btnEditProfile.visibility = View.GONE
             binding.btnChangePass.visibility = View.GONE
             getCurrentUserGoogleAuth()
         }
@@ -86,6 +94,7 @@ class ProfileFragment : Fragment() {
                     is Result.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
+
                     is Result.Success -> {
                         binding.progressBar.visibility = View.GONE
 
@@ -104,7 +113,8 @@ class ProfileFragment : Fragment() {
                     is Result.Error -> {
                         binding.progressBar.visibility = View.GONE
 
-                        showToast(result.error.message)
+                        Log.i(TAG, "${R.string.failed_get_account} ${result.error}")
+                        showToast(getString(R.string.failed_get_account))
                     }
                 }
             }
@@ -112,29 +122,38 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getCurrentUserGoogleAuth() {
-        viewModel.getCurrentUserGoogleAuth().observe(requireActivity()) { result ->
-            if (result != null) {
-                userGoogleAuth = result
-
-                binding.apply {
-                    Glide
-                        .with(requireContext())
-                        .load(userGoogleAuth.profilePic)
-                        .into(ivProfilePicture)
-                    tvUserName.text = buildString {
-                        append(userGoogleAuth.firstName)
-                        append(" ")
-                        append(userGoogleAuth.lastName)
+        val userRef = db.reference.child("users")
+        userRef.child(userModel.id!!).get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    userGoogleAuth = snapshot.getValue(UserGoogleAuth::class.java)!!
+                    binding.apply {
+                        Glide
+                            .with(requireContext())
+                            .load(userGoogleAuth.profilePic)
+                            .into(ivProfilePicture)
+                        tvUserName.text = buildString {
+                            append(userGoogleAuth.firstName)
+                            append(" ")
+                            append(userGoogleAuth.lastName)
+                        }
+                        tvUserEmail.text = userGoogleAuth.email
                     }
-                    tvUserEmail.text = userGoogleAuth.email
                 }
             }
-        }
+            .addOnFailureListener {
+                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
+                showToast(getString(R.string.cant_get_user_data_google))
+            }
     }
 
     private fun navigatePage(destination: Class<*>) {
         val intent = Intent(requireContext(), destination)
-        intent.putExtra("USER_RESPONSE", userApi)
+        if (!userModel.googleAuth) {
+            intent.putExtra("USER_RESPONSE", userApi)
+        } else {
+            intent.putExtra("USER_GOOGLE_AUTH", userGoogleAuth)
+        }
         startActivity(intent)
     }
 
@@ -157,5 +176,9 @@ class ProfileFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "ProfileFragment"
     }
 }

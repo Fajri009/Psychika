@@ -9,5 +9,5 @@ class SignUpViewModel(private val psychikaRepository: PsychikaRepository) : View
         lastName: String,
         email: String,
         password: String
-    ) = psychikaRepository.register(firstName, lastName, email, password)
+    ) = psychikaRepository.registerApi(firstName, lastName, email, password)
 }

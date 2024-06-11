@@ -2,6 +2,7 @@ package com.example.psychika.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.Toast
@@ -16,9 +17,14 @@ import com.example.psychika.data.Feel
 import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.data.network.Result
+import com.example.psychika.data.network.firebase.UserGoogleAuth
 import com.example.psychika.databinding.FragmentHomeBinding
 import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.ui.article.detail.DetailArticleActivity
+import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -30,6 +36,10 @@ class HomeFragment : Fragment() {
 
     private lateinit var userModel: User
     private lateinit var userPreference: UserPreference
+    private lateinit var userGoogleAuth: UserGoogleAuth
+
+    private lateinit var db: FirebaseDatabase
+    private lateinit var userRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +49,9 @@ class HomeFragment : Fragment() {
 
         userPreference = UserPreference(requireContext())
         userModel = userPreference.getUser()
+
+        db = Firebase.database
+        userRef = db.reference.child("users")
 
         if (!userModel.googleAuth) {
             getCurrentUserApi()
@@ -82,11 +95,38 @@ class HomeFragment : Fragment() {
     private fun getCurrentUserGoogleAuth() {
         viewModel.getCurrentUserGoogleAuth().observe(requireActivity()) { result ->
             if (result != null) {
-                binding.tvHiUser.text = getString(R.string.hi_user, result.firstName)
+                userGoogleAuth = result
+                binding.tvHiUser.text = getString(R.string.hi_user, userGoogleAuth.firstName)
+
+                userRef.child(userGoogleAuth.id!!).get()
+                    .addOnSuccessListener { snapshot ->
+                        if (!snapshot.exists()) {
+                            registerCurrentUserGoogleAuth()
+                        }
+                    }
+                    .addOnFailureListener {
+                        Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
+                        showToast(getString(R.string.cant_get_user_data_google))
+                    }
             } else {
                 showToast(getString(R.string.cant_get_user_data_google))
             }
         }
+    }
+
+    private fun registerCurrentUserGoogleAuth() {
+        val user = hashMapOf(
+            "id" to userModel.id,
+            "profilePic" to userGoogleAuth.profilePic.toString(),
+            "firstName" to userGoogleAuth.firstName,
+            "lastName" to userGoogleAuth.lastName,
+            "email" to userGoogleAuth.email,
+        )
+
+        userRef.child(userGoogleAuth.id!!).setValue(user)
+            .addOnFailureListener {
+                Log.i(TAG, "Register current user to firebase database ${it.message}")
+            }
     }
 
     private fun showListFeel() {
@@ -165,5 +205,9 @@ class HomeFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "HomeFragment"
     }
 }

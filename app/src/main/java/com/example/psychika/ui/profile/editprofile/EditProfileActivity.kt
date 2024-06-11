@@ -3,18 +3,26 @@ package com.example.psychika.ui.profile.editprofile
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.example.psychika.R
 import com.example.psychika.data.local.preference.User
 import com.example.psychika.data.local.preference.UserPreference
 import com.example.psychika.data.network.Result
+import com.example.psychika.data.network.firebase.UserGoogleAuth
 import com.example.psychika.data.network.response.UserResponse
 import com.example.psychika.databinding.ActivityEditProfileBinding
 import com.example.psychika.databinding.PopUpChangesBinding
 import com.example.psychika.ui.MainActivity
 import com.example.psychika.ui.ViewModelFactory
+import com.google.firebase.Firebase
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 
 class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
     private lateinit var binding: ActivityEditProfileBinding
@@ -24,6 +32,10 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
 
     private var userModel: User = User()
     private lateinit var userPreference: UserPreference
+    private var userResponse: UserResponse? = null
+    private var userGoogleAuth: UserGoogleAuth? = null
+
+    private lateinit var db: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +45,41 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
         userPreference = UserPreference(this)
         userModel = userPreference.getUser()
 
-        val userResponse = intent.getParcelableExtra<UserResponse>("USER_RESPONSE")
+        db = Firebase.database
 
         binding.apply {
             ivBackButton.setOnClickListener { finish() }
-            etEditFirstName.setText(userResponse!!.firstName)
-            etEditLastName.setText(userResponse.lastName)
-            etEditEmail.setText(userResponse.email)
             ivEditProfile.setOnClickListener { showBottomSheet() }
             btnSaveEdit.setOnClickListener { saveChanges() }
+
+            if (!userModel.googleAuth) {
+                userResponse = intent.getParcelableExtra("USER_RESPONSE")
+                getCurrentUserApi()
+            } else {
+                ivEditProfile.visibility = View.GONE
+                userGoogleAuth = intent.getParcelableExtra("USER_GOOGLE_AUTH")
+                getCurrentUserGoogleAuth()
+            }
+        }
+    }
+
+    private fun getCurrentUserApi() {
+        binding.apply {
+            etEditFirstName.setText(userResponse!!.firstName)
+            etEditLastName.setText(userResponse!!.lastName)
+            etEditEmail.setText(userResponse!!.email)
+        }
+    }
+
+    private fun getCurrentUserGoogleAuth() {
+        binding.apply {
+            Glide
+                .with(this@EditProfileActivity)
+                .load(userGoogleAuth!!.profilePic)
+                .into(ivProfilePicture)
+            etEditFirstName.setText(userGoogleAuth!!.firstName)
+            etEditLastName.setText(userGoogleAuth!!.lastName)
+            etEditEmail.setText(userGoogleAuth!!.email)
         }
     }
 
@@ -56,6 +94,14 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
         val etLastName = binding.etEditLastName.text.toString()
         val etEmail = binding.etEditEmail.text.toString()
 
+        if (!userModel.googleAuth) {
+            updateCurrentUserApi(etFirstName, etLastName, etEmail)
+        } else {
+            updateCurrentUserGoogleAuth(etFirstName, etLastName, etEmail)
+        }
+    }
+
+    private fun updateCurrentUserApi(etFirstName: String, etLastName: String, etEmail: String) {
         viewModel.updateCurrentUser(
             "Bearer ${userModel.id}",
             etFirstName,
@@ -69,11 +115,31 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
                         showPopUp()
                     }
                     is Result.Error -> {
-                        showToast(result.error.message)
+                        Log.i(TAG, "Failed to save changes: ${result.error.message}")
+                        showToast(R.string.failed_changes)
                     }
                 }
             }
         }
+    }
+
+    private fun updateCurrentUserGoogleAuth( etFirstName: String, etLastName: String, etEmail: String) {
+        val user = hashMapOf(
+            "id" to userGoogleAuth!!.id,
+            "profilePic" to userGoogleAuth!!.profilePic,
+            "firstName" to etFirstName,
+            "lastName" to etLastName,
+            "email" to etEmail,
+        )
+
+        val userRef = db.reference.child("users")
+        userRef.child(userGoogleAuth!!.id!!).setValue(user)
+            .addOnSuccessListener {
+                showPopUp()
+            }
+            .addOnFailureListener {
+                showToast(R.string.failed_changes)
+            }
     }
 
     private fun showPopUp() {
@@ -97,7 +163,11 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
         binding.ivProfilePicture.setImageURI(imageUri)
     }
 
-    private fun showToast(message: String) {
+    private fun showToast(message: Int) {
         Toast.makeText(this@EditProfileActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "EditProfileActivity"
     }
 }

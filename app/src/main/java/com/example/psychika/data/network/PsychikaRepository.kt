@@ -17,9 +17,9 @@ import retrofit2.HttpException
 
 class PsychikaRepository(
     private val apiService: ApiService,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
 ) {
-    fun register(
+    fun registerApi(
         firstName: String,
         lastName: String,
         email: String,
@@ -90,13 +90,14 @@ class PsychikaRepository(
         liveData {
             val currentUser = firebaseAuth.currentUser
             if (currentUser != null) {
-                val profilePic = currentUser.photoUrl
+                val idToken = currentUser.uid
+                val profilePic = currentUser.photoUrl.toString()
                 val name = currentUser.displayName ?: ""
                 val nameParts = name.split(" ")
                 val firstName = nameParts.getOrNull(0)
                 val lastName = nameParts.drop(1).joinToString(" ")
                 val email = currentUser.email ?: ""
-                val userGoogleAuth = UserGoogleAuth(profilePic!!, firstName!!, lastName, email)
+                val userGoogleAuth = UserGoogleAuth(idToken, profilePic, firstName!!, lastName, email)
                 emit(userGoogleAuth)
             } else {
                 emit(null)

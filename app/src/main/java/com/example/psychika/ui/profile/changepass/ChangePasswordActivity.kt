@@ -35,7 +35,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         userPreference = UserPreference(this)
         userModel = userPreference.getUser()
 
-        userResponse = intent.getParcelableExtra<UserResponse>("USER_RESPONSE")
+        userResponse = intent.getParcelableExtra("USER_RESPONSE")
 
         binding.apply {
             ivBackButton.setOnClickListener { finish() }
@@ -50,11 +50,11 @@ class ChangePasswordActivity : AppCompatActivity() {
         val etConfirmNewPass = binding.etEditConfirmNewPass.text
 
         if (etCurrentPass!!.isEmpty() || etNewPass!!.isEmpty() || etConfirmNewPass!!.isEmpty()) {
-            showToast(R.string.empty_form)
+            showToast(getString(R.string.empty_form))
         } else if (etNewPass.length < 8 || etConfirmNewPass.length < 8) {
-            showToast(R.string.invalid_form)
+            showToast(getString(R.string.invalid_form))
         } else if (etNewPass.toString() != etConfirmNewPass.toString()) {
-            showToast(R.string.pass_not_match)
+            showToast(getString(R.string.pass_not_match))
         } else {
             viewModel.updateChangePass(
                 "Bearer ${userModel.id}",
@@ -68,7 +68,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                             showPopUp()
                         }
                         is Result.Error -> {
-                            showToastString(result.error.message)
+                            showToast(result.error.message)
                         }
                     }
                 }
@@ -93,11 +93,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message: Int) {
-        Toast.makeText(this@ChangePasswordActivity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showToastString(message: String) {
+    private fun showToast(message: String) {
         Toast.makeText(this@ChangePasswordActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

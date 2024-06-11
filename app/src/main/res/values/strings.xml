@@ -60,7 +60,7 @@
         <item>Marah</item>
         <item>Buruk</item>
         <item>Baik</item>
-        <item>Baik-baik saja</item>
+        <item>Bahagia</item>
     </string-array>
 
     <integer-array name="feel_icon">
@@ -186,6 +186,7 @@
     <string name="language">Bahasa</string>
     <string name="icon_logout">Ikon Keluar</string>
     <string name="logout">Keluar</string>
+    <string name="failed_get_account">Gagal mendapatkan data akun</string>
 
     <!-- History -->
     <string name="mental_health">Kesehatan Mental</string>
@@ -197,7 +198,8 @@
     <string name="back_button">Tombol kembali</string>
     <string name="save_changes">Simpan perubahan</string>
     <string name="illust_edit_profile">Ilustrasi Ubah Profil</string>
-    <string name="success">Sukeses</string>
+    <string name="failed_changes">Gagal menyimpan perubahan</string>
+    <string name="success">Sukses</string>
     <string name="changes_success">Perubahan berhasil disimpan</string>
     <string name="ok">OKE</string>
     <string name="close">Tutup</string>

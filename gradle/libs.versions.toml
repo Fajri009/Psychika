@@ -27,6 +27,7 @@ glide = "4.16.0"
 ucrop = "2.2.8"
 ucropVersion = "2.2.8-native"
 cameraxVersion = "1.2.3"
+firebaseDatabase = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +60,7 @@ ucrop-v228native = { module = "com.github.yalantis:ucrop", version.ref = "ucropV
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraxVersion" }
 camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraxVersion" }
 camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraxVersion" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

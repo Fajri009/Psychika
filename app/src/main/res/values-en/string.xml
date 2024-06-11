@@ -165,6 +165,7 @@
     <string name="language">Language</string>
     <string name="icon_logout">Icon Logout</string>
     <string name="logout">Logout</string>
+    <string name="failed_get_account">Failed to get account data</string>
 
     <!-- History -->
     <string name="mental_health">Mental Health</string>
@@ -176,6 +177,7 @@
     <string name="back_button">Back Button</string>
     <string name="save_changes">Save Changes</string>
     <string name="illust_edit_profile">Illustration Edit Profile</string>
+    <string name="failed_changes">Failed to save changes</string>
     <string name="success">Success</string>
     <string name="changes_success">Changes successfully saved</string>
     <string name="ok">OK</string>
