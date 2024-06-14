@@ -187,6 +187,7 @@
     <string name="icon_logout">Ikon Keluar</string>
     <string name="logout">Keluar</string>
     <string name="failed_get_account">Gagal mendapatkan data akun</string>
+    <string name="text_classifier_error">Pengklasifikasi teks gagal diinisialisasi</string>
 
     <!-- History -->
     <string name="mental_health">Kesehatan Mental</string>

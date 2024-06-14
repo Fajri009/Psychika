@@ -17,7 +17,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.psychika.databinding.ActivityCameraBinding
-import com.example.psychika.utils.createCustomTempFile
+import com.example.psychika.utils.Utils
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
@@ -94,7 +94,7 @@ class CameraActivity : AppCompatActivity() {
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
 
-        val photoFile = createCustomTempFile(application)
+        val photoFile = Utils.createCustomTempFile(application)
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 

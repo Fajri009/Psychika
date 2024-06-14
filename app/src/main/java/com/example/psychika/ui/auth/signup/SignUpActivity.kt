@@ -11,7 +11,7 @@ import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.ActivitySignUpBinding
 import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.ui.auth.login.LoginActivity
-import com.example.psychika.utils.isValidEmail
+import com.example.psychika.utils.Utils
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -44,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
 
         if (etFirstName!!.isEmpty() || etLastName!!.isEmpty() || etEmail!!.isEmpty() || etPassword!!.isEmpty() || etConfirmPass!!.isEmpty()) {
             showToast(R.string.empty_form)
-        } else if (!isValidEmail(etEmail) || etPassword.length < 8 || etConfirmPass.length < 8) {
+        } else if (!Utils.isValidEmail(etEmail) || etPassword.length < 8 || etConfirmPass.length < 8) {
             showToast(R.string.invalid_form)
         } else if (etConfirmPass.toString() != etPassword.toString()) {
             showToast(R.string.pass_not_match)

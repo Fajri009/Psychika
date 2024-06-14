@@ -9,6 +9,7 @@
     tools:context=".ui.chat.ChatFragment">
 
     <ImageView
+        android:id="@+id/iv_leaf_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/leaf_background"
@@ -40,25 +41,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_chatbot" />
 
-    <com.example.psychika.ui.custom.IconEditText
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/et_user_input_message"
+        app:layout_constraintTop_toTopOf="@+id/iv_white_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
         android:id="@+id/et_user_input_message"
         style="@style/TextAppearance.AppCompat.TextXs.Regular"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
         android:background="@drawable/outlined_edit_text"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="10dp"
+        android:paddingHorizontal="15dp"
         android:hint="@string/hint_message"
+        android:maxLines="4"
+        android:inputType="text|textMultiLine"
+        android:scrollHorizontally="false"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
         app:layout_constraintTop_toTopOf="@id/iv_send_message"
         app:layout_constraintBottom_toBottomOf="@id/iv_send_message"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/iv_send_message" />
+        app:layout_constraintEnd_toStartOf="@id/iv_send_message"
+        android:autofillHints="" />
 
     <ImageView
         android:id="@+id/iv_send_message"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="20dp"
         android:contentDescription="@string/icon_send_message"
         android:src="@drawable/ic_send_message"
         app:layout_constraintBottom_toBottomOf="parent"

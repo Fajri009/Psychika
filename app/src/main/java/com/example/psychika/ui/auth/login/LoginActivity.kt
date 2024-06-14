@@ -22,7 +22,7 @@ import com.example.psychika.ui.MainActivity
 import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.ui.auth.forgotpass.ForgotPasswordActivity
 import com.example.psychika.ui.auth.signup.SignUpActivity
-import com.example.psychika.utils.isValidEmail
+import com.example.psychika.utils.Utils
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -99,7 +99,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (etLoginEmail!!.isEmpty() || etLoginPassword!!.isEmpty()) {
             showToast(R.string.empty_form)
-        } else if (!isValidEmail(etLoginEmail.toString()) || etLoginPassword.length < 8) {
+        } else if (!Utils.isValidEmail(etLoginEmail.toString()) || etLoginPassword.length < 8) {
             showToast(R.string.invalid_form)
         } else {
             viewModel.login(

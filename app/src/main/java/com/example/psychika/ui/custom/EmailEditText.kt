@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.example.psychika.R
-import com.example.psychika.utils.isValidEmail
+import com.example.psychika.utils.Utils
 
 class EmailEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -22,7 +22,7 @@ class EmailEditText @JvmOverloads constructor(
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (!isValidEmail(s)) {
+                if (!Utils.isValidEmail(s)) {
                     error = resources.getString(R.string.invalid_email)
                 }
             }
@@ -31,6 +31,7 @@ class EmailEditText @JvmOverloads constructor(
         })
 
         maxLines = 1
+        setSingleLine(true)
     }
 
     override fun onDraw(canvas: Canvas) {

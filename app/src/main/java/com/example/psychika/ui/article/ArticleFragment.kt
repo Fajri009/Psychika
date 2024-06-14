@@ -18,7 +18,7 @@ import java.util.Locale
 class ArticleFragment : Fragment() {
     private lateinit var binding: FragmentArticleBinding
     private val list = ArrayList<Article>()
-    private lateinit var listArticleAdapter: ArticleAdapter
+    private lateinit var articleAdapter: ArticleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,18 +30,13 @@ class ArticleFragment : Fragment() {
         showListArticle()
 
         binding.etSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 filterList(s.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
+            override fun afterTextChanged(s: Editable?) { }
         })
 
         return binding.root
@@ -59,21 +54,21 @@ class ArticleFragment : Fragment() {
             if (filteredList.isEmpty()) {
                 showToast(R.string.no_article_found)
             } else {
-                listArticleAdapter.setFilteredList(filteredList)
+                articleAdapter.setFilteredList(filteredList)
             }
         }
     }
 
     private fun showListArticle() {
         val layoutManager = LinearLayoutManager(requireContext())
-        listArticleAdapter = ArticleAdapter(list)
+        articleAdapter = ArticleAdapter(list)
 
         binding.rvListArticle.apply {
             setLayoutManager(layoutManager)
-            adapter = listArticleAdapter
+            adapter = articleAdapter
         }
 
-        listArticleAdapter.setOnItemClickCallBack(object : ArticleAdapter.OnItemClickCallBack {
+        articleAdapter.setOnItemClickCallBack(object : ArticleAdapter.OnItemClickCallBack {
             override fun onItemClicked(data: Article) {
                 showSelectedArticle(data)
             }

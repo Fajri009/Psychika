@@ -44,9 +44,9 @@ class FeelAdapter(private val listFeel: ArrayList<Feel>) : RecyclerView.Adapter<
         }
 
         if (position == selectedItemPosition) {
-            holder.boxLayout.setBackgroundColor(holder.itemView.context.resources.getColor(R.color.primary_200))
+            holder.boxLayout.setBackgroundResource(R.color.primary_200)
         } else {
-            holder.boxLayout.setBackgroundColor(holder.itemView.context.resources.getColor(R.color.primary_50))
+            holder.boxLayout.setBackgroundResource(R.color.primary_50)
         }
     }
 }

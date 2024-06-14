@@ -166,6 +166,7 @@
     <string name="icon_logout">Icon Logout</string>
     <string name="logout">Logout</string>
     <string name="failed_get_account">Failed to get account data</string>
+    <string name="text_classifier_error">Text classfier failed to initialize</string>
 
     <!-- History -->
     <string name="mental_health">Mental Health</string>

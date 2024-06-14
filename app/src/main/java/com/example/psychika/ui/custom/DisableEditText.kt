@@ -3,6 +3,7 @@ package com.example.psychika.ui.custom
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.text.InputType
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.psychika.R
@@ -18,17 +19,13 @@ class DisableEditText @JvmOverloads constructor(
             R.styleable.IconEditText,
             0, 0
         ).apply {
-            try {
-                iconEditText = getDrawable(R.styleable.IconEditText_icon)
-            } finally {
-                recycle()
-            }
+            iconEditText = getDrawable(R.styleable.IconEditText_icon)
         }
 
         isEnabled = false
         isFocusable = false
         isFocusableInTouchMode = false
-        inputType = android.text.InputType.TYPE_NULL
+        inputType = InputType.TYPE_NULL
     }
 
     override fun onDraw(canvas: Canvas) {
