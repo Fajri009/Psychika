@@ -13,8 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.psychika.R
-import com.example.psychika.data.local.preference.User
-import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.data.network.firebase.UserGoogleAuth
 import com.example.psychika.data.network.response.UserResponse

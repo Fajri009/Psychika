@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Feel (
-    val photo: Int,
-    val desc: String
+    var photo: Int = 0,
+    var desc: String = "",
+    var isSelected: Boolean = false
 ): Parcelable

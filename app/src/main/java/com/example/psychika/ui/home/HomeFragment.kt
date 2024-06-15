@@ -14,8 +14,9 @@ import com.example.psychika.adapter.ArticleAdapter
 import com.example.psychika.adapter.FeelAdapter
 import com.example.psychika.data.Article
 import com.example.psychika.data.Feel
-import com.example.psychika.data.local.preference.User
-import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.local.preference.feel.FeelPreference
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.data.network.firebase.UserGoogleAuth
 import com.example.psychika.databinding.FragmentHomeBinding
@@ -38,6 +39,8 @@ class HomeFragment : Fragment() {
     private lateinit var userPreference: UserPreference
     private lateinit var userGoogleAuth: UserGoogleAuth
 
+    private lateinit var feelPreference: FeelPreference
+
     private lateinit var db: FirebaseDatabase
     private lateinit var userRef: DatabaseReference
 
@@ -49,6 +52,8 @@ class HomeFragment : Fragment() {
 
         userPreference = UserPreference(requireContext())
         userModel = userPreference.getUser()
+
+        feelPreference = FeelPreference(requireContext())
 
         db = Firebase.database
         userRef = db.reference.child("users")
@@ -72,6 +77,7 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         listFeel.clear()
         listArticle.clear()
+        feelPreference.setInitialSelected(true)
     }
 
     private fun getCurrentUserApi() {
@@ -131,7 +137,7 @@ class HomeFragment : Fragment() {
 
     private fun showListFeel() {
         val layoutManager = GridLayoutManager(requireContext(), listFeel.size)
-        val listFeelAdapter = FeelAdapter(listFeel)
+        val listFeelAdapter = FeelAdapter(listFeel, feelPreference)
 
         binding.rvListFeel.apply {
             setLayoutManager(layoutManager)
@@ -146,7 +152,9 @@ class HomeFragment : Fragment() {
 
         val listFeel = ArrayList<Feel>()
         for (i in dataDesc.indices) {
-            val feel = Feel(dataIcon.getResourceId(i, -1), dataDesc[i])
+            val isSelected = feelPreference.getFeel(i).isSelected
+            val feel = Feel(dataIcon.getResourceId(i, -1), dataDesc[i], isSelected)
+            Log.i(TAG, feel.toString())
             listFeel.add(feel)
         }
         return listFeel

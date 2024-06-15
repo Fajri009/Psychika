@@ -6,8 +6,8 @@ import android.os.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.psychika.R
-import com.example.psychika.data.local.preference.User
-import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.ui.MainActivity
 import com.example.psychika.ui.auth.login.LoginActivity
 import java.io.IOException

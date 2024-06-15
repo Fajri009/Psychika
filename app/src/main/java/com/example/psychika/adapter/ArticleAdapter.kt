@@ -49,7 +49,6 @@ class ArticleAdapter(private var listArticle: ArrayList<Article>) : RecyclerView
         notifyDataSetChanged()
     }
 
-
     interface OnItemClickCallBack {
         fun onItemClicked(data: Article)
     }

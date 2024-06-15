@@ -1,4 +1,4 @@
-package com.example.psychika.data.local.preference
+package com.example.psychika.data.local.preference.user
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,4 +1,4 @@
-package com.example.psychika.data.local.preference
+package com.example.psychika.data.local.preference.user
 
 import android.content.Context
 
@@ -7,17 +7,21 @@ class UserPreference(context: Context) {
 
     fun setUser(data: User) {
         val editor = preference.edit()
-        editor.putString(ID, data.id)
-        editor.putBoolean(REMEMBER_ME, data.rememberMe)
-        editor.putBoolean(GOOGLE_AUTH, data.googleAuth)
-        editor.apply()
+        editor.apply {
+            putString(ID, data.id)
+            putBoolean(REMEMBER_ME, data.rememberMe)
+            putBoolean(GOOGLE_AUTH, data.googleAuth)
+            apply()
+        }
     }
 
     fun getUser(): User {
         val user = User()
-        user.id = preference.getString(ID, "")
-        user.rememberMe = preference.getBoolean(REMEMBER_ME, false)
-        user.googleAuth = preference.getBoolean(GOOGLE_AUTH, false)
+        user.apply {
+            id = preference.getString(ID, "")
+            rememberMe = preference.getBoolean(REMEMBER_ME, false)
+            googleAuth = preference.getBoolean(GOOGLE_AUTH, false)
+        }
 
         return user
     }

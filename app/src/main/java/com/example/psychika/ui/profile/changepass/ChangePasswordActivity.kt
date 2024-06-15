@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.psychika.R
-import com.example.psychika.data.local.preference.User
-import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.data.network.response.UserResponse
 import com.example.psychika.databinding.ActivityChangePasswordBinding

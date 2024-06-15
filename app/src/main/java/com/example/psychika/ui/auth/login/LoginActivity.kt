@@ -14,8 +14,8 @@ import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.lifecycle.lifecycleScope
 import com.example.psychika.R
-import com.example.psychika.data.local.preference.User
-import com.example.psychika.data.local.preference.UserPreference
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.ActivityLoginBinding
 import com.example.psychika.ui.MainActivity
