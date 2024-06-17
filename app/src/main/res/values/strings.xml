@@ -303,6 +303,8 @@
     <string name="user_email">pengguna@gmail.com</string>
     <string name="icon_history">Ikon Sejarah</string>
     <string name="history">Sejarah Obrolan</string>
+    <string name="icon_maps">Ikon Maps</string>
+    <string name="maps">Maps</string>
     <string name="icon_edit_profile">Ikon Ubah Profil</string>
     <string name="edit_profile">Ubah Profil</string>
     <string name="icon_change_password">Ikon Ubah Kata Sandi</string>
@@ -340,4 +342,5 @@
     <string name="current_pass">Kata Sandi Saat Ini</string>
     <string name="new_pass">Kata Sandi Baru</string>
     <string name="confirm_new_pass">Konfirmasi Kata Sandi Baru</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

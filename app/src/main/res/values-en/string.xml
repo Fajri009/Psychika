@@ -275,6 +275,8 @@
     <string name="user_fullname">User</string>
     <string name="user_email">user@gmail.com</string>
     <string name="icon_history">Icon History</string>
+    <string name="icon_maps">Icon Maps</string>
+    <string name="maps">Maps</string>
     <string name="history">History Chat</string>
     <string name="icon_edit_profile">Icon Edit Profile</string>
     <string name="edit_profile">Edit Profile</string>
