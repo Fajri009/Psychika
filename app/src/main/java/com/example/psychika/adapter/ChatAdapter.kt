@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.psychika.R
-import com.example.psychika.data.ChatMessage
+import com.example.psychika.data.entity.ChatMessage
 import com.example.psychika.databinding.ItemBotChatBinding
 import com.example.psychika.databinding.ItemUserChatBinding
 

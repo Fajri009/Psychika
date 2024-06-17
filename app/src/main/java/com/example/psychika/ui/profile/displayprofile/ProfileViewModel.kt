@@ -3,10 +3,10 @@ package com.example.psychika.ui.profile.displayprofile
 import androidx.lifecycle.ViewModel
 import com.example.psychika.data.repository.PsychikaRepository
 
-class ProfileViewModel(private val psychikaRepository: PsychikaRepository): ViewModel() {
+class ProfileViewModel(private val repository: PsychikaRepository): ViewModel() {
     fun getCurrentUserApi(token: String) =
-        psychikaRepository.getCurrentUserApi(token)
+        repository.getCurrentUserApi(token)
 
     fun getCurrentUserGoogleAuth() =
-        psychikaRepository.getCurrentUserGoogleAuth()
+        repository.getCurrentUserGoogleAuth()
 }

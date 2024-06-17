@@ -2,23 +2,26 @@ package com.example.psychika.data.repository
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.psychika.data.ChatMessage
-import com.example.psychika.data.ChatbotRequest
-import com.example.psychika.data.ErrorMessage
+import com.example.psychika.data.entity.ChatMessage
+import com.example.psychika.data.entity.ChatbotRequest
+import com.example.psychika.data.entity.DailyAveragePrediction
+import com.example.psychika.data.entity.ErrorMessage
 import com.example.psychika.data.local.room.ChatMessageDao
 import com.example.psychika.data.local.room.ChatMessageEntity
 import com.example.psychika.data.network.Result
 import com.example.psychika.data.network.firebase.UserGoogleAuth
 import com.example.psychika.data.network.response.ChatbotResponse
-import com.example.psychika.data.network.response.ErrorChatbotResponse
+import com.example.psychika.data.network.response.ErrorResponse
 import com.example.psychika.data.network.response.TokenResponse
 import com.example.psychika.data.network.response.ErrorsItem
-import com.example.psychika.data.network.response.ErrorResponse
+import com.example.psychika.data.network.response.MessageErrorResponse
+import com.example.psychika.data.network.response.PredictResponse
 import com.example.psychika.data.network.response.SuccessResponse
 import com.example.psychika.data.network.response.UnprocessableEntityResponse
 import com.example.psychika.data.network.response.UserResponse
-import com.example.psychika.data.network.retrofit.OllamaApiService
-import com.example.psychika.data.network.retrofit.PsychikaApiService
+import com.example.psychika.data.network.retrofit.ChatbotApiService
+import com.example.psychika.data.network.retrofit.AuthApiService
+import com.example.psychika.data.network.retrofit.ClassificationApiService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.gson.Gson
@@ -30,8 +33,9 @@ import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
 class PsychikaRepository(
-    private val psychikaApiService: PsychikaApiService,
-    private val ollamaApiService: OllamaApiService,
+    private val authApiService: AuthApiService,
+    private val chatbotApiService: ChatbotApiService,
+    private val classificationApiService: ClassificationApiService,
     private val firebaseAuth: FirebaseAuth,
     private val chatMessageDao: ChatMessageDao
 ) {
@@ -45,11 +49,11 @@ class PsychikaRepository(
             emit(Result.Loading)
 
             try {
-                val response = psychikaApiService.register(firstName, lastName, email, password)
+                val response = authApiService.register(firstName, lastName, email, password)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                Log.i("errorBody", errorBody.toString())
+                Log.i(TAG, "Error Register API : $errorBody")
                 val errorResponse =
                     Gson().fromJson(errorBody, UnprocessableEntityResponse::class.java).errors
                 val errorMessage = errorResponse!!.map { it?.message }
@@ -60,19 +64,19 @@ class PsychikaRepository(
     fun login(
         email: String,
         password: String
-    ): LiveData<Result<TokenResponse, ErrorResponse>> =
+    ): LiveData<Result<TokenResponse, MessageErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
             try {
-                val response = psychikaApiService.login(email, password)
+                val response = authApiService.login(email, password)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                Log.i("errorBody", errorBody!!)
-                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                val errorMessage = errorResponse.message
-                emit(Result.Error(ErrorResponse(errorMessage)))
+                Log.i(TAG, "Error Login API : $errorBody")
+                val messageErrorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
+                val errorMessage = messageErrorResponse.message
+                emit(Result.Error(MessageErrorResponse(errorMessage)))
             }
         }
 
@@ -103,19 +107,19 @@ class PsychikaRepository(
             }
         }
 
-    fun getCurrentUserApi(token: String): LiveData<Result<UserResponse, ErrorResponse>> =
+    fun getCurrentUserApi(token: String): LiveData<Result<UserResponse, MessageErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
             try {
-                val response = psychikaApiService.getCurrUser(token)
+                val response = authApiService.getCurrUser(token)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                Log.i("errorBody", errorBody!!)
-                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                val errorMessage = errorResponse.message
-                emit(Result.Error(ErrorResponse(errorMessage)))
+                Log.i(TAG, "Error Get Current API : $errorBody")
+                val messageErrorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
+                val errorMessage = messageErrorResponse.message
+                emit(Result.Error(MessageErrorResponse(errorMessage)))
             }
         }
 
@@ -142,22 +146,22 @@ class PsychikaRepository(
             }
         }
 
-    fun sendChat(message: List<ChatMessage>): LiveData<Result<ChatbotResponse, ErrorChatbotResponse>> =
+    fun sendChat(message: List<ChatMessage>): LiveData<Result<ChatbotResponse, ErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
             try {
                 val request = ChatbotRequest("psychika1", message, false)
-                val response = ollamaApiService.sendChat(request)
+                val response = chatbotApiService.sendChat(request)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                val errorResponse = Gson().fromJson(errorBody, ErrorChatbotResponse::class.java)
+                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
                 val errorMessage = errorResponse.message
-                Log.i(TAG, "errorSendChat: $errorMessage")
-                emit(Result.Error(ErrorChatbotResponse(errorMessage)))
+                Log.i(TAG, "Error Send Chat : $errorMessage")
+                emit(Result.Error(ErrorResponse(errorMessage)))
             } catch (e: SocketTimeoutException) {
-                emit(Result.Error(ErrorChatbotResponse(e.message ?: "Unknown error")))
+                emit(Result.Error(ErrorResponse(e.message ?: "Unknown error")))
             }
         }
 
@@ -167,28 +171,48 @@ class PsychikaRepository(
         }
     }
 
-    fun getChatMessage(): LiveData<List<ChatMessageEntity>> {
-        return chatMessageDao.getAllMessages()
+    fun getChangeMessagesByDate(date: String): LiveData<List<ChatMessageEntity>> {
+        return chatMessageDao.getAllMessagesByDate(date)
     }
+
+    fun getAllDateMessages(): LiveData<List<DailyAveragePrediction>> {
+        return chatMessageDao.getAllDateMessages()
+    }
+
+    fun getPredict(text: String): LiveData<Result<PredictResponse, ErrorResponse>> =
+        liveData {
+            emit(Result.Loading)
+
+            try {
+                val response = classificationApiService.getPredict(text)
+                emit(Result.Success(response))
+            } catch (e: HttpException) {
+                val errorBody = e.response()?.errorBody()?.string()
+                Log.i(TAG, "Error Get Predict : $errorBody")
+                val messageErrorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                val errorMessage = messageErrorResponse.message
+                emit(Result.Error(ErrorResponse(errorMessage)))
+            }
+        }
 
     fun updateCurrentUser(
         token: String,
         firstName: String,
         lastName: String,
         email: String,
-    ): LiveData<Result<SuccessResponse, ErrorResponse>> =
+    ): LiveData<Result<SuccessResponse, MessageErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
             try {
-                val response = psychikaApiService.updateCurrUser(token, firstName, lastName, email)
+                val response = authApiService.updateCurrUser(token, firstName, lastName, email)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                Log.i("errorBody", errorBody!!)
-                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                val errorMessage = errorResponse.message
-                emit(Result.Error(ErrorResponse(errorMessage)))
+                Log.i(TAG, "Error Update Current User API : $errorBody")
+                val messageErrorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
+                val errorMessage = messageErrorResponse.message
+                emit(Result.Error(MessageErrorResponse(errorMessage)))
             }
         }
 
@@ -196,19 +220,19 @@ class PsychikaRepository(
         token: String,
         currPass: String,
         newPass: String
-    ): LiveData<Result<SuccessResponse, ErrorResponse>> =
+    ): LiveData<Result<SuccessResponse, MessageErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
             try {
-                val response = psychikaApiService.updatePass(token, currPass, newPass)
+                val response = authApiService.updatePass(token, currPass, newPass)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                Log.i("errorBody", errorBody!!)
-                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                val errorMessage = errorResponse.message
-                emit(Result.Error(ErrorResponse(errorMessage)))
+                Log.i(TAG, "Error Update Password Current User API : $errorBody")
+                val messageErrorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
+                val errorMessage = messageErrorResponse.message
+                emit(Result.Error(MessageErrorResponse(errorMessage)))
             }
         }
 

@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.psychika.R
-import com.example.psychika.data.Article
+import com.example.psychika.data.entity.Article
 
 class ArticleAdapter(private var listArticle: ArrayList<Article>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallBack

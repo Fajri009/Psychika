@@ -23,7 +23,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.article.detail.P"
+            android:name=".ui.history.chatbot.ChatbotHistory"
             android:exported="false" />
         <activity
             android:name=".ui.profile.editprofile.CameraActivity"

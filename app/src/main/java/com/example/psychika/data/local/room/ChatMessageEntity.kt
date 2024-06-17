@@ -18,5 +18,11 @@ data class ChatMessageEntity(
     val message: String,
 
     @ColumnInfo(name = "time")
-    val time: String
+    val time: String,
+
+    @ColumnInfo(name = "date")
+    val date: String,
+
+    @ColumnInfo(name = "predict")
+    val predict: Double
 )

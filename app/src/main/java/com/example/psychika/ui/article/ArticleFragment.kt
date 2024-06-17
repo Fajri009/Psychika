@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.R
 import com.example.psychika.adapter.ArticleAdapter
-import com.example.psychika.data.Article
+import com.example.psychika.data.entity.Article
 import com.example.psychika.databinding.FragmentArticleBinding
 import com.example.psychika.ui.article.detail.DetailArticleActivity
 import java.util.Locale

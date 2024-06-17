@@ -8,6 +8,7 @@ import com.example.psychika.di.Injection
 import com.example.psychika.ui.auth.login.LoginViewModel
 import com.example.psychika.ui.auth.signup.SignUpViewModel
 import com.example.psychika.ui.chat.ChatViewModel
+import com.example.psychika.ui.history.HistoryViewModel
 import com.example.psychika.ui.home.HomeViewModel
 import com.example.psychika.ui.profile.changepass.ChangePasswordViewModel
 import com.example.psychika.ui.profile.displayprofile.ProfileViewModel
@@ -32,6 +33,9 @@ class ViewModelFactory private constructor(private val psychikaRepository: Psych
             }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(psychikaRepository) as T
+            }
+            modelClass.isAssignableFrom(HistoryViewModel::class.java) -> {
+                HistoryViewModel(psychikaRepository) as T
             }
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
                 EditProfileViewModel(psychikaRepository) as T

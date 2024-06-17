@@ -8,10 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private var BASE_URL_PSYCHIKA = "http://34.101.241.92:3000/"
-        private var BASE_URL_OLLAMA = "https://ollama.sleepingowl.my.id/"
+        private var BASE_URL_AUTH = "http://34.101.241.92:3000/"
+        private var BASE_URL_CHATBOT = "https://ollama.sleepingowl.my.id/"
+        private var BASE_URL_CLASSIFICATION = "https://psychika.sleepingowl.my.id/"
 
-        fun getPsychikaApiService(): PsychikaApiService {
+        fun getAuthApiService(): AuthApiService {
             val loggingInterceptor =
                 if (BuildConfig.DEBUG) {
                     HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -22,14 +23,14 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_PSYCHIKA)
+                .baseUrl(BASE_URL_AUTH)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(PsychikaApiService::class.java)
+            return retrofit.create(AuthApiService::class.java)
         }
 
-        fun getOllamaApiService(): OllamaApiService {
+        fun getChatbotApiService(): ChatbotApiService {
             val loggingInterceptor =
                 if (BuildConfig.DEBUG) {
                     HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -40,11 +41,29 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_OLLAMA)
+                .baseUrl(BASE_URL_CHATBOT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(OllamaApiService::class.java)
+            return retrofit.create(ChatbotApiService::class.java)
+        }
+
+        fun getClassificationApiService(): ClassificationApiService {
+            val loggingInterceptor =
+                if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                } else {
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+                }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL_CLASSIFICATION)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(ClassificationApiService::class.java)
         }
     }
 }

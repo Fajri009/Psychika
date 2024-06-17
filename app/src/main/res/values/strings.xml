@@ -316,9 +316,12 @@
 
     <!-- History -->
     <string name="mental_health">Kesehatan Mental</string>
+    <string name="icon_heart">Ikon Kesehatan Mental</string>
     <string name="illust_mental_health">Ilustrasi Kesehatan Mental</string>
     <string name="high_mental_health">Persentase kesehatan mentalmu tergolong tinggi, semoga hari-harimu selalu bahagia :)</string>
     <string name="low_mental_health">Persentase kesehatan mental Anda tergolong rendah, segera konsultasikan dengan psikolog/psikiater Anda.</string>
+    <string name="back">Kembali</string>
+    <string name="see_history">Lihat Sejarah</string>
 
     <!-- Edit Profile -->
     <string name="back_button">Tombol kembali</string>

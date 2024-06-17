@@ -1,7 +1,7 @@
 package com.example.psychika.data.local.preference.feel
 
 import android.content.Context
-import com.example.psychika.data.Feel
+import com.example.psychika.data.entity.Feel
 
 class FeelPreference(context: Context) {
     private val preference = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

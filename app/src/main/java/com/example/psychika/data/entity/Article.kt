@@ -1,4 +1,4 @@
-package com.example.psychika.data
+package com.example.psychika.data.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

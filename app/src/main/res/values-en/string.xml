@@ -289,9 +289,12 @@
 
     <!-- History -->
     <string name="mental_health">Mental Health</string>
+    <string name="icon_heart">Icon Mental Health</string>
     <string name="illust_mental_health">Illustration Mental Health</string>
     <string name="high_mental_health">Your mental health percentage shows high, hope your days are always happy :)</string>
     <string name="low_mental_health">Your mental health percentage shows low, please consult your psychologist/psychiatrist immediately.</string>
+    <string name="back">Back</string>
+    <string name="see_history">See History</string>
 
     <!-- Edit Profile -->
     <string name="back_button">Back Button</string>

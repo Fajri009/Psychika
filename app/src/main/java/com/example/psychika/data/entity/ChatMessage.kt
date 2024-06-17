@@ -1,4 +1,4 @@
-package com.example.psychika.data
+package com.example.psychika.data.entity
 
 data class ChatbotRequest(
     val model: String,

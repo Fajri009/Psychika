@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.R
 import com.example.psychika.adapter.ArticleAdapter
 import com.example.psychika.adapter.FeelAdapter
-import com.example.psychika.data.Article
-import com.example.psychika.data.Feel
+import com.example.psychika.data.entity.Article
+import com.example.psychika.data.entity.Feel
 import com.example.psychika.data.local.preference.feel.FeelPreference
 import com.example.psychika.data.local.preference.user.User
 import com.example.psychika.data.local.preference.user.UserPreference

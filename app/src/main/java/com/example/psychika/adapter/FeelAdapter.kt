@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.psychika.R
-import com.example.psychika.data.Feel
+import com.example.psychika.data.entity.Feel
 import com.example.psychika.data.local.preference.feel.FeelPreference
 
 class FeelAdapter(private val listFeel: ArrayList<Feel>, private val feelPreference: FeelPreference) : RecyclerView.Adapter<FeelAdapter.ViewHolder>() {

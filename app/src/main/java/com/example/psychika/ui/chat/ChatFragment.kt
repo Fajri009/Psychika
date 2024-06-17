@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.R
 import com.example.psychika.adapter.ChatAdapter
-import com.example.psychika.data.ChatMessage
+import com.example.psychika.data.entity.ChatMessage
 import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.FragmentChatBinding
 import com.example.psychika.ui.ViewModelFactory
@@ -48,7 +48,8 @@ class ChatFragment : Fragment() {
             adapter = chatAdapter
         }
 
-        viewModel.chatMessage.observe(requireActivity()) { messages ->
+        val currentDate = Utils.getCurrentDate()
+        viewModel.getChatMessageCurrentDate(currentDate).observe(requireActivity()) { messages ->
             if (messages.isEmpty()) {
                 val defaultBotMessage = ChatMessage(
                     "assistant",
@@ -56,14 +57,33 @@ class ChatFragment : Fragment() {
                     Utils.getCurrentTime()
                 )
                 chatAdapter.addChatMessage(defaultBotMessage)
-                viewModel.saveToLocalDb(listOf(defaultBotMessage))
+                viewModel.saveToLocalDb(listOf(defaultBotMessage), 0.0)
             } else {
                 chatAdapter.updateChatMessages(messages)
                 binding.rvChat.smoothScrollToPosition(messages.size - 1)
             }
         }
-
     }
+
+    private fun getPredict(message: String, userMessage: ChatMessage) {
+        viewModel.getPredict(message).observe(requireActivity()) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    val response = result.data.prediction
+                    val cleanPredictionString = response.replace("\"", "")
+                    val prediction = cleanPredictionString.toDouble()
+                    viewModel.saveToLocalDb(listOf(userMessage), prediction)
+                    Log.i(TAG, "Prediction : $prediction")
+                }
+
+                is Result.Error -> {
+                    showToast(result.error.message)
+                }
+            }
+        }
+    }
+
 
     private fun sendMessage() {
         val userInput = binding.etUserInputMessage.text.toString()
@@ -72,13 +92,13 @@ class ChatFragment : Fragment() {
 
             chatAdapter.addChatMessage(userMessage)
             binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
-            viewModel.saveToLocalDb(listOf(userMessage))
+            getPredict(userInput, userMessage)
 
             viewModel.sendChat(listOf(userMessage)).observe(requireActivity()) { result ->
                 Log.i(TAG, "userInput: $userInput")
                 if (result != null) {
                     when (result) {
-                        is Result.Loading -> { }
+                        is Result.Loading -> {}
                         is Result.Success -> {
                             val response = result.data
                             Log.i(TAG, "chatbot: ${response.message.content}")
@@ -88,9 +108,10 @@ class ChatFragment : Fragment() {
                                 response.createdAt.convertTimeStampChatApi()
                             )
                             chatAdapter.addChatMessage(assistantMessage)
-                            viewModel.saveToLocalDb(listOf(assistantMessage))
+                            viewModel.saveToLocalDb(listOf(assistantMessage), 0.0)
                             binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                         }
+
                         is Result.Error -> {
                             if (result.error.message == "timeout") {
                                 showToast(getString(R.string.chat_timeout))
@@ -106,6 +127,7 @@ class ChatFragment : Fragment() {
             binding.etUserInputMessage.setText("")
         }
     }
+
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
