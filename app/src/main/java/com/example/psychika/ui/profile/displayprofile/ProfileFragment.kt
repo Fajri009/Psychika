@@ -22,6 +22,7 @@ import com.example.psychika.databinding.FragmentProfileBinding
 import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.ui.auth.login.LoginActivity
 import com.example.psychika.ui.history.HistoryActivity
+import com.example.psychika.ui.maps.MapsActivity
 import com.example.psychika.ui.profile.changepass.ChangePasswordActivity
 import com.example.psychika.ui.profile.editprofile.EditProfileActivity
 import com.google.firebase.Firebase
@@ -69,6 +70,10 @@ class ProfileFragment : Fragment() {
         }
 
         binding.apply {
+            btnMaps.setOnClickListener {
+                val intent = Intent(requireContext(), MapsActivity::class.java)
+                startActivity(intent)
+            }
             btnHistory.setOnClickListener {
                 val intent = Intent(requireContext(), HistoryActivity::class.java)
                 startActivity(intent)

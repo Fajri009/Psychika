@@ -29,7 +29,7 @@
             android:layout_height="240dp"
             android:contentDescription="@string/illust_login"
             android:src="@drawable/illust_login"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -81,7 +81,7 @@
             android:id="@+id/tv_password"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/password"
             app:layout_constraintStart_toStartOf="@+id/tv_login"
             app:layout_constraintTop_toBottomOf="@+id/et_login_email" />
@@ -104,7 +104,7 @@
             android:id="@+id/layout_remember"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/tv_login"

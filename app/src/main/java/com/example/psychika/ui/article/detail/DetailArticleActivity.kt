@@ -16,11 +16,6 @@ class DetailArticleActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityDetailArticleBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val tvPublisher = intent.extras!!.getString(EXTRA_ARTICLE_PUBLISHER)
         val tvTitle = intent.extras!!.getString(EXTRA_ARTICLE_TITLE)

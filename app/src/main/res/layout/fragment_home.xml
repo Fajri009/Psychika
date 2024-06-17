@@ -17,6 +17,7 @@
             android:layout_height="200dp"
             android:background="@drawable/home_background"
             android:gravity="center"
+            android:paddingTop="10dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

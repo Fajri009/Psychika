@@ -32,10 +32,10 @@
 
             <ImageView
                 android:id="@+id/iv_back_button"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:contentDescription="@string/back_button"
                 android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:text="@string/last_name"
                     android:textColor="@color/shades_100"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="10dp" />
 
                 <com.example.psychika.ui.custom.IconEditText
                     android:id="@+id/et_edit_last_name"
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:text="@string/email"
                     android:textColor="@color/shades_100"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="10dp" />
 
                 <com.example.psychika.ui.custom.DisableEditText
                     android:id="@+id/et_edit_email"
