@@ -5,8 +5,12 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.psychika.BuildConfig
 import com.example.psychika.R
 import com.example.psychika.data.network.response.NearbyPlacesResponse
 import com.example.psychika.data.network.retrofit.NearbyPlacesService
@@ -35,7 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -48,6 +52,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        mMap.setPadding(0,80,10,50)
 
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
@@ -97,7 +103,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             "hospital",
             "$lat,$lng",
             10000,
-            "AIzaSyC1fNwFxe1cmbkbOnaFeThzGglQlO7j6KU"
+            BuildConfig.HOSPITAL_API_KEY
         )
 
         call.enqueue(object : Callback<NearbyPlacesResponse> {
