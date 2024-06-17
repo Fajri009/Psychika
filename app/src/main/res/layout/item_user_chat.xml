@@ -24,16 +24,19 @@
         <TextView
             android:id="@+id/tv_message"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            tools:text="Hello, Psychika!" />
+            android:layout_weight="1"
+            tools:text="Hello, Psychika" />
 
         <TextView
             android:id="@+id/tv_time"
             style="@style/TextAppearance.AppCompat.TextXxs.Medium"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:textColor="@color/neutral_500"
+            android:gravity="bottom"
             tools:text="09:00" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

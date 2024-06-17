@@ -1,13 +1,17 @@
 package com.example.psychika.di
 
-import com.example.psychika.data.network.PsychikaRepository
+import android.content.Context
+import com.example.psychika.data.local.room.ChatMessageDatabase
+import com.example.psychika.data.repository.PsychikaRepository
 import com.example.psychika.data.network.retrofit.ApiConfig
 import com.google.firebase.auth.FirebaseAuth
 
 object Injection {
-    fun provideRepository(): PsychikaRepository {
-        val apiService = ApiConfig.getApiService()
+    fun provideRepository(context: Context): PsychikaRepository {
+        val psychikaApiService = ApiConfig.getPsychikaApiService()
+        val ollamaApiService = ApiConfig.getOllamaApiService()
         val firebaseAuth = FirebaseAuth.getInstance()
-        return PsychikaRepository(apiService, firebaseAuth)
+        val chatMessageDao = ChatMessageDatabase.getDatabase(context).chatMessageDao()
+        return PsychikaRepository(psychikaApiService, ollamaApiService, firebaseAuth, chatMessageDao)
     }
 }

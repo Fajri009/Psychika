@@ -19,7 +19,7 @@ import com.example.psychika.ui.ViewModelFactory
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
     private val viewModel by viewModels<ChangePasswordViewModel> {
-        ViewModelFactory.getInstance()
+        ViewModelFactory.getInstance(this)
     }
 
     private var userModel: User = User()

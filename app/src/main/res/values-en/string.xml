@@ -60,9 +60,11 @@
     <!-- Chat -->
     <string name="chat">Chat</string>
     <string name="chatbot">Chatbot</string>
+    <string name="greeting_message">Hi, how is your day?</string>
     <string name="icon_send_message">Icon Send Message</string>
     <string name="white_container">White Container</string>
     <string name="hint_message">Type your message</string>
+    <string name="chat_timeout">Timeout error. Please try again later.</string>
 
     <!-- Article -->
     <string name="article">Article</string>

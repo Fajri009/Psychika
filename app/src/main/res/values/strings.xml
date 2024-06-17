@@ -10,7 +10,7 @@
     <!-- Login -->
     <string name="login">Masuk</string>
     <string name="illust_login">Ilustrasi Masuk</string>
-    <string name="login_hello">Halo, login untuk melanjutkan</string>
+    <string name="login_hello">Hai, login untuk melanjutkan</string>
     <string name="email">Email</string>
     <string name="invalid_email">Gunakan format email</string>
     <string name="password">Kata sandi</string>
@@ -49,7 +49,7 @@
 
     <!-- Home -->
     <string name="home">Beranda</string>
-    <string name="hi_user">Halo, %s</string>
+    <string name="hi_user">Hai, %s</string>
     <string name="ready_practice">Siap untuk berlatih kesadaran hari ini?</string>
     <string name="illust_face">Ilustrasi Wajah</string>
     <string name="question_feel">Bagaimana perasaanmu?</string>
@@ -73,9 +73,11 @@
     <!-- Chat -->
     <string name="chat">Obrolan</string>
     <string name="chatbot">Chatbot</string>
+    <string name="greeting_message">Hai, apa kabar hari mu?</string>
     <string name="icon_send_message">Ikon Kirim Pesan</string>
     <string name="white_container">Wadah Putihr</string>
     <string name="hint_message">Ketik pesan anda</string>
+    <string name="chat_timeout">Timeout error. Silahkan coba lagi nanti.</string>
 
     <!-- Article -->
     <string name="article">Artikel</string>

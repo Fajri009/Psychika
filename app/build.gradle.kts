@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -38,7 +39,6 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
-        mlModelBinding = true
     }
 }
 
@@ -96,8 +96,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
 
-    // TensorFlow Lite
-    implementation(libs.tensorflow.lite.support)
-    implementation(libs.tensorflow.lite.metadata)
-    implementation(libs.tensorflow.lite.task.text)
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 }

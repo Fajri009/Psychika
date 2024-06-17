@@ -27,7 +27,7 @@ import com.google.firebase.database.database
 class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
     private lateinit var binding: ActivityEditProfileBinding
     private val viewModel by viewModels<EditProfileViewModel> {
-        ViewModelFactory.getInstance()
+        ViewModelFactory.getInstance(this)
     }
 
     private var userModel: User = User()

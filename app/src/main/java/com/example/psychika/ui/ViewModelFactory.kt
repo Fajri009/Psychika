@@ -1,11 +1,13 @@
 package com.example.psychika.ui
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.psychika.data.network.PsychikaRepository
+import com.example.psychika.data.repository.PsychikaRepository
 import com.example.psychika.di.Injection
 import com.example.psychika.ui.auth.login.LoginViewModel
 import com.example.psychika.ui.auth.signup.SignUpViewModel
+import com.example.psychika.ui.chat.ChatViewModel
 import com.example.psychika.ui.home.HomeViewModel
 import com.example.psychika.ui.profile.changepass.ChangePasswordViewModel
 import com.example.psychika.ui.profile.displayprofile.ProfileViewModel
@@ -25,6 +27,9 @@ class ViewModelFactory private constructor(private val psychikaRepository: Psych
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(psychikaRepository) as T
             }
+            modelClass.isAssignableFrom(ChatViewModel::class.java) -> {
+                ChatViewModel(psychikaRepository) as T
+            }
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(psychikaRepository) as T
             }
@@ -42,9 +47,9 @@ class ViewModelFactory private constructor(private val psychikaRepository: Psych
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository())
+                instance ?: ViewModelFactory(Injection.provideRepository(context))
             }.also { instance = it }
     }
 }

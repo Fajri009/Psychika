@@ -1,7 +1,7 @@
 package com.example.psychika.ui.profile.changepass
 
 import androidx.lifecycle.ViewModel
-import com.example.psychika.data.network.PsychikaRepository
+import com.example.psychika.data.repository.PsychikaRepository
 
 class ChangePasswordViewModel(private val psychikaRepository: PsychikaRepository): ViewModel() {
     fun updateChangePass(

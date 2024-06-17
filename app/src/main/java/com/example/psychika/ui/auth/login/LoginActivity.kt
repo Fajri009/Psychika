@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
     private var doubleBack = false
     private val handler = Handler(Looper.getMainLooper())
     private val viewModel by viewModels<LoginViewModel> {
-        ViewModelFactory.getInstance()
+        ViewModelFactory.getInstance(this)
     }
 
     private var userModel: User = User()
@@ -98,9 +98,9 @@ class LoginActivity : AppCompatActivity() {
         val etLoginPassword = binding.etLoginPassword.text
 
         if (etLoginEmail!!.isEmpty() || etLoginPassword!!.isEmpty()) {
-            showToast(R.string.empty_form)
+            showToast(getString(R.string.empty_form))
         } else if (!Utils.isValidEmail(etLoginEmail.toString()) || etLoginPassword.length < 8) {
-            showToast(R.string.invalid_form)
+            showToast(getString(R.string.invalid_form))
         } else {
             viewModel.login(
                 etLoginEmail.toString(),
@@ -133,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
 
                             if (result.error.message == "Incorrect password!" || result.error.message == "There is no user with this email address!") {
-                                showToast(R.string.invalid_input_user)
+                                showToast(getString(R.string.invalid_input_user))
                             }
                         }
                     }
@@ -143,6 +143,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginWithGoogle() {
+        binding.progressBar.visibility = View.VISIBLE
         val credentialManager = CredentialManager.create(this)
 
         val googleIdOption = GetGoogleIdOption.Builder()
@@ -162,6 +163,7 @@ class LoginActivity : AppCompatActivity() {
                 )
                 handleSignIn(result)
             } catch (e: GetCredentialException) {
+                binding.progressBar.visibility = View.GONE
                 Log.d("Error", e.message.toString())
             }
         }
@@ -175,32 +177,50 @@ class LoginActivity : AppCompatActivity() {
                         val googleIdTokenCredential =
                             GoogleIdTokenCredential.createFrom(credential.data)
                         val idToken = googleIdTokenCredential.idToken
-                        viewModel.loginWithGoogle(idToken) { result ->
-                            if (result) {
-                                val user = auth.currentUser
-                                userModel.id = user?.uid ?: ""
-                                userModel.rememberMe = true
-                                userModel.googleAuth = true
-                                userPreference.setUser(userModel)
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(intent)
+                        viewModel.loginWithGoogle(idToken).observe(this) { result ->
+                            if (result != null) {
+                                when (result) {
+                                    is Result.Loading -> {
+                                        binding.progressBar.visibility = View.VISIBLE
+                                    }
+                                    is Result.Success -> {
+                                        val userGoogleAuth = result.data
+                                        userModel.id = userGoogleAuth.id ?: ""
+                                        userModel.rememberMe = true
+                                        userModel.googleAuth = true
+                                        userPreference.setUser(userModel)
+
+                                        binding.progressBar.visibility = View.GONE
+                                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    is Result.Error -> {
+                                        binding.progressBar.visibility = View.GONE
+                                        val errorMessage = result.error.message
+                                        showToast(errorMessage)
+                                    }
+                                }
                             }
                         }
                     } catch (e: GoogleIdTokenParsingException) {
+                        binding.progressBar.visibility = View.GONE
                         Log.e(TAG, "Received an invalid google id token response", e)
                     }
                 } else {
+                    binding.progressBar.visibility = View.GONE
                     Log.e(TAG, "Unexpected type of credential")
                 }
             }
 
             else -> {
+                binding.progressBar.visibility = View.GONE
                 Log.e(TAG, "Unexpected type of credential")
             }
         }
     }
 
-    private fun showToast(message: Int) {
+    private fun showToast(message: String) {
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
     }
 

@@ -10,7 +10,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
-interface ApiService {
+interface PsychikaApiService {
     @FormUrlEncoded
     @POST("auth/registerApi")
     suspend fun register(

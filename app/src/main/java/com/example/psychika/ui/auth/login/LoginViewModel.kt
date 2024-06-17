@@ -1,12 +1,12 @@
 package com.example.psychika.ui.auth.login
 
 import androidx.lifecycle.ViewModel
-import com.example.psychika.data.network.PsychikaRepository
+import com.example.psychika.data.repository.PsychikaRepository
 
-class LoginViewModel(private val psychikaRepository: PsychikaRepository): ViewModel() {
+class LoginViewModel(private val repository: PsychikaRepository): ViewModel() {
     fun login(email: String, password: String) =
-        psychikaRepository.login(email, password)
+        repository.login(email, password)
 
-    fun loginWithGoogle(idToken: String, onResult: (Boolean) -> Unit) =
-        psychikaRepository.loginWithGoogle(idToken, onResult)
+    fun loginWithGoogle(idToken: String) =
+        repository.loginWithGoogle(idToken)
 }

@@ -1,7 +1,7 @@
 package com.example.psychika.ui.auth.signup
 
 import androidx.lifecycle.ViewModel
-import com.example.psychika.data.network.PsychikaRepository
+import com.example.psychika.data.repository.PsychikaRepository
 
 class SignUpViewModel(private val psychikaRepository: PsychikaRepository) : ViewModel() {
     fun register(

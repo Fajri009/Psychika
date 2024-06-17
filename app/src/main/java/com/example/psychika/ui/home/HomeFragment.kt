@@ -30,7 +30,7 @@ import com.google.firebase.database.database
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel by viewModels<HomeViewModel> {
-        ViewModelFactory.getInstance()
+        ViewModelFactory.getInstance(requireContext())
     }
     private val listFeel = ArrayList<Feel>()
     private val listArticle = ArrayList<Article>()
@@ -101,21 +101,33 @@ class HomeFragment : Fragment() {
     private fun getCurrentUserGoogleAuth() {
         viewModel.getCurrentUserGoogleAuth().observe(requireActivity()) { result ->
             if (result != null) {
-                userGoogleAuth = result
-                binding.tvHiUser.text = getString(R.string.hi_user, userGoogleAuth.firstName)
-
-                userRef.child(userGoogleAuth.id!!).get()
-                    .addOnSuccessListener { snapshot ->
-                        if (!snapshot.exists()) {
-                            registerCurrentUserGoogleAuth()
-                        }
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
                     }
-                    .addOnFailureListener {
-                        Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        userGoogleAuth = result.data
+                        binding.tvHiUser.text = getString(R.string.hi_user, userGoogleAuth.firstName)
+
+                        userRef.child(userGoogleAuth.id!!).get()
+                            .addOnSuccessListener { snapshot ->
+                                if (!snapshot.exists()) {
+                                    registerCurrentUserGoogleAuth()
+                                }
+                            }
+                            .addOnFailureListener {
+                                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
+                                showToast(getString(R.string.cant_get_user_data_google))
+                            }
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+
                         showToast(getString(R.string.cant_get_user_data_google))
                     }
-            } else {
-                showToast(getString(R.string.cant_get_user_data_google))
+                }
             }
         }
     }

@@ -1,7 +1,13 @@
 package com.example.psychika.data
 
+data class ChatbotRequest(
+    val model: String,
+    val messages: List<ChatMessage>,
+    val stream: Boolean
+)
+
 data class ChatMessage(
-    val message: String,
-    val time: String,
-    val isUser: Boolean
+    val role: String,
+    val content: String,
+    val time: String
 )

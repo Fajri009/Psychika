@@ -8,11 +8,11 @@ import com.example.psychika.data.ChatMessage
 import com.example.psychika.databinding.ItemBotChatBinding
 import com.example.psychika.databinding.ItemUserChatBinding
 
-class ChatAdapter(private var chatMessages: List<ChatMessage>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class UserChatViewHolder(private val binding: ItemUserChatBinding) : RecyclerView.ViewHolder(binding.root)  {
         fun bind (chatMessage: ChatMessage) {
             binding.apply {
-                tvMessage.text = chatMessage.message
+                tvMessage.text = chatMessage.content
                 tvTime.text = chatMessage.time
             }
         }
@@ -21,14 +21,14 @@ class ChatAdapter(private var chatMessages: List<ChatMessage>) : RecyclerView.Ad
     inner class BotChatViewHolder(private val binding: ItemBotChatBinding) : RecyclerView.ViewHolder(binding.root)  {
         fun bind (chatMessage: ChatMessage) {
             binding.apply {
-                tvMessage.text = chatMessage.message
+                tvMessage.text = chatMessage.content
                 tvTime.text = chatMessage.time
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (chatMessages[position].isUser) {
+        return if (chatMessages[position].role == "user") {
             R.layout.item_user_chat
         } else {
             R.layout.item_bot_chat
@@ -54,4 +54,15 @@ class ChatAdapter(private var chatMessages: List<ChatMessage>) : RecyclerView.Ad
     }
 
     override fun getItemCount(): Int = chatMessages.size
+
+    fun addChatMessage(message: ChatMessage) {
+        chatMessages.add(message)
+        notifyItemInserted(chatMessages.size - 1)
+    }
+
+    fun updateChatMessages(messages: List<ChatMessage>) {
+        chatMessages.clear()
+        chatMessages.addAll(messages)
+        notifyDataSetChanged()
+    }
 }

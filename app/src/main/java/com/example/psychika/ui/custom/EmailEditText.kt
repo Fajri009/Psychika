@@ -23,11 +23,13 @@ class EmailEditText @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (!Utils.isValidEmail(s)) {
-                    error = resources.getString(R.string.invalid_email)
+                    setError(resources.getString(R.string.invalid_email), null)
                 }
             }
 
-            override fun afterTextChanged(s: Editable?) { }
+            override fun afterTextChanged(s: Editable?) {
+
+            }
         })
 
         maxLines = 1

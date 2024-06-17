@@ -6,18 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.psychika.R
 import com.example.psychika.adapter.ChatAdapter
 import com.example.psychika.data.ChatMessage
+import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.FragmentChatBinding
-import com.example.psychika.helper.ChatClassifierHelper
+import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.utils.Utils
-import org.tensorflow.lite.support.label.Category
+import com.example.psychika.utils.Utils.convertTimeStampChatApi
 
 class ChatFragment : Fragment() {
     private lateinit var binding: FragmentChatBinding
-    private lateinit var chatClassifierHelper: ChatClassifierHelper
-    private val chatMessages = mutableListOf<ChatMessage>()
+    private val viewModel by viewModels<ChatViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
     private lateinit var chatAdapter: ChatAdapter
 
     override fun onCreateView(
@@ -28,22 +34,6 @@ class ChatFragment : Fragment() {
 
         showChat()
 
-        chatClassifierHelper = ChatClassifierHelper(
-            context = requireContext(),
-            classifierListener = object : ChatClassifierHelper.ClassifierListener {
-                override fun onResults(results: List<Category>?) {
-                    Log.i("hallo", results.toString())
-
-                    results!!.forEach { category ->
-                        Log.d("hallo", "Label: ${category.label}, Score: ${category.score}")
-                    }
-                }
-
-                override fun error(error: String) {
-                    Log.i("hallo", error)
-                }
-            })
-
         binding.ivSendMessage.setOnClickListener { sendMessage() }
 
         return binding.root
@@ -51,23 +41,77 @@ class ChatFragment : Fragment() {
 
     private fun showChat() {
         val layoutManager = LinearLayoutManager(requireContext())
-        chatAdapter = ChatAdapter(chatMessages)
+        chatAdapter = ChatAdapter(mutableListOf())
 
         binding.rvChat.apply {
             setLayoutManager(layoutManager)
             adapter = chatAdapter
         }
+
+        viewModel.chatMessage.observe(requireActivity()) { messages ->
+            if (messages.isEmpty()) {
+                val defaultBotMessage = ChatMessage(
+                    "assistant",
+                    getString(R.string.greeting_message),
+                    Utils.getCurrentTime()
+                )
+                chatAdapter.addChatMessage(defaultBotMessage)
+                viewModel.saveToLocalDb(listOf(defaultBotMessage))
+            } else {
+                chatAdapter.updateChatMessages(messages)
+                binding.rvChat.smoothScrollToPosition(messages.size - 1)
+            }
+        }
+
     }
 
     private fun sendMessage() {
         val userInput = binding.etUserInputMessage.text.toString()
         if (userInput.isNotEmpty()) {
-            val currentTime = Utils.getCurrentTime()
-            chatMessages.add(ChatMessage(userInput, currentTime, true))
-            chatAdapter.notifyDataSetChanged()
+            val userMessage = ChatMessage("user", userInput, Utils.getCurrentTime())
 
-            chatClassifierHelper.classifyChat(userInput)
+            chatAdapter.addChatMessage(userMessage)
+            binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
+            viewModel.saveToLocalDb(listOf(userMessage))
+
+            viewModel.sendChat(listOf(userMessage)).observe(requireActivity()) { result ->
+                Log.i(TAG, "userInput: $userInput")
+                if (result != null) {
+                    when (result) {
+                        is Result.Loading -> { }
+                        is Result.Success -> {
+                            val response = result.data
+                            Log.i(TAG, "chatbot: ${response.message.content}")
+                            val assistantMessage = ChatMessage(
+                                "assistant",
+                                response.message.content,
+                                response.createdAt.convertTimeStampChatApi()
+                            )
+                            chatAdapter.addChatMessage(assistantMessage)
+                            viewModel.saveToLocalDb(listOf(assistantMessage))
+                            binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
+                        }
+                        is Result.Error -> {
+                            if (result.error.message == "timeout") {
+                                showToast(getString(R.string.chat_timeout))
+                            } else {
+                                showToast(result.error.message)
+                            }
+                        }
+                    }
+                }
+            }
+
+            chatAdapter.notifyDataSetChanged()
             binding.etUserInputMessage.setText("")
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "ChatFragment"
     }
 }

@@ -26,6 +26,7 @@ import com.example.psychika.ui.profile.changepass.ChangePasswordActivity
 import com.example.psychika.ui.profile.editprofile.EditProfileActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.database
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ import kotlinx.coroutines.launch
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private val viewModel by viewModels<ProfileViewModel> {
-        ViewModelFactory.getInstance()
+        ViewModelFactory.getInstance(requireContext())
     }
 
     private var userModel: User = User()
@@ -44,6 +45,7 @@ class ProfileFragment : Fragment() {
     private lateinit var userGoogleAuth: UserGoogleAuth
 
     private lateinit var db: FirebaseDatabase
+    private lateinit var userRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +59,7 @@ class ProfileFragment : Fragment() {
         userModel = userPreference.getUser()
 
         db = Firebase.database
+        userRef = db.reference.child("users")
 
         if (!userModel.googleAuth) {
             getCurrentUserApi()
@@ -122,29 +125,67 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getCurrentUserGoogleAuth() {
-        val userRef = db.reference.child("users")
-        userRef.child(userModel.id!!).get()
-            .addOnSuccessListener { snapshot ->
-                if (snapshot.exists()) {
-                    userGoogleAuth = snapshot.getValue(UserGoogleAuth::class.java)!!
-                    binding.apply {
-                        Glide
-                            .with(requireContext())
-                            .load(userGoogleAuth.profilePic)
-                            .into(ivProfilePicture)
-                        tvUserName.text = buildString {
-                            append(userGoogleAuth.firstName)
-                            append(" ")
-                            append(userGoogleAuth.lastName)
+        viewModel.getCurrentUserGoogleAuth().observe(requireActivity()) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        userGoogleAuth = result.data
+                        binding.apply {
+                            Glide
+                                .with(requireContext())
+                                .load(userGoogleAuth.profilePic)
+                                .into(ivProfilePicture)
+                            tvUserName.text = buildString {
+                                append(userGoogleAuth.firstName)
+                                append(" ")
+                                append(userGoogleAuth.lastName)
+                            }
+                            tvUserEmail.text = userGoogleAuth.email
                         }
-                        tvUserEmail.text = userGoogleAuth.email
+                        userRef.child(userGoogleAuth.id!!).get()
+                            .addOnFailureListener {
+                                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
+                                showToast(getString(R.string.cant_get_user_data_google))
+                            }
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        showToast(getString(R.string.cant_get_user_data_google))
                     }
                 }
             }
-            .addOnFailureListener {
-                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
-                showToast(getString(R.string.cant_get_user_data_google))
-            }
+
+        }
+//        val userRef = db.reference.child("users")
+//        userRef.child(userModel.id!!).get()
+//            .addOnSuccessListener { snapshot ->
+//                if (snapshot.exists()) {
+//                    userGoogleAuth = snapshot.getValue(UserGoogleAuth::class.java)!!
+//                    binding.apply {
+//                        Glide
+//                            .with(requireContext())
+//                            .load(userGoogleAuth.profilePic)
+//                            .into(ivProfilePicture)
+//                        tvUserName.text = buildString {
+//                            append(userGoogleAuth.firstName)
+//                            append(" ")
+//                            append(userGoogleAuth.lastName)
+//                        }
+//                        tvUserEmail.text = userGoogleAuth.email
+//                    }
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
+//                showToast(getString(R.string.cant_get_user_data_google))
+//            }
     }
 
     private fun navigatePage(destination: Class<*>) {
