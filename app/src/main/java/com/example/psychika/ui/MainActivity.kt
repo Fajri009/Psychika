@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.psychika.R
 import com.example.psychika.databinding.ActivityMainBinding
-import com.example.psychika.databinding.ActivityMapsBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {

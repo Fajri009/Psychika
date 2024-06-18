@@ -43,16 +43,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        binding.apply {
+            ivBackButton.setOnClickListener { finish() }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        mMap.setPadding(0,80,10,50)
+        mMap.setPadding(0,100,20,100)
 
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isIndoorLevelPickerEnabled = true
-        mMap.uiSettings.isCompassEnabled = true
+        mMap.uiSettings.isCompassEnabled = false
         mMap.uiSettings.isMapToolbarEnabled = true
 
         getMyLocation()

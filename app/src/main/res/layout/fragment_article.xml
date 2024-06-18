@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/outlined_edit_text"
         android:hint="@string/search"
         app:icon="@drawable/ic_search"
@@ -58,6 +58,7 @@
             android:id="@+id/rv_list_article"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="5dp"
             tools:listitem="@layout/item_row_article" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

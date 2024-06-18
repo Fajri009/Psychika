@@ -21,8 +21,8 @@
 
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/ic_back"
@@ -58,7 +58,8 @@
         android:id="@+id/rv_chat"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
         android:layout_marginHorizontal="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_white_container"
