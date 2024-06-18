@@ -8,8 +8,8 @@ import com.example.psychika.data.repository.PsychikaRepository
 import com.example.psychika.utils.Utils
 
 class ChatViewModel(private val repository: PsychikaRepository) : ViewModel() {
-    fun getChatMessageCurrentDate(date: String) =
-        repository.getChangeMessagesByDate(date).map { entities ->
+    fun getChatMessageCurrentDate(date: String, userId: String) =
+        repository.getChangeMessagesByDate(date, userId).map { entities ->
             entities.map {
                 ChatMessage(it.role, it.message, it.time)
             }
@@ -18,14 +18,15 @@ class ChatViewModel(private val repository: PsychikaRepository) : ViewModel() {
     fun sendChat(messages: List<ChatMessage>) =
         repository.sendChat(messages)
 
-    fun saveToLocalDb(messages: List<ChatMessage>, predict: Double) {
+    fun saveToLocalDb(messages: List<ChatMessage>, userId: String, predict: Double) {
         messages.forEach { message ->
             val entity = ChatMessageEntity(
                 role = message.role,
+                userId = userId,
                 message = message.content,
                 time = message.time,
                 date = Utils.getCurrentDate(),
-                predict = predict
+                predict = predict,
             )
             repository.insertMessage(entity)
         }

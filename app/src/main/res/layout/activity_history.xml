@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_500"
+    android:background="@color/primary_700"
     tools:context=".ui.history.HistoryActivity">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,6 @@
         android:id="@+id/tv_history"
         style="@style/TextAppearance.AppCompat.TextXl.Semibold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/history"
         android:textColor="@color/shades_50"
         android:layout_marginStart="10dp"

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.R
 import com.example.psychika.adapter.ChatAdapter
 import com.example.psychika.data.entity.ChatMessage
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.FragmentChatBinding
 import com.example.psychika.ui.ViewModelFactory
@@ -26,11 +28,19 @@ class ChatFragment : Fragment() {
 
     private lateinit var chatAdapter: ChatAdapter
 
+    private lateinit var userModel: User
+    private lateinit var userPreference: UserPreference
+    private lateinit var userId: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatBinding.inflate(layoutInflater)
+
+        userPreference = UserPreference(requireContext())
+        userModel = userPreference.getUser()
+        userId = userModel.id!!
 
         showChat()
 
@@ -49,7 +59,7 @@ class ChatFragment : Fragment() {
         }
 
         val currentDate = Utils.getCurrentDate()
-        viewModel.getChatMessageCurrentDate(currentDate).observe(requireActivity()) { messages ->
+        viewModel.getChatMessageCurrentDate(currentDate, userId).observe(requireActivity()) { messages ->
             if (messages.isEmpty()) {
                 val defaultBotMessage = ChatMessage(
                     "assistant",
@@ -57,7 +67,7 @@ class ChatFragment : Fragment() {
                     Utils.getCurrentTime()
                 )
                 chatAdapter.addChatMessage(defaultBotMessage)
-                viewModel.saveToLocalDb(listOf(defaultBotMessage), 0.0)
+                viewModel.saveToLocalDb(listOf(defaultBotMessage), userId, 0.0)
             } else {
                 chatAdapter.updateChatMessages(messages)
                 binding.rvChat.smoothScrollToPosition(messages.size - 1)
@@ -73,7 +83,7 @@ class ChatFragment : Fragment() {
                     val response = result.data.prediction
                     val cleanPredictionString = response.replace("\"", "")
                     val prediction = cleanPredictionString.toDouble()
-                    viewModel.saveToLocalDb(listOf(userMessage), prediction)
+                    viewModel.saveToLocalDb(listOf(userMessage), userId, prediction)
                     Log.i(TAG, "Prediction : $prediction")
                 }
 
@@ -108,7 +118,7 @@ class ChatFragment : Fragment() {
                                 response.createdAt.convertTimeStampChatApi()
                             )
                             chatAdapter.addChatMessage(assistantMessage)
-                            viewModel.saveToLocalDb(listOf(assistantMessage), 0.0)
+                            viewModel.saveToLocalDb(listOf(assistantMessage), userId, 0.0)
                             binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                         }
 

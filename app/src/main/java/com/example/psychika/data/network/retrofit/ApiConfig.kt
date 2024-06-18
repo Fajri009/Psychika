@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private var BASE_URL_AUTH = "http://34.101.241.92:3000/"
+        private var BASE_URL_AUTH = "http://34.34.223.17:3000/"
         private var BASE_URL_CHATBOT = "https://ollama.sleepingowl.my.id/"
         private var BASE_URL_CLASSIFICATION = "https://psychika.sleepingowl.my.id/"
         private val BASE_URL_MAPS_NEARBY = "https://maps.googleapis.com/maps/api/place/nearbysearch/"

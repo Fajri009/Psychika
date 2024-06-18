@@ -157,7 +157,6 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("navigateToProfile", true)
             startActivity(intent)
-            alertDialog.dismiss()
         }
     }
 

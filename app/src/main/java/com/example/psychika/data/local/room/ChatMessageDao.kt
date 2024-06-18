@@ -12,8 +12,8 @@ interface ChatMessageDao {
     @Query("SELECT * FROM chat_messages")
     fun getAllMessages(): LiveData<List<ChatMessageEntity>>
 
-    @Query("SELECT * FROM chat_messages WHERE date = :date")
-    fun getAllMessagesByDate(date: String): LiveData<List<ChatMessageEntity>>
+    @Query("SELECT * FROM chat_messages WHERE date = :date AND userId = :userId")
+    fun getAllMessagesByDate(date: String, userId: String): LiveData<List<ChatMessageEntity>>
 
     @Query("SELECT date, AVG(predict) AS averagePredict FROM chat_messages GROUP BY date ORDER BY date DESC")
     fun getAllDateMessages(): LiveData<List<DailyAveragePrediction>>

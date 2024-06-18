@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_700"
-    android:gravity="center"
     tools:context=".ui.chat.ChatFragment">
 
     <ImageView
@@ -51,7 +50,8 @@
         app:layout_constraintBottom_toTopOf="@+id/et_user_input_message"
         app:layout_constraintTop_toTopOf="@+id/iv_white_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_user_chat" />
 
     <EditText
         android:id="@+id/et_user_input_message"

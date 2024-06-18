@@ -2,6 +2,7 @@ package com.example.psychika.ui.history
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -19,16 +20,35 @@ class HistoryActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var historyAdapter: HistoryAdapter
+    private var isDialogShowing = false
+    private var dialogDate: String? = null
+    private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (savedInstanceState != null) {
+            isDialogShowing = savedInstanceState.getBoolean("isDialogShowing")
+            dialogDate = savedInstanceState.getString("dialogDate")
+        }
 
         setupRecyclerView()
         setDataChatHistoryDate()
 
         binding.ivBack.setOnClickListener { finish() }
+
+        if (isDialogShowing && dialogDate != null) {
+            showPopUp(dialogDate!!)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isDialogShowing", isDialogShowing)
+        outState.putString("dialogDate", dialogDate)
     }
 
     private fun setupRecyclerView() {
@@ -42,7 +62,7 @@ class HistoryActivity : AppCompatActivity() {
 
         historyAdapter.setOnItemClickCallBack(object : HistoryAdapter.OnItemClickCallBack {
             override fun onItemClicked(data: DailyAveragePrediction) {
-                showPopUp()
+                showPopUp(data.date)
             }
         })
     }
@@ -53,22 +73,30 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPopUp() {
+    private fun showPopUp(date: String) {
         val popUpBinding = PopUpHistoryBinding.inflate(layoutInflater)
 
-        val alertDialog = AlertDialog.Builder(this)
+        alertDialog = AlertDialog.Builder(this)
             .setView(popUpBinding.root)
             .setCancelable(false)
             .create()
-        alertDialog.show()
+        alertDialog?.show()
 
         popUpBinding.apply {
-            btnBack.setOnClickListener { finish() }
+            btnBack.setOnClickListener { alertDialog?.dismiss() }
             btnSeeHistory.setOnClickListener {
+                isDialogShowing = false
+                dialogDate = null
                 val intent = Intent(this@HistoryActivity, ChatbotHistory::class.java)
+                intent.putExtra("DATE_CHAT_HISTORY", date)
                 startActivity(intent)
-                alertDialog.dismiss()
+                alertDialog?.dismiss()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        alertDialog?.dismiss()
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_500"
+    android:background="@color/primary_700"
     tools:context=".ui.article.ArticleFragment">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         android:text="@string/article"
         android:textColor="@color/shades_50"
         app:layout_constraintStart_toStartOf="parent"

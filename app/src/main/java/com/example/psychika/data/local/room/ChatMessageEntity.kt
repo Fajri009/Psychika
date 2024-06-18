@@ -11,6 +11,9 @@ data class ChatMessageEntity(
     @ColumnInfo(name = "id")
     var id: Int = 0,
 
+    @ColumnInfo(name = "userId")
+    val userId: String,
+
     @ColumnInfo(name = "role")
     val role: String,
 

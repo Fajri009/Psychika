@@ -166,31 +166,7 @@ class ProfileFragment : Fragment() {
                     }
                 }
             }
-
         }
-//        val userRef = db.reference.child("users")
-//        userRef.child(userModel.id!!).get()
-//            .addOnSuccessListener { snapshot ->
-//                if (snapshot.exists()) {
-//                    userGoogleAuth = snapshot.getValue(UserGoogleAuth::class.java)!!
-//                    binding.apply {
-//                        Glide
-//                            .with(requireContext())
-//                            .load(userGoogleAuth.profilePic)
-//                            .into(ivProfilePicture)
-//                        tvUserName.text = buildString {
-//                            append(userGoogleAuth.firstName)
-//                            append(" ")
-//                            append(userGoogleAuth.lastName)
-//                        }
-//                        tvUserEmail.text = userGoogleAuth.email
-//                    }
-//                }
-//            }
-//            .addOnFailureListener {
-//                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
-//                showToast(getString(R.string.cant_get_user_data_google))
-//            }
     }
 
     private fun navigatePage(destination: Class<*>) {
