@@ -2,6 +2,8 @@ package com.example.psychika.ui.history
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -49,7 +51,18 @@ class HistoryActivity : AppCompatActivity() {
         setupRecyclerView()
         setDataChatHistoryDate()
 
-        binding.ivBack.setOnClickListener { finish() }
+        binding.apply {
+            ivBack.setOnClickListener { finish() }
+            etSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    filterDate(s.toString())
+                }
+
+                override fun afterTextChanged(s: Editable?) { }
+            })
+        }
 
         if (isDialogShowing && dialogDate != null) {
             showPopUp(dialogDate!!)
@@ -60,6 +73,10 @@ class HistoryActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putBoolean("isDialogShowing", isDialogShowing)
         outState.putString("dialogDate", dialogDate)
+    }
+
+    private fun filterDate(query: String) {
+        historyAdapter.filterByDate(query)
     }
 
     private fun setupRecyclerView() {
@@ -79,8 +96,8 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun setDataChatHistoryDate() {
-        viewModel.getAllDateMessages(userId).observe(this) {
-            historyAdapter.submitList(it)
+        viewModel.getAllDateMessages(userId).observe(this) { history ->
+            historyAdapter.setOriginalList(history)
         }
     }
 

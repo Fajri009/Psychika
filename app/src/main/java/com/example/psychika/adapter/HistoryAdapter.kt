@@ -9,6 +9,7 @@ import com.example.psychika.data.entity.DailyAveragePrediction
 import com.example.psychika.databinding.ItemRowHistoryBinding
 
 class HistoryAdapter : ListAdapter<DailyAveragePrediction, HistoryAdapter.ViewHolder>(DIFF_CALLBACK) {
+    private var originalList: List<DailyAveragePrediction> = listOf()
     private lateinit var onItemClickCallback: OnItemClickCallBack
 
     fun setOnItemClickCallBack(onItemClickCallBack: OnItemClickCallBack) {
@@ -36,6 +37,16 @@ class HistoryAdapter : ListAdapter<DailyAveragePrediction, HistoryAdapter.ViewHo
         holder.itemView.setOnClickListener {
             onItemClickCallback.onItemClicked(chatMessage)
         }
+    }
+
+    fun setOriginalList(list: List<DailyAveragePrediction>) {
+        originalList = list
+        submitList(list)
+    }
+
+    fun filterByDate(date: String) {
+        val filteredList = originalList.filter { it.date.contains(date, ignoreCase = true) }
+        submitList(filteredList)
     }
 
     interface OnItemClickCallBack {

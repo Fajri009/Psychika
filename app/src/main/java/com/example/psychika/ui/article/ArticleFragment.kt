@@ -33,7 +33,7 @@ class ArticleFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterList(s.toString())
+                filterTitle(s.toString())
             }
 
             override fun afterTextChanged(s: Editable?) { }
@@ -42,19 +42,19 @@ class ArticleFragment : Fragment() {
         return binding.root
     }
 
-    private fun filterList(query: String?) {
+    private fun filterTitle(query: String?) {
         if (query != null) {
-            val filteredList = ArrayList<Article>()
+            val filteredArticle = ArrayList<Article>()
             for (i in list) {
                 if (i.title.lowercase(Locale.getDefault()).contains(query)) {
-                    filteredList.add(i)
+                    filteredArticle.add(i)
                 }
             }
 
-            if (filteredList.isEmpty()) {
+            if (filteredArticle.isEmpty()) {
                 showToast(getString(R.string.no_article_found))
             } else {
-                articleAdapter.setFilteredList(filteredList)
+                articleAdapter.setFilteredList(filteredArticle)
             }
         }
     }

@@ -16,7 +16,7 @@ object Utils {
     private const val API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'"
     private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
     private val chatTimeFormat = "HH:mm"
-    private val historyChatTimeFormat = "EEEE, dd MMMM yyyy"
+    private val historyChatTimeFormat = "dd MMMM yyyy"
 
     fun isValidEmail(email: CharSequence): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
