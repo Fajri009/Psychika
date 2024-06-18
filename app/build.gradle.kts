@@ -40,6 +40,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    defaultConfig {
+        buildConfigField("String", "HOSPITAL_API_KEY", "\"AIzaSyC1fNwFxe1cmbkbOnaFeThzGglQlO7j6KU\"")
+    }
 }
 
 dependencies {
@@ -100,4 +103,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    // Maps
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.places)
 }

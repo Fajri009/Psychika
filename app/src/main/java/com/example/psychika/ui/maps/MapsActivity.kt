@@ -5,35 +5,30 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.psychika.BuildConfig
 import com.example.psychika.R
-import com.example.psychika.data.network.response.NearbyPlacesResponse
-import com.example.psychika.data.network.retrofit.NearbyPlacesService
-
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.psychika.data.network.Result
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.example.psychika.databinding.ActivityMapsBinding
+import com.example.psychika.ui.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private val viewModel by viewModels<MapsViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -83,6 +78,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 location?.let {
                     val currentLatLng = LatLng(it.latitude, it.longitude)
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 13f))
+                    Log.d(TAG, "Latitude : ${it.latitude}\nLongitude : ${it.longitude}")
                     fetchNearbyHospitals(it.latitude, it.longitude)
                 }
             }
@@ -92,39 +88,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun fetchNearbyHospitals(lat: Double, lng: Double) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://maps.googleapis.com/maps/api/place/nearbysearch/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        viewModel.getMapsNearbyHospital(lat, lng).observe(this@MapsActivity) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> { }
+                    is Result.Success -> {
+                        val response = result.data
+                        val status = response.status
 
-        val service = retrofit.create(NearbyPlacesService::class.java)
+                        if (status == "OK") {
+                            response.results.forEach { place ->
+                                val places = place.geometry.location
+                                val placeLatLng = LatLng(places.lat, places.lng)
 
-        val call = service.getNearbyPlaces(
-            "hospital",
-            "$lat,$lng",
-            10000,
-            BuildConfig.HOSPITAL_API_KEY
-        )
-
-        call.enqueue(object : Callback<NearbyPlacesResponse> {
-            override fun onResponse(
-                call: Call<NearbyPlacesResponse>,
-                response: Response<NearbyPlacesResponse>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.results?.forEach { place ->
-                        val placeLatLng = LatLng(place.geometry.location.lat, place.geometry.location.lng)
-                        mMap.addMarker(MarkerOptions().position(placeLatLng).title(place.name))
-                        Log.d("MapsActivity", "Marker added for: ${place.name}")
+                                val markerOption = MarkerOptions()
+                                    .position(placeLatLng)
+                                    .title(place.name)
+                                Log.d(TAG, "Marker added for: ${place.name}")
+                                mMap.addMarker(markerOption)
+                            }
+                        } else {
+                            showToast(getString(R.string.failed_nearby_hospital))
+                        }
                     }
-                } else {
-                    Log.e("MapsActivity", "Failed to get nearby places: ${response.errorBody()?.string()}")
+                    is Result.Error -> {
+                        Log.e(TAG, "Error Get Nearby Hospital : ${result.error}", )
+                    }
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<NearbyPlacesResponse>, t: Throwable) {
-                Log.e("MapsActivity", "Failed to make API call", t)
-            }
-        })
+    private fun showToast(message: String) {
+        Toast.makeText(this@MapsActivity, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        const val TAG = "MapsActivity"
     }
 }

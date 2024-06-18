@@ -11,8 +11,9 @@ object Injection {
         val authApiService = ApiConfig.getAuthApiService()
         val chatbotApiService = ApiConfig.getChatbotApiService()
         val classificationApiService = ApiConfig.getClassificationApiService()
+        val mapsNearbyApiService = ApiConfig.getMapsNearbyApiService()
         val firebaseAuth = FirebaseAuth.getInstance()
         val chatMessageDao = ChatMessageDatabase.getDatabase(context).chatMessageDao()
-        return PsychikaRepository(authApiService, chatbotApiService, classificationApiService, firebaseAuth, chatMessageDao)
+        return PsychikaRepository(authApiService, chatbotApiService, classificationApiService, mapsNearbyApiService, firebaseAuth, chatMessageDao)
     }
 }

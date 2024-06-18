@@ -45,11 +45,11 @@ class SignUpActivity : AppCompatActivity() {
         val etConfirmPass = binding.etConfirmPassword.text
 
         if (etFirstName!!.isEmpty() || etLastName!!.isEmpty() || etEmail!!.isEmpty() || etPassword!!.isEmpty() || etConfirmPass!!.isEmpty()) {
-            showToast(R.string.empty_form)
+            showToast(getString(R.string.empty_form))
         } else if (!Utils.isValidEmail(etEmail) || etPassword.length < 8 || etConfirmPass.length < 8) {
-            showToast(R.string.invalid_form)
+            showToast(getString(R.string.invalid_form))
         } else if (etConfirmPass.toString() != etPassword.toString()) {
-            showToast(R.string.pass_not_match)
+            showToast(getString(R.string.pass_not_match))
         } else {
             viewModel.register(
                 etFirstName.toString(),
@@ -67,13 +67,13 @@ class SignUpActivity : AppCompatActivity() {
                             binding.progressBar.visibility = View.GONE
 
                             if (result.error.message == "[email must be unique]") {
-                                showToast(R.string.email_registered)
+                                showToast(getString(R.string.email_registered))
                             }
                         }
 
                         is Result.Success -> {
                             binding.progressBar.visibility = View.GONE
-                            showToast(R.string.try_login)
+                            showToast(getString(R.string.try_login))
 
                             val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
@@ -84,7 +84,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message: Int) {
+    private fun showToast(message: String) {
         Toast.makeText(this@SignUpActivity, message, Toast.LENGTH_SHORT).show()
     }
 }

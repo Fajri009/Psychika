@@ -289,6 +289,9 @@
     <string name="failed_get_account">Failed to get account data</string>
     <string name="text_classifier_error">Text classfier failed to initialize</string>
 
+    <!-- Maps -->
+    <string name="failed_nearby_hospital">Failed to display nearby hospitals. Please try again later.</string>
+
     <!-- History -->
     <string name="mental_health">Mental Health</string>
     <string name="icon_heart">Icon Mental Health</string>

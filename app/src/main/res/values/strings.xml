@@ -316,6 +316,9 @@
     <string name="failed_get_account">Gagal mendapatkan data akun</string>
     <string name="text_classifier_error">Pengklasifikasi teks gagal diinisialisasi</string>
 
+    <!-- Maps -->
+    <string name="failed_nearby_hospital">Gagal menampilkan rumah sakit terdekat. Silakan coba lagi nanti.</string>
+
     <!-- History -->
     <string name="mental_health">Kesehatan Mental</string>
     <string name="icon_heart">Ikon Kesehatan Mental</string>
@@ -345,5 +348,4 @@
     <string name="current_pass">Kata Sandi Saat Ini</string>
     <string name="new_pass">Kata Sandi Baru</string>
     <string name="confirm_new_pass">Konfirmasi Kata Sandi Baru</string>
-    <string name="title_activity_maps">MapsActivity</string>
 </resources>

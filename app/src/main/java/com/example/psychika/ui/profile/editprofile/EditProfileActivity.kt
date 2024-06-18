@@ -118,7 +118,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
                     }
                     is Result.Error -> {
                         Log.i(TAG, "Failed to save changes: ${result.error.message}")
-                        showToast(R.string.failed_changes)
+                        showToast(getString(R.string.failed_changes))
                     }
                 }
             }
@@ -140,7 +140,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
                 showPopUp()
             }
             .addOnFailureListener {
-                showToast(R.string.failed_changes)
+                showToast(getString(R.string.failed_changes))
             }
     }
 
@@ -165,7 +165,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
         binding.ivProfilePicture.setImageURI(imageUri)
     }
 
-    private fun showToast(message: Int) {
+    private fun showToast(message: String) {
         Toast.makeText(this@EditProfileActivity, message, Toast.LENGTH_SHORT).show()
     }
 

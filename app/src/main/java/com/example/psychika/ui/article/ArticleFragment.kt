@@ -52,7 +52,7 @@ class ArticleFragment : Fragment() {
             }
 
             if (filteredList.isEmpty()) {
-                showToast(R.string.no_article_found)
+                showToast(getString(R.string.no_article_found))
             } else {
                 articleAdapter.setFilteredList(filteredList)
             }
@@ -110,7 +110,7 @@ class ArticleFragment : Fragment() {
         startActivity(moveWithParcelableIntent)
     }
 
-    private fun showToast(message: Int) {
+    private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

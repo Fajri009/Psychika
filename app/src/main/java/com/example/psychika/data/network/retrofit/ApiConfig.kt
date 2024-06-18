@@ -11,6 +11,7 @@ class ApiConfig {
         private var BASE_URL_AUTH = "http://34.101.241.92:3000/"
         private var BASE_URL_CHATBOT = "https://ollama.sleepingowl.my.id/"
         private var BASE_URL_CLASSIFICATION = "https://psychika.sleepingowl.my.id/"
+        private val BASE_URL_MAPS_NEARBY = "https://maps.googleapis.com/maps/api/place/nearbysearch/"
 
         fun getAuthApiService(): AuthApiService {
             val loggingInterceptor =
@@ -64,6 +65,24 @@ class ApiConfig {
                 .client(client)
                 .build()
             return retrofit.create(ClassificationApiService::class.java)
+        }
+
+        fun getMapsNearbyApiService(): NearbyPlacesService {
+            val loggingInterceptor =
+                if (BuildConfig.DEBUG) {
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+                } else {
+                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+                }
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL_MAPS_NEARBY)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(NearbyPlacesService::class.java)
         }
     }
 }

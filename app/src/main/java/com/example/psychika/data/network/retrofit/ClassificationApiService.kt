@@ -7,7 +7,6 @@ import retrofit2.http.Query
 interface ClassificationApiService {
     @GET("predict")
     suspend fun getPredict(
-        @Query("text")
-        text: String
+        @Query("text") text: String
     ): PredictResponse
 }
