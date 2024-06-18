@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.psychika.R
 import com.example.psychika.data.entity.ChatMessage
 import com.example.psychika.databinding.ItemBotChatBinding
+import com.example.psychika.databinding.ItemBotErrorBinding
 import com.example.psychika.databinding.ItemUserChatBinding
 
 class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -27,21 +28,42 @@ class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : Recycler
         }
     }
 
+    inner class BotErrorViewHolder(private val binding: ItemBotErrorBinding) : RecyclerView.ViewHolder(binding.root)  {
+        fun bind (chatMessage: ChatMessage) {
+            binding.apply {
+                tvMessage.text = chatMessage.content
+                tvTime.text = chatMessage.time
+            }
+        }
+    }
+
     override fun getItemViewType(position: Int): Int {
-        return if (chatMessages[position].role == "user") {
-            R.layout.item_user_chat
-        } else {
-            R.layout.item_bot_chat
+        val role = chatMessages[position].role
+        return when (role) {
+            "user" -> {
+                R.layout.item_user_chat
+            }
+            "assistant" -> {
+                R.layout.item_bot_chat
+            }
+            else -> {R.layout.item_bot_error}
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == R.layout.item_user_chat) {
-            val binding = ItemUserChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            UserChatViewHolder(binding)
-        } else {
-            val binding = ItemBotChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            BotChatViewHolder(binding)
+        return when (viewType) {
+            R.layout.item_user_chat -> {
+                val binding = ItemUserChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                UserChatViewHolder(binding)
+            }
+            R.layout.item_bot_chat -> {
+                val binding = ItemBotChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                BotChatViewHolder(binding)
+            }
+            else -> {
+                val binding = ItemBotErrorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                BotErrorViewHolder(binding)
+            }
         }
     }
 
@@ -50,6 +72,7 @@ class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : Recycler
         when (holder) {
             is UserChatViewHolder -> holder.bind(chatMessage)
             is BotChatViewHolder -> holder.bind(chatMessage)
+            is BotErrorViewHolder -> holder.bind(chatMessage)
         }
     }
 

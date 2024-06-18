@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.psychika.adapter.HistoryAdapter
 import com.example.psychika.data.entity.DailyAveragePrediction
+import com.example.psychika.data.local.preference.user.User
+import com.example.psychika.data.local.preference.user.UserPreference
 import com.example.psychika.databinding.ActivityHistoryBinding
 import com.example.psychika.databinding.PopUpHistoryBinding
 import com.example.psychika.ui.ViewModelFactory
@@ -20,6 +22,11 @@ class HistoryActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
     private lateinit var historyAdapter: HistoryAdapter
+
+    private lateinit var userModel: User
+    private lateinit var userPreference: UserPreference
+    private lateinit var userId: String
+
     private var isDialogShowing = false
     private var dialogDate: String? = null
     private var alertDialog: AlertDialog? = null
@@ -29,6 +36,10 @@ class HistoryActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userPreference = UserPreference(this)
+        userModel = userPreference.getUser()
+        userId = userModel.id!!
 
         if (savedInstanceState != null) {
             isDialogShowing = savedInstanceState.getBoolean("isDialogShowing")
@@ -68,7 +79,7 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun setDataChatHistoryDate() {
-        viewModel.getAllDateMessages().observe(this) {
+        viewModel.getAllDateMessages(userId).observe(this) {
             historyAdapter.submitList(it)
         }
     }

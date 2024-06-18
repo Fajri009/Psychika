@@ -124,7 +124,13 @@ class ChatFragment : Fragment() {
 
                         is Result.Error -> {
                             if (result.error.message == "timeout") {
-                                showToast(getString(R.string.chat_timeout))
+                                val errorTimeoutMessage = ChatMessage(
+                                    "error",
+                                    getString(R.string.chat_timeout),
+                                    Utils.getCurrentTime()
+                                )
+                                chatAdapter.addChatMessage(errorTimeoutMessage)
+                                viewModel.saveToLocalDb(listOf(errorTimeoutMessage), userId, 0.0)
                             } else {
                                 showToast(result.error.message)
                             }

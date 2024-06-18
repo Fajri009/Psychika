@@ -182,8 +182,8 @@ class PsychikaRepository(
         return chatMessageDao.getAllMessagesByDate(date, userId)
     }
 
-    fun getAllDateMessages(): LiveData<List<DailyAveragePrediction>> {
-        return chatMessageDao.getAllDateMessages()
+    fun getAllDateMessages(userId: String): LiveData<List<DailyAveragePrediction>> {
+        return chatMessageDao.getAllDateMessages(userId)
     }
 
     fun getPredict(text: String): LiveData<Result<PredictResponse, ErrorResponse>> =

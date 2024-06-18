@@ -77,7 +77,7 @@
     <string name="icon_send_message">Ikon Kirim Pesan</string>
     <string name="white_container">Wadah Putihr</string>
     <string name="hint_message">Ketik pesan anda</string>
-    <string name="chat_timeout">Timeout error. Silahkan coba lagi nanti.</string>
+    <string name="chat_timeout">Error: Psychika sedang sibuk</string>
 
     <!-- Article -->
     <string name="article">Artikel</string>

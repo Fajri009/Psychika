@@ -15,8 +15,8 @@ interface ChatMessageDao {
     @Query("SELECT * FROM chat_messages WHERE date = :date AND userId = :userId")
     fun getAllMessagesByDate(date: String, userId: String): LiveData<List<ChatMessageEntity>>
 
-    @Query("SELECT date, AVG(predict) AS averagePredict FROM chat_messages GROUP BY date ORDER BY date DESC")
-    fun getAllDateMessages(): LiveData<List<DailyAveragePrediction>>
+    @Query("SELECT date, AVG(predict) AS averagePredict FROM chat_messages WHERE userId = :userId GROUP BY date ORDER BY date DESC")
+    fun getAllDateMessages(userId: String): LiveData<List<DailyAveragePrediction>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMessage(message: ChatMessageEntity)

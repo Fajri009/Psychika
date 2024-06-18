@@ -64,7 +64,7 @@
     <string name="icon_send_message">Icon Send Message</string>
     <string name="white_container">White Container</string>
     <string name="hint_message">Type your message</string>
-    <string name="chat_timeout">Timeout error. Please try again later.</string>
+    <string name="chat_timeout">Error: Psychika busyer.</string>
 
     <!-- Article -->
     <string name="article">Article</string>
