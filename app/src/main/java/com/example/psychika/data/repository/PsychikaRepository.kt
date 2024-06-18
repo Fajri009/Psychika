@@ -182,6 +182,12 @@ class PsychikaRepository(
         return chatMessageDao.getAllMessagesByDate(date, userId)
     }
 
+    fun deleteChatRoleLoading() {
+        CoroutineScope(Dispatchers.IO).launch {
+            chatMessageDao.deleteChatRoleLoading()
+        }
+    }
+
     fun getAllDateMessages(userId: String): LiveData<List<DailyAveragePrediction>> {
         return chatMessageDao.getAllDateMessages(userId)
     }

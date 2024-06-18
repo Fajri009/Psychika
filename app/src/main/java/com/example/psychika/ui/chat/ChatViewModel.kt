@@ -34,4 +34,7 @@ class ChatViewModel(private val repository: PsychikaRepository) : ViewModel() {
 
     fun getPredict(text: String) =
         repository.getPredict(text)
+
+    fun deleteChatRoleLoading() =
+        repository.deleteChatRoleLoading()
 }

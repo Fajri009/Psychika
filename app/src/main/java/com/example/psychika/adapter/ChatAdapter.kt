@@ -8,6 +8,7 @@ import com.example.psychika.data.entity.ChatMessage
 import com.example.psychika.databinding.ItemBotChatBinding
 import com.example.psychika.databinding.ItemBotErrorBinding
 import com.example.psychika.databinding.ItemUserChatBinding
+import com.example.psychika.databinding.ItemChatLoadingBinding
 
 class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class UserChatViewHolder(private val binding: ItemUserChatBinding) : RecyclerView.ViewHolder(binding.root)  {
@@ -37,16 +38,15 @@ class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : Recycler
         }
     }
 
+    inner class ChatLoadingViewHolder(binding: ItemChatLoadingBinding) : RecyclerView.ViewHolder(binding.root)
+
     override fun getItemViewType(position: Int): Int {
         val role = chatMessages[position].role
         return when (role) {
-            "user" -> {
-                R.layout.item_user_chat
-            }
-            "assistant" -> {
-                R.layout.item_bot_chat
-            }
-            else -> {R.layout.item_bot_error}
+            "user" -> R.layout.item_user_chat
+            "assistant" -> R.layout.item_bot_chat
+            "loading" -> R.layout.item_chat_loading
+            else -> R.layout.item_bot_error
         }
     }
 
@@ -59,6 +59,10 @@ class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : Recycler
             R.layout.item_bot_chat -> {
                 val binding = ItemBotChatBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 BotChatViewHolder(binding)
+            }
+            R.layout.item_chat_loading -> {
+                val binding = ItemChatLoadingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ChatLoadingViewHolder(binding)
             }
             else -> {
                 val binding = ItemBotErrorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -81,6 +85,11 @@ class ChatAdapter(private var chatMessages: MutableList<ChatMessage>) : Recycler
     fun addChatMessage(message: ChatMessage) {
         chatMessages.add(message)
         notifyItemInserted(chatMessages.size - 1)
+    }
+
+    fun removeLoadingMessage() {
+        chatMessages.removeAt(chatMessages.size - 1)
+        notifyItemRemoved(chatMessages.size)
     }
 
     fun updateChatMessages(messages: List<ChatMessage>) {

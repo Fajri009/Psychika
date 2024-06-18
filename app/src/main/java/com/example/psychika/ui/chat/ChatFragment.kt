@@ -1,6 +1,8 @@
 package com.example.psychika.ui.chat
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +33,8 @@ class ChatFragment : Fragment() {
     private lateinit var userModel: User
     private lateinit var userPreference: UserPreference
     private lateinit var userId: String
+
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +88,10 @@ class ChatFragment : Fragment() {
                     val cleanPredictionString = response.replace("\"", "")
                     val prediction = cleanPredictionString.toDouble()
                     viewModel.saveToLocalDb(listOf(userMessage), userId, prediction)
-                    Log.i(TAG, "Prediction : $prediction")
+                    Log.d(TAG, "Prediction : $prediction")
+
+                    chatAdapter.addChatMessage(userMessage)
+                    binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                 }
 
                 is Result.Error -> {
@@ -100,18 +107,29 @@ class ChatFragment : Fragment() {
         if (userInput.isNotEmpty()) {
             val userMessage = ChatMessage("user", userInput, Utils.getCurrentTime())
 
-            chatAdapter.addChatMessage(userMessage)
-            binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
             getPredict(userInput, userMessage)
 
+            chatAdapter.addChatMessage(userMessage)
+            binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
+
             viewModel.sendChat(listOf(userMessage)).observe(requireActivity()) { result ->
-                Log.i(TAG, "userInput: $userInput")
+                Log.d(TAG, "userInput: $userInput")
                 if (result != null) {
                     when (result) {
-                        is Result.Loading -> {}
+                        is Result.Loading -> {
+                            handler.postDelayed({
+                                val loadingMessage = ChatMessage("loading", "", "")
+                                chatAdapter.addChatMessage(loadingMessage)
+                                viewModel.saveToLocalDb(listOf(loadingMessage), userId, 0.0)
+                                binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
+                            }, 1000)
+                        }
                         is Result.Success -> {
+                            chatAdapter.removeLoadingMessage()
+                            viewModel.deleteChatRoleLoading()
+
                             val response = result.data
-                            Log.i(TAG, "chatbot: ${response.message.content}")
+                            Log.d(TAG, "chatbot: ${response.message.content}")
                             val assistantMessage = ChatMessage(
                                 "assistant",
                                 response.message.content,
@@ -123,6 +141,9 @@ class ChatFragment : Fragment() {
                         }
 
                         is Result.Error -> {
+                            chatAdapter.removeLoadingMessage()
+                            viewModel.deleteChatRoleLoading()
+
                             if (result.error.message == "timeout") {
                                 val errorTimeoutMessage = ChatMessage(
                                     "error",
@@ -132,14 +153,20 @@ class ChatFragment : Fragment() {
                                 chatAdapter.addChatMessage(errorTimeoutMessage)
                                 viewModel.saveToLocalDb(listOf(errorTimeoutMessage), userId, 0.0)
                             } else {
-                                showToast(result.error.message)
+                                Log.e(TAG, "Error ${result.error.message}", )
+                                val errorTimeoutMessage = ChatMessage(
+                                    "error",
+                                    getString(R.string.chat_timeout),
+                                    Utils.getCurrentTime()
+                                )
+                                chatAdapter.addChatMessage(errorTimeoutMessage)
+                                viewModel.saveToLocalDb(listOf(errorTimeoutMessage), userId, 0.0)
                             }
                         }
                     }
                 }
             }
 
-            chatAdapter.notifyDataSetChanged()
             binding.etUserInputMessage.setText("")
         }
     }
