@@ -9,4 +9,10 @@ class HomeViewModel(private val repository: PsychikaRepository): ViewModel() {
 
     fun getCurrentUserGoogleAuth() =
         repository.getCurrentUserGoogleAuth()
+
+    fun getCurrentFirebaseUser(userId: String) =
+        repository.getCurrentFirebaseUser(userId)
+
+    fun registerWithGogleAuth(userId: String, userMap: HashMap<String, String?>) =
+        repository.registerWithGoogleAuth(userId, userMap)
 }

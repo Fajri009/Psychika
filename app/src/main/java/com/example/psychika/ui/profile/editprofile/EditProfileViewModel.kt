@@ -4,10 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.example.psychika.data.repository.PsychikaRepository
 
 class EditProfileViewModel(private val repository: PsychikaRepository): ViewModel() {
-    fun updateCurrentUser(
+    fun updateCurrentUserApi(
         token: String,
         firstName: String,
         lastName: String,
         email: String,
-    ) = repository.updateCurrentUser(token, firstName, lastName, email)
+    ) = repository.updateCurrentUserAPI(token, firstName, lastName, email)
+
+    fun updateCurrentUserGoogle(
+        userId: String,
+        userMap: HashMap<String, String?>
+    ) = repository.updateCurrentUserGoogle(userId, userMap)
 }

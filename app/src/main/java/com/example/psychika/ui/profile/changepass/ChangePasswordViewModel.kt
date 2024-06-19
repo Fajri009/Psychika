@@ -8,5 +8,5 @@ class ChangePasswordViewModel(private val repository: PsychikaRepository): ViewM
         token: String,
         currPass: String,
         newPass: String
-    ) = repository.updatePasswordCurrentUser(token, currPass, newPass)
+    ) = repository.updatePasswordCurrentUserApi(token, currPass, newPass)
 }

@@ -121,7 +121,7 @@ class ProfileFragment : Fragment() {
                     is Result.Error -> {
                         binding.progressBar.visibility = View.GONE
 
-                        Log.i(TAG, "${R.string.failed_get_account} ${result.error}")
+                        Log.e(TAG, "${R.string.failed_get_account} ${result.error}")
                         showToast(getString(R.string.failed_get_account))
                     }
                 }
@@ -130,7 +130,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getCurrentUserGoogleAuth() {
-        viewModel.getCurrentUserGoogleAuth().observe(requireActivity()) { result ->
+        viewModel.getCurrentUserGoogleAuth(userModel.id!!).observe(requireActivity()) { result ->
             if (result != null) {
                 when (result) {
                     is Result.Loading -> {
@@ -141,6 +141,8 @@ class ProfileFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
 
                         userGoogleAuth = result.data
+                        Log.d(TAG, "userGoogleAuth : $userGoogleAuth")
+
                         binding.apply {
                             Glide
                                 .with(requireContext())
@@ -153,15 +155,11 @@ class ProfileFragment : Fragment() {
                             }
                             tvUserEmail.text = userGoogleAuth.email
                         }
-                        userRef.child(userGoogleAuth.id!!).get()
-                            .addOnFailureListener {
-                                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
-                                showToast(getString(R.string.cant_get_user_data_google))
-                            }
                     }
                     is Result.Error -> {
                         binding.progressBar.visibility = View.GONE
 
+                        Log.e(TAG, "${getString(R.string.cant_get_user_data_google)} : ${result.error.message}")
                         showToast(getString(R.string.cant_get_user_data_google))
                     }
                 }

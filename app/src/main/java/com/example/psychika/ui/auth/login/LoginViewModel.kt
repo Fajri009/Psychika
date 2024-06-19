@@ -5,7 +5,7 @@ import com.example.psychika.data.repository.PsychikaRepository
 
 class LoginViewModel(private val repository: PsychikaRepository): ViewModel() {
     fun login(email: String, password: String) =
-        repository.login(email, password)
+        repository.loginApi(email, password)
 
     fun loginWithGoogle(idToken: String) =
         repository.loginWithGoogle(idToken)

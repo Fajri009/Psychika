@@ -21,12 +21,15 @@ import com.example.psychika.data.network.response.PredictResponse
 import com.example.psychika.data.network.response.SuccessResponse
 import com.example.psychika.data.network.response.UnprocessableEntityResponse
 import com.example.psychika.data.network.response.UserResponse
-import com.example.psychika.data.network.retrofit.ChatbotApiService
 import com.example.psychika.data.network.retrofit.AuthApiService
+import com.example.psychika.data.network.retrofit.ChatbotApiService
 import com.example.psychika.data.network.retrofit.ClassificationApiService
 import com.example.psychika.data.network.retrofit.NearbyPlacesService
+import com.example.psychika.ui.home.HomeFragment
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.database
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +46,9 @@ class PsychikaRepository(
     private val firebaseAuth: FirebaseAuth,
     private val chatMessageDao: ChatMessageDao
 ) {
+    private val db = Firebase.database
+    private val userRef = db.reference.child("users")
+
     fun registerApi(
         firstName: String,
         lastName: String,
@@ -65,7 +71,23 @@ class PsychikaRepository(
             }
         }
 
-    fun login(
+    fun registerWithGoogleAuth(
+        userId: String,
+        userMap: HashMap<String, String?>
+    ): LiveData<Result<String, String>> =
+        liveData {
+            emit(Result.Loading)
+
+            try {
+                userRef.child(userId).setValue(userMap).await()
+                emit(Result.Success("Berhasil mendaftar akun ke Firebase"))
+            } catch (e: Exception) {
+                Log.e(HomeFragment.TAG, "Failed to register current user to firebase database")
+                emit(Result.Error("Failed to register current user to firebase database"))
+            }
+        }
+
+    fun loginApi(
         email: String,
         password: String
     ): LiveData<Result<TokenResponse, MessageErrorResponse>> =
@@ -142,8 +164,27 @@ class PsychikaRepository(
                     val firstName = nameParts.getOrNull(0)
                     val lastName = nameParts.drop(1).joinToString(" ")
                     val email = currentUser.email ?: ""
-                    val userGoogleAuth =
-                        UserGoogleAuth(idToken, profilePic, firstName!!, lastName, email)
+                    val userGoogleAuth = UserGoogleAuth(idToken, profilePic, firstName!!, lastName, email)
+                    emit(Result.Success(userGoogleAuth))
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error Get Current User Google: ${e.message}", )
+                emit(Result.Error(ErrorMessage(e.message ?: "Unknown error")))
+            }
+        }
+
+    fun getCurrentFirebaseUser(userId: String): LiveData<Result<UserGoogleAuth, ErrorMessage>> =
+        liveData {
+            emit(Result.Loading)
+
+            try {
+                val userSnapshot = userRef.child(userId).get().await()
+                if (userSnapshot.exists()) {
+                    val userGoogleAuth = userSnapshot.getValue(UserGoogleAuth::class.java)
+                    emit(Result.Success(userGoogleAuth!!))
+                } else {
+                    val userGoogleAuth = UserGoogleAuth()
+                    Log.d(TAG, "Not Registered : $userGoogleAuth")
                     emit(Result.Success(userGoogleAuth))
                 }
             } catch (e: Exception) {
@@ -208,7 +249,12 @@ class PsychikaRepository(
             }
         }
 
-    fun getMapsNearbyPlaces(type: String, lat: Double, lng: Double, radius: Int): LiveData<Result<NearbyPlacesResponse, MessageErrorResponse>> =
+    fun getMapsNearbyPlaces(
+        type: String,
+        lat: Double,
+        lng: Double,
+        radius: Int
+    ): LiveData<Result<NearbyPlacesResponse, MessageErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
@@ -224,7 +270,7 @@ class PsychikaRepository(
             }
         }
 
-    fun updateCurrentUser(
+    fun updateCurrentUserAPI(
         token: String,
         firstName: String,
         lastName: String,
@@ -245,7 +291,23 @@ class PsychikaRepository(
             }
         }
 
-    fun updatePasswordCurrentUser(
+    fun updateCurrentUserGoogle(
+        userId: String,
+        userMap: HashMap<String, String?>
+    ): LiveData<Result<String, String>> =
+        liveData {
+            emit(Result.Loading)
+
+            try {
+                userRef.child(userId).setValue(userMap).await()
+                emit(Result.Success("Berhasil mengubah data akun"))
+            } catch (e: Exception) {
+                Log.e(HomeFragment.TAG, "Failed to update current user to firebase database")
+                emit(Result.Error("Failed to update current user to firebase database"))
+            }
+        }
+
+    fun updatePasswordCurrentUserApi(
         token: String,
         currPass: String,
         newPass: String

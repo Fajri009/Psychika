@@ -55,6 +55,7 @@ class ChatFragment : Fragment() {
 
     private fun showChat() {
         val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.stackFromEnd = true
         chatAdapter = ChatAdapter(mutableListOf())
 
         binding.rvChat.apply {
@@ -63,20 +64,21 @@ class ChatFragment : Fragment() {
         }
 
         val currentDate = Utils.getCurrentDate()
-        viewModel.getChatMessageCurrentDate(currentDate, userId).observe(requireActivity()) { messages ->
-            if (messages.isEmpty()) {
-                val defaultBotMessage = ChatMessage(
-                    "assistant",
-                    getString(R.string.greeting_message),
-                    Utils.getCurrentTime()
-                )
-                chatAdapter.addChatMessage(defaultBotMessage)
-                viewModel.saveToLocalDb(listOf(defaultBotMessage), userId, 0.0)
-            } else {
-                chatAdapter.updateChatMessages(messages)
-                binding.rvChat.smoothScrollToPosition(messages.size - 1)
+        viewModel.getChatMessageCurrentDate(currentDate, userId)
+            .observe(requireActivity()) { messages ->
+                if (messages.isEmpty()) {
+                    val defaultBotMessage = ChatMessage(
+                        "assistant",
+                        getString(R.string.greeting_message),
+                        Utils.getCurrentTime()
+                    )
+                    chatAdapter.addChatMessage(defaultBotMessage)
+                    viewModel.saveToLocalDb(listOf(defaultBotMessage), userId, 0.0)
+                } else {
+                    chatAdapter.updateChatMessages(messages)
+                    binding.rvChat.smoothScrollToPosition(messages.size - 1)
+                }
             }
-        }
     }
 
     private fun getPredict(message: String, userMessage: ChatMessage) {
@@ -91,7 +93,6 @@ class ChatFragment : Fragment() {
                     Log.d(TAG, "Prediction : $prediction")
 
                     chatAdapter.addChatMessage(userMessage)
-                    binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                 }
 
                 is Result.Error -> {
@@ -109,9 +110,6 @@ class ChatFragment : Fragment() {
 
             getPredict(userInput, userMessage)
 
-            chatAdapter.addChatMessage(userMessage)
-            binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
-
             viewModel.sendChat(listOf(userMessage)).observe(requireActivity()) { result ->
                 Log.d(TAG, "userInput: $userInput")
                 if (result != null) {
@@ -121,9 +119,9 @@ class ChatFragment : Fragment() {
                                 val loadingMessage = ChatMessage("loading", "", "")
                                 chatAdapter.addChatMessage(loadingMessage)
                                 viewModel.saveToLocalDb(listOf(loadingMessage), userId, 0.0)
-                                binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                             }, 1000)
                         }
+
                         is Result.Success -> {
                             chatAdapter.removeLoadingMessage()
                             viewModel.deleteChatRoleLoading()
@@ -137,31 +135,20 @@ class ChatFragment : Fragment() {
                             )
                             chatAdapter.addChatMessage(assistantMessage)
                             viewModel.saveToLocalDb(listOf(assistantMessage), userId, 0.0)
-                            binding.rvChat.smoothScrollToPosition(chatAdapter.itemCount - 1)
                         }
 
                         is Result.Error -> {
                             chatAdapter.removeLoadingMessage()
                             viewModel.deleteChatRoleLoading()
 
-                            if (result.error.message == "timeout") {
-                                val errorTimeoutMessage = ChatMessage(
-                                    "error",
-                                    getString(R.string.chat_timeout),
-                                    Utils.getCurrentTime()
-                                )
-                                chatAdapter.addChatMessage(errorTimeoutMessage)
-                                viewModel.saveToLocalDb(listOf(errorTimeoutMessage), userId, 0.0)
-                            } else {
-                                Log.e(TAG, "Error ${result.error.message}", )
-                                val errorTimeoutMessage = ChatMessage(
-                                    "error",
-                                    getString(R.string.chat_timeout),
-                                    Utils.getCurrentTime()
-                                )
-                                chatAdapter.addChatMessage(errorTimeoutMessage)
-                                viewModel.saveToLocalDb(listOf(errorTimeoutMessage), userId, 0.0)
-                            }
+                            Log.e(TAG, "Error Send Chat : ${result.error.message}")
+                            val errorTimeoutMessage = ChatMessage(
+                                "error",
+                                getString(R.string.chat_timeout),
+                                Utils.getCurrentTime()
+                            )
+                            chatAdapter.addChatMessage(errorTimeoutMessage)
+                            viewModel.saveToLocalDb(listOf(errorTimeoutMessage), userId, 0.0)
                         }
                     }
                 }

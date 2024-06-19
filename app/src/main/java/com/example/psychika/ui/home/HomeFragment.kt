@@ -109,23 +109,40 @@ class HomeFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
 
                         userGoogleAuth = result.data
-                        binding.tvHiUser.text = getString(R.string.hi_user, userGoogleAuth.firstName)
 
-                        userRef.child(userGoogleAuth.id!!).get()
-                            .addOnSuccessListener { snapshot ->
-                                if (!snapshot.exists()) {
-                                    registerCurrentUserGoogleAuth()
-                                }
-                            }
-                            .addOnFailureListener {
-                                Log.i(TAG, "${R.string.cant_get_user_data_google} ${it.message}")
-                                showToast(getString(R.string.cant_get_user_data_google))
-                            }
+                        getCurrentFirebaseUser(userGoogleAuth.id!!)
                     }
                     is Result.Error -> {
                         binding.progressBar.visibility = View.GONE
 
                         showToast(getString(R.string.cant_get_user_data_google))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getCurrentFirebaseUser(userId: String) {
+        viewModel.getCurrentFirebaseUser(userId).observe(requireActivity()) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                    }
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        val response = result.data
+                        if (response.firstName.isNullOrEmpty()) {
+                            registerCurrentUserGoogleAuth()
+                        }
+
+                        getCurrentFirebaseUser(userGoogleAuth.id!!)
+
+                        binding.tvHiUser.text = getString(R.string.hi_user, response.firstName)
+                    }
+                    is Result.Error -> {
+                        Log.e(TAG, "${getString(R.string.failed_get_account)} : ${result.error.message}")
+                        showToast(getString(R.string.failed_get_account))
                     }
                 }
             }
@@ -141,10 +158,7 @@ class HomeFragment : Fragment() {
             "email" to userGoogleAuth.email,
         )
 
-        userRef.child(userGoogleAuth.id!!).setValue(user)
-            .addOnFailureListener {
-                Log.i(TAG, "Register current user to firebase database ${it.message}")
-            }
+        viewModel.registerWithGogleAuth(userGoogleAuth.id!!, user).observe(requireActivity()) {}
     }
 
     private fun showListFeel() {

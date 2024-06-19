@@ -104,7 +104,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
     }
 
     private fun updateCurrentUserApi(etFirstName: String, etLastName: String, etEmail: String) {
-        viewModel.updateCurrentUser(
+        viewModel.updateCurrentUserApi(
             "Bearer ${userModel.id}",
             etFirstName,
             etLastName,
@@ -117,7 +117,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
                         showPopUp()
                     }
                     is Result.Error -> {
-                        Log.i(TAG, "Failed to save changes: ${result.error.message}")
+                        Log.d(TAG, "Failed to save changes: ${result.error.message}")
                         showToast(getString(R.string.failed_changes))
                     }
                 }
@@ -125,7 +125,7 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
         }
     }
 
-    private fun updateCurrentUserGoogleAuth( etFirstName: String, etLastName: String, etEmail: String) {
+    private fun updateCurrentUserGoogleAuth(etFirstName: String, etLastName: String, etEmail: String) {
         val user = hashMapOf(
             "id" to userGoogleAuth!!.id,
             "profilePic" to userGoogleAuth!!.profilePic,
@@ -134,14 +134,25 @@ class EditProfileActivity : AppCompatActivity(), OnImageSelectedListener {
             "email" to etEmail,
         )
 
-        val userRef = db.reference.child("users")
-        userRef.child(userGoogleAuth!!.id!!).setValue(user)
-            .addOnSuccessListener {
-                showPopUp()
+        Log.d(TAG, "Update Current Google Auth: $user")
+
+        viewModel.updateCurrentUserGoogle(userGoogleAuth!!.id!!, user).observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        showPopUp()
+                    }
+                    is Result.Error -> {
+                        showToast(getString(R.string.failed_changes))
+                    }
+                }
             }
-            .addOnFailureListener {
-                showToast(getString(R.string.failed_changes))
-            }
+        }
     }
 
     private fun showPopUp() {

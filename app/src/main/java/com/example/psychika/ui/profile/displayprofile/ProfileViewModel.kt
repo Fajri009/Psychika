@@ -7,6 +7,6 @@ class ProfileViewModel(private val repository: PsychikaRepository): ViewModel() 
     fun getCurrentUserApi(token: String) =
         repository.getCurrentUserApi(token)
 
-    fun getCurrentUserGoogleAuth() =
-        repository.getCurrentUserGoogleAuth()
+    fun getCurrentUserGoogleAuth(userId: String) =
+        repository.getCurrentFirebaseUser(userId)
 }
