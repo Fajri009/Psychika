@@ -52,10 +52,13 @@ class ArticleFragment : Fragment() {
             }
 
             if (filteredArticle.isEmpty()) {
+                articleAdapter.setFilteredList(filteredArticle)
                 showToast(getString(R.string.no_article_found))
             } else {
                 articleAdapter.setFilteredList(filteredArticle)
             }
+        } else {
+            articleAdapter.setFilteredList(list)
         }
     }
 
