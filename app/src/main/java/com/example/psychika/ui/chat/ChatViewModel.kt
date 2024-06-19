@@ -15,8 +15,8 @@ class ChatViewModel(private val repository: PsychikaRepository) : ViewModel() {
             }
         }
 
-    fun sendChat(messages: List<ChatMessage>) =
-        repository.sendChat(messages)
+    fun sendChat(token: String, messages: List<ChatMessage>) =
+        repository.sendChat(token, messages)
 
     fun saveToLocalDb(messages: List<ChatMessage>, userId: String, predict: Double) {
         messages.forEach { message ->

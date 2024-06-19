@@ -20,7 +20,6 @@ import com.example.psychika.data.network.Result
 import com.example.psychika.databinding.FragmentChatBinding
 import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.utils.Utils
-import com.example.psychika.utils.Utils.convertTimeStampChatApi
 
 class ChatFragment : Fragment() {
     private lateinit var binding: FragmentChatBinding
@@ -110,7 +109,7 @@ class ChatFragment : Fragment() {
 
             getPredict(userInput, userMessage)
 
-            viewModel.sendChat(listOf(userMessage)).observe(requireActivity()) { result ->
+            viewModel.sendChat("Bearer $userId", listOf(userMessage)).observe(requireActivity()) { result ->
                 Log.d(TAG, "userInput: $userInput")
                 if (result != null) {
                     when (result) {
@@ -119,19 +118,25 @@ class ChatFragment : Fragment() {
                                 val loadingMessage = ChatMessage("loading", "", "")
                                 chatAdapter.addChatMessage(loadingMessage)
                                 viewModel.saveToLocalDb(listOf(loadingMessage), userId, 0.0)
-                            }, 1000)
+                            }, 1500)
                         }
 
                         is Result.Success -> {
                             chatAdapter.removeLoadingMessage()
                             viewModel.deleteChatRoleLoading()
 
-                            val response = result.data
-                            Log.d(TAG, "chatbot: ${response.message.content}")
+                            val responseAssistant = result.data.messages.filter {
+                                it.role == "assistant"
+                            }
+                            val responseMessage =
+                                if (responseAssistant.isNotEmpty()) {
+                                    responseAssistant[0].content
+                                } else { "" }
+                            Log.d(TAG, "Chatbot: ${responseMessage}")
                             val assistantMessage = ChatMessage(
                                 "assistant",
-                                response.message.content,
-                                response.createdAt.convertTimeStampChatApi()
+                                responseMessage,
+                                Utils.getCurrentTime()
                             )
                             chatAdapter.addChatMessage(assistantMessage)
                             viewModel.saveToLocalDb(listOf(assistantMessage), userId, 0.0)

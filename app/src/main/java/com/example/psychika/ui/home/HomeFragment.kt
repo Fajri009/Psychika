@@ -22,10 +22,7 @@ import com.example.psychika.data.network.firebase.UserGoogleAuth
 import com.example.psychika.databinding.FragmentHomeBinding
 import com.example.psychika.ui.ViewModelFactory
 import com.example.psychika.ui.article.detail.DetailArticleActivity
-import com.google.firebase.Firebase
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
+import com.example.psychika.ui.auth.login.LoginActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -41,9 +38,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var feelPreference: FeelPreference
 
-    private lateinit var db: FirebaseDatabase
-    private lateinit var userRef: DatabaseReference
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,9 +48,6 @@ class HomeFragment : Fragment() {
         userModel = userPreference.getUser()
 
         feelPreference = FeelPreference(requireContext())
-
-        db = Firebase.database
-        userRef = db.reference.child("users")
 
         if (!userModel.googleAuth) {
             getCurrentUserApi()
@@ -91,7 +82,21 @@ class HomeFragment : Fragment() {
                     }
 
                     is Result.Error -> {
-                        showToast(result.error.message)
+                        val errorMessage = result.error.message
+
+                        if (errorMessage == "timeout") {
+                            userModel.id = ""
+                            userModel.rememberMe = false
+                            userModel.googleAuth = false
+                            userPreference.setUser(userModel)
+
+                            showToast(getString(R.string.session_expired))
+
+                            val intent = Intent(requireContext(), LoginActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            showToast(result.error.message)
+                        }
                     }
                 }
             }

@@ -21,8 +21,7 @@ import com.example.psychika.data.network.response.PredictResponse
 import com.example.psychika.data.network.response.SuccessResponse
 import com.example.psychika.data.network.response.UnprocessableEntityResponse
 import com.example.psychika.data.network.response.UserResponse
-import com.example.psychika.data.network.retrofit.AuthApiService
-import com.example.psychika.data.network.retrofit.ChatbotApiService
+import com.example.psychika.data.network.retrofit.PsychikaApiService
 import com.example.psychika.data.network.retrofit.ClassificationApiService
 import com.example.psychika.data.network.retrofit.NearbyPlacesService
 import com.example.psychika.ui.home.HomeFragment
@@ -39,8 +38,7 @@ import retrofit2.HttpException
 import java.net.SocketTimeoutException
 
 class PsychikaRepository(
-    private val authApiService: AuthApiService,
-    private val chatbotApiService: ChatbotApiService,
+    private val psychikaApiService: PsychikaApiService,
     private val classificationApiService: ClassificationApiService,
     private val mapsNearbyPlacesService: NearbyPlacesService,
     private val firebaseAuth: FirebaseAuth,
@@ -59,7 +57,7 @@ class PsychikaRepository(
             emit(Result.Loading)
 
             try {
-                val response = authApiService.register(firstName, lastName, email, password)
+                val response = psychikaApiService.register(firstName, lastName, email, password)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
@@ -95,7 +93,7 @@ class PsychikaRepository(
             emit(Result.Loading)
 
             try {
-                val response = authApiService.login(email, password)
+                val response = psychikaApiService.login(email, password)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
@@ -103,6 +101,9 @@ class PsychikaRepository(
                 val messageErrorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
                 val errorMessage = messageErrorResponse.message
                 emit(Result.Error(MessageErrorResponse(errorMessage)))
+            } catch (e: SocketTimeoutException) {
+                Log.e(TAG, "Timeout Login with API : ${e.message}", )
+                emit(Result.Error(MessageErrorResponse(e.message ?: "Unknown error")))
             }
         }
 
@@ -139,7 +140,7 @@ class PsychikaRepository(
             emit(Result.Loading)
 
             try {
-                val response = authApiService.getCurrUser(token)
+                val response = psychikaApiService.getCurrUser(token)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
@@ -147,6 +148,9 @@ class PsychikaRepository(
                 val messageErrorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
                 val errorMessage = messageErrorResponse.message
                 emit(Result.Error(MessageErrorResponse(errorMessage)))
+            } catch (e: SocketTimeoutException) {
+                Log.e(TAG, "Timeout Get Current User with API : ${e.message}", )
+                emit(Result.Error(MessageErrorResponse(e.message ?: "Unknown error")))
             }
         }
 
@@ -193,23 +197,24 @@ class PsychikaRepository(
             }
         }
 
-    fun sendChat(message: List<ChatMessage>): LiveData<Result<ChatbotResponse, ErrorResponse>> =
+    fun sendChat(token: String, message: List<ChatMessage>): LiveData<Result<ChatbotResponse, MessageErrorResponse>> =
         liveData {
             emit(Result.Loading)
 
             try {
                 val request = ChatbotRequest("psychika1", message, false)
-                val response = chatbotApiService.sendChat(request)
+                Log.d(TAG, "Send Chat : $request")
+                val response = psychikaApiService.sendChat(token, request)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
-                val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+                val errorResponse = Gson().fromJson(errorBody, MessageErrorResponse::class.java)
                 val errorMessage = errorResponse.message
                 Log.e(TAG, "Error Send Chat : $errorMessage")
-                emit(Result.Error(ErrorResponse(errorMessage)))
+                emit(Result.Error(MessageErrorResponse(errorMessage)))
             } catch (e: SocketTimeoutException) {
                 Log.e(TAG, "Timeout Error Send Chat : ${e.message}", )
-                emit(Result.Error(ErrorResponse(e.message ?: "Unknown error")))
+                emit(Result.Error(MessageErrorResponse(e.message ?: "Unknown error")))
             }
         }
 
@@ -280,7 +285,7 @@ class PsychikaRepository(
             emit(Result.Loading)
 
             try {
-                val response = authApiService.updateCurrUser(token, firstName, lastName, email)
+                val response = psychikaApiService.updateCurrUser(token, firstName, lastName, email)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()
@@ -316,7 +321,7 @@ class PsychikaRepository(
             emit(Result.Loading)
 
             try {
-                val response = authApiService.updatePass(token, currPass, newPass)
+                val response = psychikaApiService.updatePass(token, currPass, newPass)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 val errorBody = e.response()?.errorBody()?.string()

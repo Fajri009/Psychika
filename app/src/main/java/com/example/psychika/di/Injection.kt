@@ -8,12 +8,11 @@ import com.google.firebase.auth.FirebaseAuth
 
 object Injection {
     fun provideRepository(context: Context): PsychikaRepository {
-        val authApiService = ApiConfig.getAuthApiService()
-        val chatbotApiService = ApiConfig.getChatbotApiService()
+        val authApiService = ApiConfig.getPsychikaApiService()
         val classificationApiService = ApiConfig.getClassificationApiService()
         val mapsNearbyApiService = ApiConfig.getMapsNearbyApiService()
         val firebaseAuth = FirebaseAuth.getInstance()
         val chatMessageDao = ChatMessageDatabase.getDatabase(context).chatMessageDao()
-        return PsychikaRepository(authApiService, chatbotApiService, classificationApiService, mapsNearbyApiService, firebaseAuth, chatMessageDao)
+        return PsychikaRepository(authApiService, classificationApiService, mapsNearbyApiService, firebaseAuth, chatMessageDao)
     }
 }

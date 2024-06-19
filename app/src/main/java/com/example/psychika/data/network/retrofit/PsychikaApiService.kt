@@ -1,8 +1,11 @@
 package com.example.psychika.data.network.retrofit
 
+import com.example.psychika.data.entity.ChatbotRequest
+import com.example.psychika.data.network.response.ChatbotResponse
 import com.example.psychika.data.network.response.SuccessResponse
 import com.example.psychika.data.network.response.TokenResponse
 import com.example.psychika.data.network.response.UserResponse
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -10,7 +13,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
-interface AuthApiService {
+interface PsychikaApiService {
     @FormUrlEncoded
     @POST("auth/registerApi")
     suspend fun register(
@@ -48,4 +51,10 @@ interface AuthApiService {
         @Field("current") currPass: String,
         @Field("password") newPass: String
     ): SuccessResponse
+
+    @POST("chat")
+    suspend fun sendChat(
+        @Header("Authorization") token: String,
+        @Body request: ChatbotRequest
+    ): ChatbotResponse
 }

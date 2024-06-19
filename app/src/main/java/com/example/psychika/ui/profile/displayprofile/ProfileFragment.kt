@@ -25,11 +25,7 @@ import com.example.psychika.ui.history.HistoryActivity
 import com.example.psychika.ui.maps.MapsActivity
 import com.example.psychika.ui.profile.changepass.ChangePasswordActivity
 import com.example.psychika.ui.profile.editprofile.EditProfileActivity
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
 import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
@@ -45,9 +41,6 @@ class ProfileFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var userGoogleAuth: UserGoogleAuth
 
-    private lateinit var db: FirebaseDatabase
-    private lateinit var userRef: DatabaseReference
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,9 +51,6 @@ class ProfileFragment : Fragment() {
 
         userPreference = UserPreference(requireContext())
         userModel = userPreference.getUser()
-
-        db = Firebase.database
-        userRef = db.reference.child("users")
 
         if (!userModel.googleAuth) {
             getCurrentUserApi()

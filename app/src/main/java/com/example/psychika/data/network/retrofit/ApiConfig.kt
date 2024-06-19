@@ -8,12 +8,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private var BASE_URL_AUTH = "http://34.34.223.17:3000/"
-        private var BASE_URL_CHATBOT = "https://ollama.sleepingowl.my.id/"
+        private var BASE_URL_PSYCHIKA = "http://34.34.223.17:3000/"
         private var BASE_URL_CLASSIFICATION = "https://psychika.sleepingowl.my.id/"
         private val BASE_URL_MAPS_NEARBY = "https://maps.googleapis.com/maps/api/place/nearbysearch/"
 
-        fun getAuthApiService(): AuthApiService {
+        fun getPsychikaApiService(): PsychikaApiService {
             val loggingInterceptor =
                 if (BuildConfig.DEBUG) {
                     HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -24,29 +23,11 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_AUTH)
+                .baseUrl(BASE_URL_PSYCHIKA)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
-            return retrofit.create(AuthApiService::class.java)
-        }
-
-        fun getChatbotApiService(): ChatbotApiService {
-            val loggingInterceptor =
-                if (BuildConfig.DEBUG) {
-                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-                } else {
-                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-                }
-            val client = OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_CHATBOT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
-            return retrofit.create(ChatbotApiService::class.java)
+            return retrofit.create(PsychikaApiService::class.java)
         }
 
         fun getClassificationApiService(): ClassificationApiService {

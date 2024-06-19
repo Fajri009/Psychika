@@ -49,6 +49,7 @@
     <string name="question_feel">How do you feel?</string>
     <string name="recent_article">Recent Article</string>
     <string name="cant_get_user_data_google">Unable to retrieve user data</string>
+    <string name="session_expired">Your session has expired. Please log in again to continue.</string>
 
     <string-array name="feel_desc">
         <item>Angry</item>

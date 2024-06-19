@@ -55,6 +55,7 @@
     <string name="question_feel">Bagaimana perasaanmu?</string>
     <string name="recent_article">Artikel Terbaru</string>
     <string name="cant_get_user_data_google">Tidak dapat mengambil data pengguna</string>
+    <string name="session_expired">Sesi Anda telah habis. Silakan login kembali untuk melanjutkan.</string>
 
     <string-array name="feel_desc">
         <item>Marah</item>
