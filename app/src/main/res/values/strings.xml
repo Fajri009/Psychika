@@ -23,6 +23,7 @@
     <string name="dont_have_acc">Belum punya akun?</string>
     <string name="empty_form">Silakan isi kolom formulir</string>
     <string name="invalid_form">Silakan isi data formulir sesuai kebutuhan</string>
+    <string name="no_user">Akun belum terdaftar. Silakan daftar terlebih dahulu.</string>
     <string name="invalid_input_user">Email atau kata sandi tidak valid. Silakan coba lagi.</string>
     <string name="try_login">Daftar Sukses! Silakan coba login ke akun Anda</string>
 
@@ -349,4 +350,5 @@
     <string name="current_pass">Kata Sandi Saat Ini</string>
     <string name="new_pass">Kata Sandi Baru</string>
     <string name="confirm_new_pass">Konfirmasi Kata Sandi Baru</string>
+    <string name="success_logout">Anda telah berhasil keluar</string>
 </resources>

@@ -17,6 +17,7 @@
     <string name="dont_have_acc">Don\'t have an account yet?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
+    <string name="no_user">Account not registered yet. Please register first.</string>
     <string name="invalid_input_user">Invalid email or password. Please try again.</string>
     <string name="try_login">Register Success! Please try to login to your account</string>
 
@@ -322,4 +323,5 @@
     <string name="current_pass">Current Password</string>
     <string name="new_pass">New Password</string>
     <string name="confirm_new_pass">Confirm New Password</string>
+    <string name="success_logout">You have successfully logged out</string>
 </resources>

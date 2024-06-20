@@ -7,7 +7,7 @@ import com.example.psychika.data.repository.PsychikaRepository
 
 class ChatbotViewModel(private val repository: PsychikaRepository): ViewModel() {
     fun getChatMessageCurrentDate(date: String, userId: String) =
-        repository.getChangeMessagesByDate(date, userId).map { entities ->
+        repository.getAllMessagesByDate(date, userId).map { entities ->
             entities.map {
                 ChatMessage(it.role, it.message, it.time)
             }

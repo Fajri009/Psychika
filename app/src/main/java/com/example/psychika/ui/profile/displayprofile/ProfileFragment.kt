@@ -181,6 +181,8 @@ class ProfileFragment : Fragment() {
 
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
+
+            showToast(getString(R.string.success_logout))
         }
     }
 

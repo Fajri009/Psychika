@@ -8,10 +8,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        private var BASE_URL_PSYCHIKA = "http://34.34.223.17:3000/"
-        private var BASE_URL_CLASSIFICATION = "https://psychika.sleepingowl.my.id/"
-        private val BASE_URL_MAPS_NEARBY = "https://maps.googleapis.com/maps/api/place/nearbysearch/"
-
         fun getPsychikaApiService(): PsychikaApiService {
             val loggingInterceptor =
                 if (BuildConfig.DEBUG) {
@@ -23,7 +19,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_PSYCHIKA)
+                .baseUrl(BuildConfig.BASE_URL_PSYCHIKA)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
@@ -41,7 +37,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_CLASSIFICATION)
+                .baseUrl(BuildConfig.BASE_URL_CLASSIFICATION)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
@@ -59,7 +55,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL_MAPS_NEARBY)
+                .baseUrl(BuildConfig.BASE_URL_MAPS_NEARBY)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

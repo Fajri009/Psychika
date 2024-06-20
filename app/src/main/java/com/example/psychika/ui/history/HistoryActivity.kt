@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.psychika.R
 import com.example.psychika.adapter.HistoryAdapter
 import com.example.psychika.data.entity.DailyAveragePrediction
 import com.example.psychika.data.local.preference.user.User
@@ -31,6 +32,7 @@ class HistoryActivity : AppCompatActivity() {
 
     private var isDialogShowing = false
     private var dialogDate: String? = null
+    private var avgPredict: Double? = null
     private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +48,7 @@ class HistoryActivity : AppCompatActivity() {
         if (savedInstanceState != null) {
             isDialogShowing = savedInstanceState.getBoolean("isDialogShowing")
             dialogDate = savedInstanceState.getString("dialogDate")
+            avgPredict = savedInstanceState.getDouble("avgPredict")
         }
 
         setupRecyclerView()
@@ -54,18 +57,18 @@ class HistoryActivity : AppCompatActivity() {
         binding.apply {
             ivBack.setOnClickListener { finish() }
             etSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     filterDate(s.toString())
                 }
 
-                override fun afterTextChanged(s: Editable?) { }
+                override fun afterTextChanged(s: Editable?) {}
             })
         }
 
         if (isDialogShowing && dialogDate != null) {
-            showPopUp(dialogDate!!)
+            showPopUp(dialogDate!!, avgPredict!!)
         }
     }
 
@@ -73,6 +76,7 @@ class HistoryActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putBoolean("isDialogShowing", isDialogShowing)
         outState.putString("dialogDate", dialogDate)
+        avgPredict?.let { outState.putDouble("avgPredict", it) }
     }
 
     private fun filterDate(query: String) {
@@ -90,7 +94,7 @@ class HistoryActivity : AppCompatActivity() {
 
         historyAdapter.setOnItemClickCallBack(object : HistoryAdapter.OnItemClickCallBack {
             override fun onItemClicked(data: DailyAveragePrediction) {
-                showPopUp(data.date)
+                showPopUp(data.date, data.averagePredict)
             }
         })
     }
@@ -101,8 +105,15 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPopUp(date: String) {
+    private fun showPopUp(date: String, predict: Double) {
         val popUpBinding = PopUpHistoryBinding.inflate(layoutInflater)
+
+        popUpBinding.tvAdvice.text =
+            if (predict < 80.0) {
+                getString(R.string.low_mental_health)
+            } else {
+                getString(R.string.high_mental_health)
+            }
 
         alertDialog = AlertDialog.Builder(this)
             .setView(popUpBinding.root)
@@ -111,10 +122,16 @@ class HistoryActivity : AppCompatActivity() {
         alertDialog?.show()
 
         popUpBinding.apply {
-            btnBack.setOnClickListener { alertDialog?.dismiss() }
+            btnBack.setOnClickListener {
+                alertDialog?.dismiss()
+                isDialogShowing = false
+                dialogDate = null
+                avgPredict = null
+            }
             btnSeeHistory.setOnClickListener {
                 isDialogShowing = false
                 dialogDate = null
+                avgPredict = null
                 val intent = Intent(this@HistoryActivity, ChatbotHistory::class.java)
                 intent.putExtra("DATE_CHAT_HISTORY", date)
                 startActivity(intent)

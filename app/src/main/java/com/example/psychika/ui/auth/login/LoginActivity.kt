@@ -134,7 +134,10 @@ class LoginActivity : AppCompatActivity() {
                         is Result.Error -> {
                             binding.progressBar.visibility = View.GONE
 
-                            if (result.error.message == "Incorrect password!" || result.error.message == "There is no user with this email address!") {
+                            if (result.error.message == "There is no user with this email address!") {
+                                showToast(getString(R.string.no_user))
+                            }
+                            if (result.error.message == "Incorrect password!") {
                                 showToast(getString(R.string.invalid_input_user))
                             }
                         }
