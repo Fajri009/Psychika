@@ -17,29 +17,19 @@ import com.example.psychika.R
 class PasswordEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : AppCompatEditText(context, attrs), View.OnTouchListener {
-    private var iconPassword: Drawable?
+    private var iconPassword: Drawable
     private var hidePassword : Drawable
     private var showPassword: Drawable
     private var isPasswordVisible: Boolean = false
 
     init {
+        iconPassword = ContextCompat.getDrawable(context, R.drawable.ic_pass) as Drawable
         hidePassword = ContextCompat.getDrawable(context, R.drawable.ic_hide_pass) as Drawable
         showPassword = ContextCompat.getDrawable(context, R.drawable.ic_unhide_pass) as Drawable
 
         setOnTouchListener(this)
 
-
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.IconEditText,
-            0, 0
-        ).apply {
-            try {
-                iconPassword = getDrawable(R.styleable.IconEditText_icon)
-            } finally {
-                recycle()
-            }
-        }
+        hidePassword()
 
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
@@ -53,13 +43,13 @@ class PasswordEditText @JvmOverloads constructor(
             override fun afterTextChanged(s: Editable?) { }
         })
 
-
+        maxLines = 1
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        setButtonDrawables(startOfTheText = iconPassword,endOfTheText = if (isPasswordVisible) showPassword else hidePassword)
+        setEditTextDrawables(startOfTheText = iconPassword,endOfTheText = if (isPasswordVisible) showPassword else hidePassword)
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -67,10 +57,10 @@ class PasswordEditText @JvmOverloads constructor(
             val drawableEnd = compoundDrawables[2]
             if (drawableEnd != null && event.rawX >= (right - drawableEnd.bounds.width() - paddingEnd)) {
                 isPasswordVisible = !isPasswordVisible
-                if (isPasswordVisible) {
-                    showPassword()
-                } else {
+                if (!isPasswordVisible) {
                     hidePassword()
+                } else {
+                    showPassword()
                 }
 
                 setSelection(text?.length ?: 0)
@@ -80,7 +70,7 @@ class PasswordEditText @JvmOverloads constructor(
         return false
     }
 
-    private fun setButtonDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
+    private fun setEditTextDrawables(startOfTheText: Drawable? = null, topOfTheText:Drawable? = null, endOfTheText:Drawable? = null, bottomOfTheText: Drawable? = null){
         setCompoundDrawablesWithIntrinsicBounds(startOfTheText, topOfTheText, endOfTheText, bottomOfTheText)
         compoundDrawablePadding = 20
     }

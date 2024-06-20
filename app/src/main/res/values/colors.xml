@@ -25,11 +25,11 @@
     <color name="primary_900">#0D47A1</color>
     
     <!-- Secondary -->
-    <color name="secondary_50">#E0F2F1</color>
-    <color name="secondary_300">#4DB6AC</color>
-    <color name="secondary_500">#009688</color>
-    <color name="secondary_700">#00796B</color>
-    <color name="secondary_900">#004D40</color>
+    <color name="secondary_50">#FDECEE</color>
+    <color name="secondary_300">#FCC9CC</color>
+    <color name="secondary_500">#F99399</color>
+    <color name="secondary_700">#F8787F</color>
+    <color name="secondary_900">#C66066</color>
 
     <!-- Success -->
     <color name="success_50">#A8EE87</color>
