@@ -11,7 +11,7 @@
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/shades_50"
+        android:background="@color/neutral_100"
         app:labelVisibilityMode="labeled"
         app:itemPaddingTop="20dp"
         app:itemPaddingBottom="20dp"
