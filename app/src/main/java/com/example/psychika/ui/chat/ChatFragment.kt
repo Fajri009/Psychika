@@ -32,6 +32,8 @@ class ChatFragment : Fragment() {
     private lateinit var userModel: User
     private lateinit var userPreference: UserPreference
     private lateinit var userId: String
+    
+    private lateinit var allMessages: List<ChatMessage>
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -64,8 +66,9 @@ class ChatFragment : Fragment() {
 
         val currentDate = Utils.getCurrentDate()
         viewModel.getChatMessageCurrentDate(currentDate, userId)
-            .observe(requireActivity()) { messages ->
-                if (messages.isEmpty()) {
+            .observe(requireActivity()) { message ->
+                val noErrorMessages = message.filter { it.role != "error" }
+                if (message.isEmpty()) {
                     val defaultBotMessage = ChatMessage(
                         "assistant",
                         getString(R.string.greeting_message),
@@ -74,9 +77,13 @@ class ChatFragment : Fragment() {
                     chatAdapter.addChatMessage(defaultBotMessage)
                     viewModel.saveToLocalDb(listOf(defaultBotMessage), userId, 0.0)
                 } else {
-                    chatAdapter.updateChatMessages(messages)
-                    binding.rvChat.smoothScrollToPosition(messages.size - 1)
+                    chatAdapter.updateChatMessages(message)
+                    binding.rvChat.smoothScrollToPosition(message.size - 1)
                 }
+                Log.d(TAG, "Show All Chat Current Date : $message")
+
+                allMessages = noErrorMessages
+                Log.d(TAG, "Show All Chat Current Date without Error Message : $noErrorMessages")
             }
     }
 
@@ -109,7 +116,13 @@ class ChatFragment : Fragment() {
 
             getPredict(userInput, userMessage)
 
-            viewModel.sendChat("Bearer $userId", listOf(userMessage)).observe(requireActivity()) { result ->
+            val messagesToSend = allMessages.toMutableList()
+
+            messagesToSend.add(userMessage)
+
+            Log.d(TAG, "All messages : $messagesToSend")
+
+            viewModel.sendChat("Bearer $userId", messagesToSend).observe(requireActivity()) { result ->
                 Log.d(TAG, "userInput: $userInput")
                 if (result != null) {
                     when (result) {
@@ -130,9 +143,10 @@ class ChatFragment : Fragment() {
                             }
                             val responseMessage =
                                 if (responseAssistant.isNotEmpty()) {
-                                    responseAssistant[0].content
+                                    val lastContent = responseAssistant.size
+                                    responseAssistant[lastContent - 1].content
                                 } else { "" }
-                            Log.d(TAG, "Chatbot: ${responseMessage}")
+                            Log.d(TAG, "Chatbot: $responseAssistant")
                             val assistantMessage = ChatMessage(
                                 "assistant",
                                 responseMessage,

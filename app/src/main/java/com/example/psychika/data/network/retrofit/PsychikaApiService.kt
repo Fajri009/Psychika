@@ -15,7 +15,7 @@ import retrofit2.http.PUT
 
 interface PsychikaApiService {
     @FormUrlEncoded
-    @POST("auth/registerApi")
+    @POST("auth/register")
     suspend fun register(
         @Field("firstName") firstName: String,
         @Field("lastName") lastName: String,
