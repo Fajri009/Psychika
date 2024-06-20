@@ -11,13 +11,24 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="60dp">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/illust_signup"
-            android:layout_width="330dp"
-            android:layout_height="240dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="320dp"
+            android:layout_height="230dp"
+            android:layout_marginTop="40dp"
             android:contentDescription="@string/illust_signup"
             android:src="@drawable/illust_signup"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +50,6 @@
             android:id="@+id/tv_create"
             style="@style/TextAppearance.AppCompat.TextSm.Regular"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="@string/signup_create"
             android:textColor="@color/neutral_700"
@@ -47,36 +57,55 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_signup" />
 
         <TextView
-            android:id="@+id/tv_fullname"
+            android:id="@+id/tv_first_name"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@string/fullname"
+            android:text="@string/first_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_create" />
 
         <com.example.psychika.ui.custom.IconEditText
-            android:id="@+id/et_signup_fullname"
+            android:id="@+id/et_signup_first_name"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/outlined_edit_text"
             android:paddingHorizontal="15dp"
-            app:icon="@drawable/ic_fullname"
+            app:icon="@drawable/ic_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_fullname" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_first_name" />
+
+        <TextView
+            android:id="@+id/tv_last_name"
+            style="@style/TextAppearance.AppCompat.TextSm.Medium"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/last_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_signup_first_name" />
+
+        <com.example.psychika.ui.custom.IconEditText
+            android:id="@+id/et_signup_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/outlined_edit_text"
+            android:paddingHorizontal="15dp"
+            app:icon="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_last_name" />
 
         <TextView
             android:id="@+id/tv_email"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/email"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_signup_fullname" />
+            app:layout_constraintTop_toBottomOf="@+id/et_signup_last_name" />
 
         <com.example.psychika.ui.custom.EmailEditText
             android:id="@+id/et_signup_email"
@@ -93,9 +122,8 @@
             android:id="@+id/tv_password"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/password"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_signup_email" />
 
@@ -107,7 +135,7 @@
             android:background="@drawable/outlined_edit_text"
             android:layout_marginTop="5dp"
             android:paddingHorizontal="15dp"
-            app:icon="@drawable/ic_password"
+            app:icon="@drawable/ic_pass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_password"/>
@@ -116,9 +144,8 @@
             android:id="@+id/tv_confirm_password"
             style="@style/TextAppearance.AppCompat.TextSm.Medium"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/confirm_pass"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_signup_password"
             app:layout_goneMarginTop="20dp" />
@@ -130,7 +157,8 @@
             android:background="@drawable/outlined_edit_text"
             android:inputType="textPassword"
             android:paddingHorizontal="15dp"
-            app:icon="@drawable/ic_password"
+            android:layout_marginTop="5dp"
+            app:icon="@drawable/ic_pass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_confirm_password" />
